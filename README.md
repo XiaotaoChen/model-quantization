@@ -5,8 +5,7 @@ This project collects and trys to reproduce the result of the model quantization
 If you find it useful, please cite the following work / the specific work you are employing.
 
 
-## How to
-To begin:
+## How to use
 
 1. create necessary folder and prepare the datasets. Advised structure:
 
