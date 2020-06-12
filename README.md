@@ -10,14 +10,16 @@ To begin:
 
 1. create necessary folder and prepare the datasets. Advised structure:
 
-#dataset: /data/imagenet/{train, val}
-   
-#log and weight: /data/pretrained/pytorch/model-quantization/{exp, weights}
-#download the pretrained model and put into the /data/pretrained/pytorch/model-quantization/weights/ folder
+```
+# dataset
+mkdir -p /data/imagenet/{train, val}
+# download imagnet in /data/imagenet/
+
+# log and weight:
+# download the pretrained model and put into the /data/pretrained/pytorch/model-quantization/weights/ folder
+mkdir -p /data/pretrained/pytorch/model-quantization/{exp, weights}
 
 #code: download and move the code to /workspace/git/model-quantization
-
-```
 cd /workspace/git/
 git clone https://github.com/blueardour/model-quantization
 git clone https://github.com/blueardour/pytorch-utils
@@ -35,7 +37,9 @@ ln -s /data/pretrained/pytorch/model-quantization/weights .
 bash train.sh config.xxxx
 ```
 
-Examples of config.xxxx is illustrated below.
+`config.xxxx` is the configuration file. Examples of config.xxxx are illustrated below.
+
+
 
 ## Algorithms
 
