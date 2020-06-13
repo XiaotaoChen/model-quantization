@@ -71,7 +71,6 @@ class BasicBlock(nn.Module):
     def __init__(self, inplanes, planes, stride=1, args=None, feature_stride=1):
         super(BasicBlock, self).__init__()
         self.args = args
-        #logging.info("===> warning: feature_stride {}".format(feature_stride))
 
         if 'origin' in args.keyword:
             self.addition_skip = False
@@ -84,10 +83,10 @@ class BasicBlock(nn.Module):
         qconv3x3 = conv3x3
         qconv1x1 = conv1x1
         for i in range(2):
-            setattr(self, 'relu%d' % (i+1), nn.ModuleList([actv(args)]))
+            setattr(self, 'relu%d' % (i+1), nn.ModuleList([actv(args) for j in range(args.base)]))
         if 'fix' in self.args.keyword and ('cbas' in self.args.keyword or 'cbsa' in self.args.keyword):
             self.fix_relu = actv(args)
-            setattr(self, 'relu2', nn.ModuleList([nn.Sequential()]))
+            setattr(self, 'relu2', nn.ModuleList([nn.Sequential() for j in range(args.base)]))
 
         if 'cbas' in args.keyword: # default ?
             self.seq = seq_c_b_a_s
@@ -157,7 +156,6 @@ class BasicBlock(nn.Module):
             for i, n in enumerate(self.skip):
                 if isinstance(n, (nn.BatchNorm2d, nn.GroupNorm)):
                     self.skip[i] = nn.Sequential()
-            #print(self.skip)
 
             self.fixup_scale = nn.Parameter(torch.ones(1))
             if 'bias' in args.keyword:
@@ -166,7 +164,6 @@ class BasicBlock(nn.Module):
                 self.fixup_bias2a = nn.Parameter(torch.zeros(1))
                 self.fixup_bias2b = nn.Parameter(torch.zeros(1))
 
-        #print(self.enable_skip)
 
     def forward(self, x):
         if not self.enable_skip:
@@ -450,7 +447,6 @@ class ResNet(nn.Module):
     def _make_layer(self, block, planes, blocks, stride=1, feature_stride=1):
         strides = [stride] + [1]*(blocks-1)
         layers = []
-        #print('feature_stride', feature_stride)
         for stride in strides:
             layers.append(block(self.inplanes, planes, stride, self.args, feature_stride))
             feature_stride = feature_stride * stride
@@ -496,10 +492,6 @@ class ResNet(nn.Module):
                 x = x + self.fixup_bias2
 
         x = self.fc(x)
-
-        #if hasattr(self, '_out_features') and 'linear' in self._out_features:
-        #    outputs["linear"] = x
-
         return x
 
 
