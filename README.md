@@ -36,7 +36,10 @@ ln -s /data/pretrained/pytorch/model-quantization/weights .
 bash train.sh config.xxxx
 ```
 
-`config.xxxx` is the configuration file. Examples of config.xxxx are illustrated below.
+`config.xxxx` is the configuration file.
+Default naming pattern is `config` + `method` + `phase` + `dataset` + `precision` + `network`.
+For example, config.dorefa.eval.imagenet.fp.resnet18 inidcates evaluat
+Examples of config.xxxx are illustrated below.
 
 
 
@@ -45,6 +48,10 @@ bash train.sh config.xxxx
 The project consists of 
 
 1. LQnet:
+
+Method | Model | A/W | Top-1  | Comment | pretrained
+--- |:---:|:---:|:---:|:---:|:---:
+LQ-net | ResNet-18 | 2/2 | 
 
 Please cite if you use this method
 
