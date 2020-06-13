@@ -59,10 +59,8 @@ def get_parameter():
     parser.add_argument('--fm_boundary', default=None, type=float)
     parser.add_argument('--fm_quant_group', default=None, type=int)
     # advanced options for gradient control / normalization / debug
-    parser.add_argument('--fm_norm_version', default=3, type=int)
     parser.add_argument('--fm_adaptive', default='none', type=str, choices=['none', 'var', 'mean', 'mean-var', 'min', 'max', 'var-mean'])
-    parser.add_argument('--fm_grad_scale', default='none', type=str, choices=['none', 'mean', 'mean-fan-scale', 'fan-scale', 'scale-fan'])
-    parser.add_argument('--fm_grad_type', default='none', type=str, choices=['none', 'bug-A', 'bug-B'])
+    parser.add_argument('--fm_custom', default='none', type=str, choices=['none', 'channel', 'resolution'])
 
     # config for weight quantization
     parser.add_argument('--wt_bit', default=None, type=float)
@@ -76,8 +74,6 @@ def get_parameter():
     parser.add_argument('--wt_boundary', default=None, type=float)
     parser.add_argument('--wt_quant_group', default=None, type=int)
     parser.add_argument('--wt_adaptive', default='none', type=str, choices=['none', 'var', 'mean', 'mean-var', 'var-mean'])
-    parser.add_argument('--wt_grad_scale', default='none', type=str, choices=['none', 'mean', 'mean-fan-scale', 'fan-scale'])
-    parser.add_argument('--wt_norm_version', default=3, type=int)
 
     # re-init the model to pre-calculate some initial value
     parser.add_argument('--re_init', action='store_true', default=False)

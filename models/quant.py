@@ -11,6 +11,7 @@ from torch.nn.modules.utils import _quadruple
 if sys.version_info[0] == 3:
     from . import alqnet as alqnet
     from . import dorefa as dorefa
+    from . import xnor as xnor
 
 __EPS__ = 0 #1e-5
 
@@ -27,7 +28,7 @@ class quantization(nn.Module):
         self.enable = getattr(args, tag + '_enable', False)
         self.adaptive = getattr(self.args, self.tag + '_adaptive', 'none')
         self.grad_scale = getattr(self.args, self.tag + '_grad_scale', 'none')
-        self.grad_type = getattr(args, tag + '_grad_type', 'none')
+        self.custom = getattr(args, tag + '_custom', 'none')
         self.bit = getattr(args, tag + '_bit', None)
         self.num_levels = getattr(args, tag + '_level', None)
         self.half_range = getattr(args, tag + '_half_range', None)
@@ -36,8 +37,6 @@ class quantization(nn.Module):
         self.correlate = getattr(args, tag + '_correlate', -1)
         self.quant_group = getattr(args, tag + '_quant_group', None)
         self.boundary = getattr(self.args, self.tag + '_boundary', None)
-        #[0: group + back, 1: group, 2: 1 + back , 3: 1]
-        self.norm_version = getattr(self.args, self.tag + '_norm_version', 3)
         if self.bit is None:
             self.bit = 32
         if self.num_levels is None or self.num_levels <= 0:
@@ -146,8 +145,7 @@ class quantization(nn.Module):
                     self.clip_val = nn.Parameter(torch.Tensor([self.boundary]))
                     self.quant_fm = dorefa.LSQ
                 elif 'non-uniform' in self.args.keyword:
-                    # self.grad_type: { "none": no scale, no grad. "bug-A": scale, no grad. "bug-B": scale, grad. }
-                    self.clip_val = nn.Parameter(torch.Tensor([self.boundary]), requires_grad = self.grad_type=="bug-B")
+                    self.clip_val = nn.Parameter(torch.Tensor([self.boundary]), requires_grad = False)
                     self.custom_ratio = self.ratio
                     self.quant_fm = dorefa.RoundSTE
                     assert self.num_levels <= 4, 'non-uniform target at 2bit, ter, bin'
@@ -155,8 +153,6 @@ class quantization(nn.Module):
                     for i in range(self.num_levels-1):
                         setattr(self, "alpha%d" % i, nn.Parameter(torch.ones(1)))
                         getattr(self, "alpha%d" % i).data.fill_(self.scale / self.boundary)
-                    if 'debug' in self.args.keyword:
-                        self.logger.info('debug: tag: {}, enter non-uniform with grad-type {}'.format(self.tag, self.grad_type))
                     if 'gamma' in self.args.keyword:
                         self.basis = nn.Parameter(torch.ones (1), requires_grad=False)
                         self.auxil = nn.Parameter(torch.zeros(1), requires_grad=False)
@@ -186,20 +182,11 @@ class quantization(nn.Module):
                     self.quant_wt = dorefa.qfn
                     self.clip_val = self.boundary
 
-                # adaptive
-                if self.adaptive != "none":
-                    self.logger.info('verbose %s_norm-version %r' % (self.tag, self.norm_version))
-
         if 'xnor' in self.args.keyword:
             if self.tag == 'fm':
-                self.quant_fm = dorefa.Xnor
-                if 'boundary' in self.args.keyword:
-                    if self.boundary is not None:
-                        self.boundary = 1.0
-                        self.logger.info('update %s_boundary %r' % (self.tag, self.boundary))
-                    self.clip_val = nn.Parameter(torch.Tensor([self.boundary]))
+                self.quant_fm = xnor.XnorActivation
             else:
-                self.quant_wt = dorefa.DorefaParamsBinarizationSTE
+                self.quant_wt = xnor.XnorWeight
                 if 'gamma' in self.args.keyword:
                     self.gamma = nn.Parameter(torch.ones(self.quant_group, 1, 1, 1))
 
@@ -305,9 +292,7 @@ class quantization(nn.Module):
 
         if 'xnor' in self.args.keyword:
             if self.tag == 'fm':
-                if 'boundary' in self.args.keyword:
-                    x = x * self.clip_val
-                y = self.quant_fm.apply(x)
+                y = self.quant_fm.apply(x, self.custom)
             else:
                 if self.adaptive == 'var-mean':
                     std, mean = torch.std_mean(x.data.reshape(self.quant_group, -1, 1, 1, 1), 1)
@@ -395,9 +380,6 @@ class quantization(nn.Module):
                     y = torch.tanh(x)
                     y = y / (2 * y.abs().max()) + 0.5
                     y = 2 * self.quant_wt.apply(y, self.num_levels, self.clip_val, self.adaptive) - 1
-
-                if self.adaptive != 'none' and self.norm_version in [0, 2]:
-                    y = y * (std + __EPS__)
 
             self.times.data = self.times.data + 1
             return self.quantization_value(x, y)

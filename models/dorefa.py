@@ -57,26 +57,6 @@ class DorefaParamsBinarizationSTE(torch.autograd.Function):
     def backward(ctx, grad_output):
         return grad_output, None
 
-## Xnor-Net
-class Xnor(torch.autograd.Function):
-    '''
-    Binarize the input activations and calculate the mean across channel dimension.
-    '''
-    @staticmethod
-    def forward(self, x):
-        self.save_for_backward(x)
-        y = torch.ones_like(x)
-        y.masked_fill_(x < 0, -1)
-        return y
-
-    @staticmethod
-    def backward(self, grad_output):
-        input, = self.saved_tensors
-        grad_input = grad_output.clone()
-        grad_input[input.ge(1)] = 0
-        grad_input[input.le(-1)] = 0
-        return grad_input
-
 ## TTN (https://arxiv.org/pdf/1612.01064v1)
 class TTN(torch.autograd.Function):
     @staticmethod
