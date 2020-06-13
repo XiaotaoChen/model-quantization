@@ -198,10 +198,10 @@ class quantization(nn.Module):
                         self.boundary = 1.0
                         self.logger.info('update %s_boundary %r' % (self.tag, self.boundary))
                     self.clip_val = nn.Parameter(torch.Tensor([self.boundary]))
-                if 'gamma' in self.args.keyword:
-                    self.gamma = nn.Parameter(torch.Tensor([self.scale]))
             else:
                 self.quant_wt = dorefa.DorefaParamsBinarizationSTE
+                if 'gamma' in self.args.keyword:
+                    self.gamma = nn.Parameter(torch.ones(self.quant_group, 1, 1, 1)))
 
         if 'ttn' in self.args.keyword:
             self.quant_group = 1 # consirder channel wise quant later
@@ -308,10 +308,13 @@ class quantization(nn.Module):
                 if 'boundary' in self.args.keyword:
                     x = x * self.clip_val
                 y = self.quant_fm.apply(x)
+            else:
+                if self.adaptive == 'var-mean':
+                    std, mean = torch.std_mean(x.data.reshape(self.quant_group, -1, 1, 1, 1), 1)
+                    x = (x - mean) / (std + __EPS__)
+                y = self.quant_wt.apply(x)
                 if 'gamma' in self.args.keyword:
                     y = y * self.gamma
-            else:
-                y = self.quant_wt.apply(x)
 
             return self.quantization_value(x, y)
 
