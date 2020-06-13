@@ -134,7 +134,6 @@ def main(args=None):
         log_suffix = model_arch + '-' + args.case
     utils.setup_logging(os.path.join(args.log_dir, log_suffix + '.txt'), resume=args.resume)
 
-    logging.info("system version: %s" % utils.env_info())
     logging.info("alqnet plugins: %r", plugin_enable)
     logging.info("apex available: %r", apex_enable)
     logging.info("dali available: %r", dali_enable)
@@ -368,12 +367,11 @@ def main(args=None):
         args.tensorboard = None
 
     # init status
-    if 'custom-update' in args.keyword:
-        index = 0
-        for m in model.modules():
-            if hasattr(m, 'update_quantization_parameter'):
-                m.update_quantization_parameter(init_lr=args.lr, index=index)
-                index = index + 1
+    index = 0
+    for m in model.modules():
+        if 'custom-update' in args.keyword and hasattr(m, 'update_quantization_parameter'):
+            m.update_quantization_parameter(init_lr=args.lr, index=index)
+            index = index + 1
 
     logging.info("start to train network " + model_name + ' with case ' + args.case)
     while epoch < (args.epochs + args.extra_epoch):

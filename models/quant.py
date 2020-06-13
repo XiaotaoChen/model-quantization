@@ -201,7 +201,7 @@ class quantization(nn.Module):
             else:
                 self.quant_wt = dorefa.DorefaParamsBinarizationSTE
                 if 'gamma' in self.args.keyword:
-                    self.gamma = nn.Parameter(torch.ones(self.quant_group, 1, 1, 1)))
+                    self.gamma = nn.Parameter(torch.ones(self.quant_group, 1, 1, 1))
 
         if 'ttn' in self.args.keyword:
             self.quant_group = 1 # consirder channel wise quant later

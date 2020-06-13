@@ -23,7 +23,7 @@ model_urls = {
 
 def conv3x3(in_planes, out_planes, stride=1, groups=1, dilation=1, args=None):
     """3x3 convolution with padding"""
-    elif args is not None and hasattr(args, 'keyword'):
+    if args is not None and hasattr(args, 'keyword'):
         from .quant import custom_conv
         return custom_conv(in_planes, out_planes, kernel_size=3, stride=stride,
                 padding=dilation, groups=groups, bias=False, dilation=dilation,
@@ -35,7 +35,7 @@ def conv3x3(in_planes, out_planes, stride=1, groups=1, dilation=1, args=None):
 
 def conv1x1(in_planes, out_planes, stride=1, args=None, force_fp=False):
     """1x1 convolution"""
-    elif args is not None and hasattr(args, 'keyword'):
+    if args is not None and hasattr(args, 'keyword'):
         from .quant import custom_conv
         return custom_conv(in_planes, out_planes, kernel_size=1, stride=stride, bias=False,
                 args=args, force_fp=force_fp)
