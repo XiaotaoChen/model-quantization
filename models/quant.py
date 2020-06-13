@@ -306,7 +306,7 @@ class quantization(nn.Module):
         if 'xnor' in self.args.keyword:
             if self.tag == 'fm':
                 if 'boundary' in self.args.keyword:
-                    y = y * self.clip_val
+                    x = x * self.clip_val
                 y = self.quant_fm.apply(x)
                 if 'gamma' in self.args.keyword:
                     y = y * self.gamma

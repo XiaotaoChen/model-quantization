@@ -23,11 +23,6 @@ model_urls = {
 
 def conv3x3(in_planes, out_planes, stride=1, groups=1, dilation=1, args=None):
     """3x3 convolution with padding"""
-    if args is not None and hasattr(args, 'keyword') and 'dorefa-clip' in args.keyword:
-        from .dorefa_clip import QConv2d
-        return QConv2d(in_planes, out_planes, kernel_size=3, stride=stride,
-                padding=dilation, groups=groups, bias=False, dilation=dilation,
-                bits_weights=args.wt_bit, bits_activations=args.fm_bit)
     elif args is not None and hasattr(args, 'keyword'):
         from .quant import custom_conv
         return custom_conv(in_planes, out_planes, kernel_size=3, stride=stride,
@@ -40,10 +35,6 @@ def conv3x3(in_planes, out_planes, stride=1, groups=1, dilation=1, args=None):
 
 def conv1x1(in_planes, out_planes, stride=1, args=None, force_fp=False):
     """1x1 convolution"""
-    if force_fp == False and args is not None and hasattr(args, 'keyword') and 'dorefa-clip' in args.keyword:
-        from .dorefa_clip import QConv2d
-        return QConv2d(in_planes, out_planes, kernel_size=1, stride=stride, bias=False,
-                bits_weights=args.wt_bit, bits_activations=args.fm_bit)
     elif args is not None and hasattr(args, 'keyword'):
         from .quant import custom_conv
         return custom_conv(in_planes, out_planes, kernel_size=1, stride=stride, bias=False,
@@ -51,7 +42,6 @@ def conv1x1(in_planes, out_planes, stride=1, args=None, force_fp=False):
     else:
         return nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=stride, bias=False)
 
-# refer: https://github.com/Cadene/pretrained-models.pytorch/tree/master/pretrainedmodels/models
 class SEModule(nn.Module):
     def __init__(self, channels, reduction=16):
         super(SEModule, self).__init__()
@@ -70,7 +60,6 @@ class SEModule(nn.Module):
         x = self.sigmoid(x)
         return module_input * x
 
-# refer: https://github.com/moskomule/senet.pytorch/blob/master/senet/se_module.py
 class SELayer(nn.Module):
     def __init__(self, channel, reduction=16):
         super(SELayer, self).__init__()
@@ -112,16 +101,6 @@ class BasicBlock(nn.Module):
             if 'PReLU' in args.keyword:
                 self.relu1 = nn.PReLU()
                 self.relu2 = nn.PReLU()
-            elif 'Tanh' in args.keyword:
-                def tanh(x):
-                    return 1.7159 * torch.tanh(x * 2.0/3)
-                self.relu1 = tanh 
-                self.relu2 = tanh
-            elif 'TwistTanh' in args.keyword and hasattr(args, 'fm_correlate'):
-                def tanh(x, a=args.fm_correlate):
-                    return torch.tanh(x) + a*x
-                self.relu1 = tanh 
-                self.relu2 = tanh
 
             if 'extra_prebn' in args.keyword:
                 self.extra_bn1 = norm_layer(inplanes)
@@ -129,8 +108,6 @@ class BasicBlock(nn.Module):
 
             if 'skip_scale' in args.keyword and downsample is None:
                 self.skip_scale = nn.Parameter(torch.ones(1, inplanes, 1, 1))
-
-            assert 'norm-fm' not in args.keyword, 'not support anymore'
 
             if 'se-module' in args.keyword and hasattr(args, 'se_reduction'):
                 self.se = SEModule(planes, args.se_reduction)
@@ -343,7 +320,6 @@ class ResNet(nn.Module):
         x = self.layer4(x)
 
         x = self.avgpool(x)
-        #x = torch.flatten(x, 1)
         x = x.view(x.size(0), -1)
         x = self.fc(x)
 

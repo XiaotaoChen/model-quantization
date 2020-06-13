@@ -110,6 +110,9 @@ def actv(args=None):
     if 'PReLU' in keyword:
         return nn.PReLU()
 
+    if 'NReLU' in keyword:
+        return nn.nn.Sequential()
+
     if 'enhance-info' in keyword:
         return EnchanceReLU(args)
 
