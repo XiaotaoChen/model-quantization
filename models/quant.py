@@ -185,6 +185,8 @@ class quantization(nn.Module):
         if 'xnor' in self.args.keyword:
             if self.tag == 'fm':
                 self.quant_fm = xnor.XnorActivation
+                if 'debug' in self.args.keyword:
+                    self.logger.info('debug: tag: {} custom: {}'.format(self.tag, self.custom))
             else:
                 self.quant_wt = xnor.XnorWeight
                 if 'gamma' in self.args.keyword:
