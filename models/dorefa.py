@@ -28,15 +28,9 @@ class LSQ(torch.autograd.Function):
 class qfn(torch.autograd.Function):
     @staticmethod
     def forward(ctx, input, num_levels, clip_val=1.0, adaptive='none'):
-        if adaptive == 'var':
-            std = input.std()
-            input = input / std
-
         n = float(num_levels - 1)
         scale = n / clip_val
         out = torch.round(input * scale) / scale
-        if adaptive == 'var':
-            out = out * std
         return out
 
     @staticmethod
