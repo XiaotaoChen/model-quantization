@@ -20,6 +20,7 @@ class DCHR(nn.Module):
         fill = x.new_zeros(shape)
         return torch.cat((fill, pool, fill), 1)
 
+# TResNet: High Performance GPU-Dedicated Architecture (https://arxiv.org/pdf/2003.13630v1.pdf)
 class TResNetStem(nn.Module):
     def __init__(self, channel, stride=4):
         super(TResNetStem, self).__init__()
@@ -50,6 +51,14 @@ def seq_c_b_s_a(x, conv, relu, bn, skip, skip_enbale):
     out = relu(out)
     return out
 
+def seq_c_a_b_s(x, conv, relu, bn, skip, skip_enbale):
+    out = conv(x)
+    out = relu(out)
+    out = bn(out)
+    if skip_enbale:
+        out += skip
+    return out
+
 def seq_b_c_a_s(x, conv, relu, bn, skip, skip_enbale):
     out = bn(x)
     out = conv(out)
@@ -66,12 +75,17 @@ def seq_b_a_c_s(x, conv, relu, bn, skip, skip_enbale):
         out += skip
     return out
 
+'''
+BasicBlock:
+    different variants on architectures are supported (mainly controled by the order string
+'''
 class BasicBlock(nn.Module):
     expansion = 1
     def __init__(self, inplanes, planes, stride=1, args=None, feature_stride=1):
         super(BasicBlock, self).__init__()
         self.args = args
 
+        # Bi-Real structure or original structure
         if 'origin' in args.keyword:
             self.addition_skip = False
         else:
@@ -88,10 +102,12 @@ class BasicBlock(nn.Module):
             self.fix_relu = actv(args)
             setattr(self, 'relu2', nn.ModuleList([nn.Sequential() for j in range(args.base)]))
 
-        if 'cbas' in args.keyword: # default ?
+        if 'cbas' in args.keyword:
             self.seq = seq_c_b_a_s
-        elif 'cbsa' in args.keyword: # default ?
+        elif 'cbsa' in args.keyword: # default architecture in Pytorch
             self.seq = seq_c_b_s_a
+        elif 'cabs' in args.keyword: # group-net
+            self.seq = seq_c_a_b_s
         elif 'bacs' in args.keyword:
             self.seq = seq_b_a_c_s
         elif 'bcas' in args.keyword:
@@ -100,12 +116,12 @@ class BasicBlock(nn.Module):
             self.seq = None
 
         if 'bacs' in args.keyword or 'bcas' in args.keyword: 
-            self.bn1 = nn.ModuleList([norm(inplanes, args, feature_stride=feature_stride)])
+            self.bn1 = nn.ModuleList([norm(inplanes, args, feature_stride=feature_stride) for j in range(args.base)])
             if 'fix' in self.args.keyword:
                 self.fix_bn = norm(planes, args, feature_stride=feature_stride*stride)
         else:
-            self.bn1 = nn.ModuleList([norm(planes, args, feature_stride=feature_stride*stride)])
-        self.bn2 = nn.ModuleList([norm(planes, args, feature_stride=feature_stride*stride)])
+            self.bn1 = nn.ModuleList([norm(planes, args, feature_stride=feature_stride*stride) for j in range(args.base)])
+        self.bn2 = nn.ModuleList([norm(planes, args, feature_stride=feature_stride*stride) for j in range(args.base)])
 
         # downsample branch
         self.enable_skip = stride != 1 or inplanes != planes
@@ -126,30 +142,35 @@ class BasicBlock(nn.Module):
                 downsample.append(norm(inplanes, args, feature_stride=feature_stride))
                 downsample.append(qconv1x1(inplanes, planes, stride=1, args=args, force_fp=real_skip, feature_stride=feature_stride*stride))
                 downsample.append(actv(args))
-                if 'fix' in args.keyword: # add in 2020.02.12
+                if 'fix' in args.keyword: # remove the ReLU in skip connection
                     downsample.append(norm(planes, args, feature_stride=feature_stride*stride))
             else:
                 downsample.append(qconv1x1(inplanes, planes, args=args, force_fp=real_skip, feature_stride=feature_stride*stride))
                 downsample.append(norm(planes, args, feature_stride=feature_stride*stride))
                 if 'fix' not in args.keyword:
                     downsample.append(actv(args))
-        if 'singleconv' in args.keyword:
+        if 'singleconv' in args.keyword: # pytorch official branch employ single convolution layer
             for i, n in enumerate(downsample):
                 if isinstance(n, nn.AvgPool2d):
                     downsample[i] = nn.Sequential()
                 if isinstance(n, nn.Conv2d):
                     downsample[i] = qconv1x1(inplanes, planes, stride=stride, args=args, force_fp=real_skip, feature_stride=feature_stride)
-        trick = 'trick' in args.keyword
-        if trick:
+        if 'DCHR' in args.keyword: # try if any performance improvement when aligning resolution without downsample 
             if args.verbose:
-                logging.info("warning: trick is used in the block")
+                logging.info("warning: DCHR is used in the block")
             self.skip = DCHR(stride)
         else:
             self.skip = nn.Sequential(*downsample)
 
-        self.conv1 = nn.ModuleList([qconv3x3(inplanes, planes, stride, 1, args=args, feature_stride=feature_stride)])
-        self.conv2 = nn.ModuleList([qconv3x3(planes, planes, 1, 1, args=args, feature_stride=feature_stride*stride)])
+        self.conv1 = nn.ModuleList([qconv3x3(inplanes, planes, stride, 1, args=args, feature_stride=feature_stride) for j in range(args.base)])
+        self.conv2 = nn.ModuleList([qconv3x3(planes, planes, 1, 1, args=args, feature_stride=feature_stride*stride) for j in range(args.base)])
 
+        if args.base == 1:
+            self.scales = [1]
+        else:
+            self.scales = nn.ParameterList([nn.Parameter(torch.ones(1) / args.base, requires_grad=True) for i in range(args.base)])
+
+        # Fixup initialization (https://arxiv.org/abs/1901.09321)
         if 'fixup' in args.keyword:
             self.bn1 = nn.ModuleList([nn.Sequential()])
             self.bn2 = nn.ModuleList([nn.Sequential()])
@@ -176,13 +197,19 @@ class BasicBlock(nn.Module):
         if self.enable_skip:
             residual = self.skip(x)
 
-        output = None
-        for conv1, conv2, bn1, bn2, relu1, relu2 in zip(self.conv1, self.conv2, self.bn1, self.bn2, self.relu1, self.relu2):
+        result = None
+        for conv1, conv2, bn1, bn2, relu1, relu2, scale in zip(self.conv1, self.conv2, \
+                self.bn1, self.bn2, self.relu1, self.relu2, self.scales):
             if 'fixup' in self.args.keyword and 'bias' in self.args.keyword:
-                output = self.seq(x, conv1, relu1, bn1, self.fixup_bias1b, True) + self.fixup_bias2a
+                out = self.seq(x, conv1, relu1, bn1, self.fixup_bias1b, True) + self.fixup_bias2a
             else:
-                output = self.seq(x, conv1, relu1, bn1, residual, self.addition_skip)
-            output = self.seq(output, conv2, relu2, bn2, output, self.addition_skip)
+                out = self.seq(x, conv1, relu1, bn1, residual, self.addition_skip)
+            output = self.seq(out, conv2, relu2, bn2, out, self.addition_skip)
+            if result is None:
+                result = scale * output
+            else:
+                result = result + scale * output
+        output = result
 
         if 'fixup' in self.args.keyword:
             output = output * self.fixup_scale
@@ -204,6 +231,7 @@ class BottleNeck(nn.Module):
         super(BottleNeck, self).__init__()
         self.args = args
 
+        # Bi-Real structure or original structure
         if 'origin' in args.keyword:
             self.addition_skip = False
         else:
@@ -215,29 +243,33 @@ class BottleNeck(nn.Module):
         qconv3x3 = conv3x3
         qconv1x1 = conv1x1
         for i in range(3):
-            setattr(self, 'relu%d' % (i+1), nn.ModuleList([actv(args)]))
+            setattr(self, 'relu%d' % (i+1), nn.ModuleList([actv(args) for j in range(args.base)]))
         if 'fix' in self.args.keyword and ('cbas' in self.args.keyword or 'cbsa' in self.args.keyword):
-            setattr(self, 'relu3', nn.ModuleList([nn.Sequential()]))
+            setattr(self, 'relu3', nn.ModuleList([nn.Sequential() for j in range(args.base)]))
             self.fix_relu = actv(args)
 
-        if 'cbas' in args.keyword: # default ?
+        if 'cbas' in args.keyword:
             self.seq = seq_c_b_a_s
-        elif 'cbsa' in args.keyword: # default ?
+        elif 'cbsa' in args.keyword: # default Pytorch
             self.seq = seq_c_b_s_a
+        elif 'cabs' in args.keyword: # group-net
+            self.seq = seq_c_a_b_s
         elif 'bacs' in args.keyword:
             self.seq = seq_b_a_c_s
+        elif 'bcas' in args.keyword:
+            self.seq = seq_b_c_a_s
         else:
             self.seq = None
 
         if 'bacs' in args.keyword:
-            self.bn1 = nn.ModuleList([norm(inplanes, args)])
-            self.bn3 = nn.ModuleList([norm(planes, args)])
+            self.bn1 = nn.ModuleList([norm(inplanes, args) for j in range(args.base)])
+            self.bn3 = nn.ModuleList([norm(planes, args) for j in range(args.base)])
             if 'fix' in self.args.keyword:
                 self.fix_bn = norm(planes * self.expansion, args)
         else:
-            self.bn1 = nn.ModuleList([norm(planes, args)])
-            self.bn3 = nn.ModuleList([norm(planes * self.expansion, args)])
-        self.bn2 = nn.ModuleList([norm(planes, args)])
+            self.bn1 = nn.ModuleList([norm(planes, args) for j in range(args.base)])
+            self.bn3 = nn.ModuleList([norm(planes * self.expansion, args) for j in range(args.base)])
+        self.bn2 = nn.ModuleList([norm(planes, args) for j in range(args.base)])
 
         # downsample branch
         self.enable_skip = stride != 1 or inplanes != planes * self.expansion
@@ -265,20 +297,25 @@ class BottleNeck(nn.Module):
                     downsample[i] = nn.Sequential()
                 if isinstance(n, nn.Conv2d):
                     downsample[i] = qconv1x1(inplanes, planes * self.expansion, stride=stride, args=args, force_fp=real_skip, feature_stride=feature_stride)
-        trick = 'trick' in args.keyword
-        if trick:
+        if 'DCHR' in args.keyword:
             if args.verbose:
-                logging.info("warning: trick is used in the block")
+                logging.info("warning: DCHR is used in the block")
             self.skip = DCHR(stride)
         else:
             self.skip = nn.Sequential(*downsample)
 
-        self.conv1 = nn.ModuleList([qconv1x1(inplanes, planes, 1, args=args, feature_stride=feature_stride)])
-        self.conv2 = nn.ModuleList([qconv3x3(planes, planes, stride, 1, args=args, feature_stride=feature_stride)])
+        self.conv1 = nn.ModuleList([qconv1x1(inplanes, planes, 1, args=args, feature_stride=feature_stride) for j in range(args.base)])
+        self.conv2 = nn.ModuleList([qconv3x3(planes, planes, stride, 1, args=args, feature_stride=feature_stride) for j in range(args.base)])
         feature_stride = feature_stride * stride
-        self.conv3 = nn.ModuleList([qconv1x1(planes, planes * self.expansion, 1, args=args, feature_stride=feature_stride)])
+        self.conv3 = nn.ModuleList([qconv1x1(planes, planes * self.expansion, 1, args=args, feature_stride=feature_stride) for j in range(args.base)])
+
+        if args.base == 1:
+            self.scales = [1]
+        else:
+            self.scales = nn.ParameterList([nn.Parameter(torch.ones(1) / args.base, requires_grad=True) for i in range(args.base)])
 
         if 'fixup' in args.keyword:
+            assert args.base == 1, 'Base should be 1 in Fixup'
             self.bn1 = nn.ModuleList([nn.Sequential()])
             self.bn2 = nn.ModuleList([nn.Sequential()])
             self.bn3 = nn.ModuleList([nn.Sequential()])
@@ -294,8 +331,8 @@ class BottleNeck(nn.Module):
                 self.fixup_bias2b = nn.Parameter(torch.zeros(1))
                 self.fixup_bias3a = nn.Parameter(torch.zeros(1))
                 self.fixup_bias3b = nn.Parameter(torch.zeros(1))
-
-        assert args.base == 1, "base must equal one in current version"
+            else:
+                pass
 
     def forward(self, x):
         if not self.enable_skip:
@@ -308,16 +345,21 @@ class BottleNeck(nn.Module):
         if self.enable_skip:
             residual = self.skip(x)
 
-        output = None
-        for conv1, conv2, conv3, bn1, bn2, bn3, relu1, relu2, relu3 in zip(self.conv1, self.conv2, self.conv3, \
-                    self.bn1, self.bn2, self.bn3, self.relu1, self.relu2, self.relu3):
+        result = None
+        for conv1, conv2, conv3, bn1, bn2, bn3, relu1, relu2, relu3, scale in zip(self.conv1, self.conv2, self.conv3, \
+                    self.bn1, self.bn2, self.bn3, self.relu1, self.relu2, self.relu3, self.scales):
             if 'fixup' in self.args.keyword and 'bias' in self.args.keyword:
-                output = self.seq(x, conv1, relu1, bn1, self.fixup_bias1b, True) + self.fixup_bias2a
-                output = self.seq(output, conv2, relu2, bn2, self.fixup_bias2b, True) + self.fixup_bias3a
+                out = self.seq(x, conv1, relu1, bn1, self.fixup_bias1b, True) + self.fixup_bias2a
+                out = self.seq(out, conv2, relu2, bn2, self.fixup_bias2b, True) + self.fixup_bias3a
             else:
-                output = self.seq(x, conv1, relu1, bn1, residual, self.addition_skip)
-                output = self.seq(output, conv2, relu2, bn2, output, self.addition_skip)
-            output = self.seq(output, conv3, relu3, bn3, output, self.addition_skip)
+                out = self.seq(x, conv1, relu1, bn1, residual, self.addition_skip)
+                out = self.seq(out, conv2, relu2, bn2, out, self.addition_skip)
+            output = self.seq(out, conv3, relu3, bn3, out, self.addition_skip)
+            if result is None:
+                result = scale * output
+            else:
+                result = result + scale * output
+        output = result
 
         if 'fixup' in self.args.keyword:
             output = output * self.fixup_scale
@@ -376,6 +418,8 @@ class ResNet(nn.Module):
         else:
             self.bn1 = nn.Sequential(norm(self.input_channel, args), actv(args))
             self.bn2 = nn.Sequential()
+            if 'group-net' in args.keyword:
+                self.bn1[1] = nn.Sequential()
 
         self.avgpool = nn.AdaptiveAvgPool2d((1,1))
         self.fc = nn.Linear(outplanes * block.expansion, args.num_classes)

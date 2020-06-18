@@ -261,7 +261,10 @@ def main():
                 print(value.data)
             elif "all" in args.verbose_list:
                 if 'num_batches_tracked' not in name:
-                    print(name, value.shape, value.requires_grad)
+                    if isinstance(value, torch.Tensor):
+                        print(name, value.shape, value.requires_grad)
+                    else:
+                        print(name, value, type(value))
 
     if 'load' in config.keys():
         model_name = args.model
