@@ -28,7 +28,9 @@ ln -s /data/pretrained/pytorch/model-quantization/exp .
 ln -s /data/pretrained/pytorch/model-quantization/weights .
 ```
 
-2. install prerequisite packages listed in requirement.txt in python 3.
+2. basic prerequisite packages are listed in requirement.txt (python 3+).
+
+Additional packages include the [Nvidia Dali](https://github.com/NVIDIA/DALI) and [Nvidia Mix precision training package](https://github.com/NVIDIA/apex)
 
 3. to train or test (modify the train.sh according to your own evironment if not following above folder structure):
 
@@ -53,9 +55,22 @@ The project consists of
 
 1. LQnet:
 
-Method | Model | A/W | Paper Reported | My Top-1  | Comment | pretrained
---- |:---:|:---:|:---:|:---:|:---:|:---:
-LQ-net | ResNet-18 | 2/2 | 64.9 | 65.0 | PreBN,bacs | 
+Method | Model | A/W | Paper Reported | My Top-1  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:
+LQ-net | ResNet-18 | 2/2 | 64.9 | 64.9 | PreBN,bacs 
+LQ-net | ResNet-18 | 2/2 | - | 65.9 | PreBN,bacs,wt-qg=8
+--- |:---:|:---:|:---:|:---:|:---:
+
+To test:
+
+```
+bash train.sh config.lq-net.eval.dali.2bit.resnet18
+```
+
+```
+bash train.sh config.lq-net.eval.dali.2bit.resnet18-fg8
+```
+
 
 Please cite if you use this method
 
