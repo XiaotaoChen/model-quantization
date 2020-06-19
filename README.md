@@ -58,8 +58,7 @@ The project consists of
 Method | Model | A/W | Paper Reported | My Top-1  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:
 LQ-net | ResNet-18 | 2/2 | 64.9 | 64.9 | PreBN,bacs 
-LQ-net | ResNet-18 | 2/2 | - | 65.9 | PreBN,bacs,wt-qg=8
---- |:---:|:---:|:---:|:---:|:---:
+LQ-net | ResNet-18 | 2/2 | - | 65.9 | PreBN,bacs,fm-qg=8
 
 To test:
 
