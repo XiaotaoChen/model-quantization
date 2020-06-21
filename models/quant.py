@@ -28,6 +28,7 @@ class quantization(nn.Module):
         self.enable = getattr(args, tag + '_enable', False)
         self.adaptive = getattr(self.args, self.tag + '_adaptive', 'none')
         self.grad_scale = getattr(self.args, self.tag + '_grad_scale', 'none')
+        self.grad_type = getattr(args, tag + '_grad_type', 'none')
         self.custom = getattr(args, tag + '_custom', 'none')
         self.bit = getattr(args, tag + '_bit', None)
         self.num_levels = getattr(args, tag + '_level', None)
@@ -186,8 +187,10 @@ class quantization(nn.Module):
             if self.tag == 'fm':
                 self.quant_fm = xnor.XnorActivation
                 if 'debug' in self.args.keyword:
-                    self.logger.info('debug: tag: {} custom: {}'.format(self.tag, self.custom))
+                    self.logger.info('debug: tag: {} custom: {}, grad_type {}'.format(self.tag, self.custom, self.grad_type))
             else:
+                if 'debug' in self.args.keyword:
+                    self.logger.info('debug: tag: {} custom: {}, grad_type {}'.format(self.tag, self.custom, self.grad_type))
                 self.quant_wt = xnor.XnorWeight
                 if 'gamma' in self.args.keyword:
                     self.gamma = nn.Parameter(torch.ones(self.quant_group, 1, 1, 1))
@@ -294,12 +297,12 @@ class quantization(nn.Module):
 
         if 'xnor' in self.args.keyword:
             if self.tag == 'fm':
-                y = self.quant_fm.apply(x, self.custom)
+                y = self.quant_fm.apply(x, self.custom, self.grad_type)
             else:
                 if self.adaptive == 'var-mean':
                     std, mean = torch.std_mean(x.data.reshape(self.quant_group, -1, 1, 1, 1), 1)
                     x = (x - mean) / (std + __EPS__)
-                y = self.quant_wt.apply(x)
+                y = self.quant_wt.apply(x, self.quant_group, self.grad_type)
                 if 'gamma' in self.args.keyword:
                     y = y * self.gamma
 
