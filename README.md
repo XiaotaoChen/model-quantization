@@ -68,6 +68,9 @@ bash train.sh config.xxxx
 
 `config.xxxx` is the configuration file, which contains network architecture, quantization related and training related parameters. For more about the supported options, refer [config.md](./doc/config.md) and the `config` subfolder.
 
+Sometime the training is time-consuming. `start_on_terminate.sh` can be used to wait the process to terminate and start another round of training.
+
+Besides, `tools.py` provides many useful functions for debug / verbose / model convert. Refer [tools.md](./doc/tools.md) for detailed usage.
 
 ## Algorithms
 
@@ -84,6 +87,18 @@ Please cite if you use this method
 }
 ```
 
+## Contributors
 
+Current Contributors:
+
+- Blueardour
+- Bohan
+- Jing
+- Chunlei
+
+
+To contribute, PR is appreciated and it is also possible to contact me by email: blueardour@gamil.com
+
+## License
 
 
