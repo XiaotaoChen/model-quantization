@@ -7,7 +7,7 @@ This project collects model quantization algorithms in the publication.
 
 The dashboard collects the perfromance of quantization algoirthms for different architectures. Both the Top-1(\%) from original paper and the reproduction are listed. Corresponding training and testing configruations can be found in the `config` folder.
 
-Note that the performance among different methods is obtained based on different training hyper-parameters. The accuracy in the table will not be the evidence of superior of one algoirthm over another. Training hyper-parameters and tricks such as weight normalization play a considerable role on improving the performance. See my experience summary of training quantization networks in [experience.md](./doc/experience.md).
+Note that the performance among different methods is obtained based on different training hyper-parameters. The accuracy in the table will not be the evidence of superior of one algorithms over another. Training hyper-parameters and tricks such as `weight normalization` play a considerable role on improving the performance. See my experience summary of training quantization networks in [experience.md](./doc/experience.md).
 
 Dataset | Method | Model | A/W | Reported | Top-1  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:
@@ -26,7 +26,7 @@ git clone https://github.com/blueardour/model-quantization
 git clone https://github.com/blueardour/pytorch-utils
 cd model-quantization
 ln -s ../pytorch-utils utils
-# log and weight folders (optional, if symbol link not created, the script will create these folder under project path)
+# log and weight folders (optional, if symbol link not created, the script will create these folders under the project path)
 mkdir -p /data/pretrained/pytorch/model-quantization/{exp,weights}
 ln -s /data/pretrained/pytorch/model-quantization/exp .
 ln -s /data/pretrained/pytorch/model-quantization/weights .
