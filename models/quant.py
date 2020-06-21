@@ -144,7 +144,7 @@ class quantization(nn.Module):
                 elif 'lsq' in self.args.keyword or 'fm_lsq' in self.args.keyword:
                     self.clip_val = nn.Parameter(torch.Tensor([self.boundary]))
                     self.quant_fm = dorefa.LSQ
-                elif 'non-uniform' in self.args.keyword:
+                elif 'non-uniform' in self.args.keyword or 'fm_non-uniform' in self.args.keyword:
                     self.clip_val = nn.Parameter(torch.Tensor([self.boundary]), requires_grad = False)
                     self.custom_ratio = self.ratio
                     self.quant_fm = dorefa.RoundSTE
@@ -321,11 +321,11 @@ class quantization(nn.Module):
                         y = y * 2.0 - 1.0
                         y = y * self.clip_val
                 elif 'pact' in self.args.keyword:
-                    # note: we don't clip on the lower boundary, add F.ReLU if required
                     # the gradient of clip_val is automatically calculated by the torch.where
-                    y = torch.where(x < self.clip_val, x, self.clip_val)
+                    y = torch.clamp(x, min=0)
+                    y = torch.where(y < self.clip_val, y, self.clip_val)
                     y = self.quant_fm.apply(y, self.num_levels, self.clip_val, self.adaptive)
-                elif 'non-uniform' in self.args.keyword:
+                elif 'non-uniform' in self.args.keyword or 'fm_non-uniform' in self.args.keyword:
                     if self.half_range:
                         y1 = x * self.alpha0
                         y1 = torch.clamp(y1, min=0, max=1)
