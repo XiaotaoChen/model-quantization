@@ -66,7 +66,7 @@ Both training and testing employ the `train.sh` script. Directly call the `main.
 bash train.sh config.xxxx
 ```
 
-`config.xxxx` is the configuration file, which contains network architecture, quantization related and training related parameters. For more about the supported options, refer [config.md](./doc/config.md) 
+`config.xxxx` is the configuration file, which contains network architecture, quantization related and training related parameters. For more about the supported options, refer [config.md](./doc/config.md) and the `config` subfolder.
 
 
 ## Algorithms
