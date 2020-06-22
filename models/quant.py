@@ -195,11 +195,6 @@ class quantization(nn.Module):
                 if 'gamma' in self.args.keyword:
                     self.gamma = nn.Parameter(torch.ones(self.quant_group, 1, 1, 1))
 
-        if 'ttn' in self.args.keyword:
-            self.quant_group = 1 # consirder channel wise quant later
-            self.ttn_init()
-            self.method = 'ttn'
-
         #raise RuntimeError("Quantization method not provided %s" % self.args.keyword)
 
     def update_quantization(self, **parameters):
@@ -291,9 +286,6 @@ class quantization(nn.Module):
             self.update_bias(basis)
 
             return self.quantization_value(x, y)
-
-        if self.method == 'ttn':
-            return TTN.apply(x, self.wp, self.wn, self.thre)
 
         if 'xnor' in self.args.keyword:
             if self.tag == 'fm':
@@ -390,12 +382,6 @@ class quantization(nn.Module):
             return self.quantization_value(x, y)
 
         raise RuntimeError("Should not reach here in quant.py")
-
-    def ttn_init(self):
-        self.wp = nn.Parameter(torch.ones(self.quant_group, 1), requires_grad=True)
-        self.wn = nn.Parameter(torch.ones(self.quant_group, 1), requires_grad=True)
-        self.thre = nn.Parameter(torch.ones(self.quant_group, 1), requires_grad=False)
-        self.thre.data.fill_(getattr(self.args, self.tag + '_separator', 0.05))
 
     def lq_net_init(self):
         self.basis = nn.Parameter(torch.ones(self.bit, self.quant_group), requires_grad=False)
