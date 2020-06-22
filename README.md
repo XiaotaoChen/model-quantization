@@ -70,6 +70,13 @@ bash train.sh config.xxxx
 
 Sometime the training is time-consuming. `start_on_terminate.sh` can be used to wait the process to terminate and start another round of training.
 
+```
+# wait in a screen shell
+screen -S next-round
+bash start_on_terminate.sh [current training thread pid] [next round config.xxxx]
+# Ctl+A D to detach screen to backend
+```
+
 Besides, `tools.py` provides many useful functions for debug / verbose / model convert. Refer [tools.md](./doc/tools.md) for detailed usage.
 
 ## Algorithms
