@@ -327,7 +327,7 @@ class quantization(nn.Module):
                     # the gradient of clip_val is automatically calculated by the torch.where
                     y = torch.clamp(x, min=0)
                     y = torch.where(y < self.clip_val, y, self.clip_val)
-                    y = self.quant_fm.apply(y, self.num_levels, self.clip_val, self.adaptive)
+                    y = self.quant_fm.apply(y, self.num_levels, self.clip_val.detach(), self.adaptive)
                 elif 'non-uniform' in self.args.keyword or 'fm_non-uniform' in self.args.keyword:
                     if self.half_range:
                         y1 = x * self.alpha0
