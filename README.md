@@ -1,75 +1,80 @@
 
-# Deep learning model Compression
+# EasyQuantization: A flexible and unified framework to make the model quantization easier.
 
-This project collects and trys to reproduce the result of the model quantization algorithms in the publication.
-If you find it useful, please cite the following work / the specific work you are employing.
+This project collects model quantization algorithms in the publication.
 
+## Dashboard
 
-## How to use
+The dashboard collects the perfromance of quantization algoirthms for different architectures. Both the Top-1(\%) from original paper and the reproduction are listed. Corresponding training and testing configruations can be found in the `config` folder.
 
-1. create necessary folder and prepare the datasets. Advised structure:
+Note that the performance among different methods is obtained based on different training hyper-parameters. The accuracy in the table will not be the evidence of superior of one algorithms over another. Training hyper-parameters and tricks such as `weight normalization` play a considerable role on improving the performance. See my experience summary of training quantization networks in [experience.md](./doc/experience.md).
 
+Dataset | Method | Model | A/W | Reported | Top-1  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:
+imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 64.9 | PreBN,bacs 
+imagenet | LQ-net | ResNet-18 | 2/2 | - | 65.9 | PreBN,bacs,fm-qg=8
+
+## Update History
+
+## Install
+
+1. clone the repo (change the `FASTDIR` as perfered):
 ```
-# dataset
-mkdir -p /data/imagenet/{train, val}
-# download imagnet in /data/imagenet/
-
-# log and weight:
-# download the pretrained model and put into the /data/pretrained/pytorch/model-quantization/weights/ folder
-mkdir -p /data/pretrained/pytorch/model-quantization/{exp, weights}
-
-#code: download and move the code to /workspace/git/model-quantization
-cd /workspace/git/
+export FASTDIR=/workspace
+cd $FASTDIR/git/
 git clone https://github.com/blueardour/model-quantization
 git clone https://github.com/blueardour/pytorch-utils
 cd model-quantization
 ln -s ../pytorch-utils utils
+# log and weight folders (optional, if symbol link not created, the script will create these folders under the project path)
+mkdir -p /data/pretrained/pytorch/model-quantization/{exp,weights}
 ln -s /data/pretrained/pytorch/model-quantization/exp .
 ln -s /data/pretrained/pytorch/model-quantization/weights .
 ```
 
-2. basic prerequisite packages are listed in requirement.txt (python 3+).
+2. install prerequisite packages
+```
+cd $FASTDIR/git/model-quantization
+# python 3 is required
+pip install -r requirement.txt
+```
 
-Additional packages include the [Nvidia Dali](https://github.com/NVIDIA/DALI) and [Nvidia Mix precision training package](https://github.com/NVIDIA/apex)
+3. Install Nvidia Image preprocess packages and mix precision training packages (optional)
 
-3. to train or test (modify the train.sh according to your own evironment if not following above folder structure):
+[Nvidia Dali](https://github.com/NVIDIA/DALI) 
+
+[Nvidia Mix precision training package](https://github.com/NVIDIA/apex)
+
+## Dataset
+
+This repo support the imagenet dataset and cifar dataset. 
+Create necessary folder and prepare the datasets. Example:
+
+```
+# dataset
+mkdir -p /data/cifar
+mkdir -p /data/imagenet
+# download imagnet and move the train and evaluation data in in /data/imagenet/{train,val}, respectively.
+# cifar dataset can be downloaded on the fly
+```
+
+## Quick Start
+
+Both training and testing employ the `train.sh` script. Directly call the `main.py` is also possible.
 
 ```
 bash train.sh config.xxxx
 ```
 
-`config.xxxx` is the configuration file.
-Default naming pattern is `config` + `method` + `phase` + `dataset` + `precision` + `network`.
+`config.xxxx` is the configuration file, which contains network architecture, quantization related and training related parameters. For more about the supported options, refer [config.md](./doc/config.md) and the `config` subfolder.
 
-where `phase` contains `eval` for evaluation; `train-stratch` for training without pretrained model; `finetuning` means training with pretrained model as the initilization.
+Sometime the training is time-consuming. `start_on_terminate.sh` can be used to wait the process to terminate and start another round of training.
 
-`dataset` can be chosen from `imagenet` for the imagenet dataset; `dali` for the imagenet dataset wrappered in nvidia dali for fast preprocessing; `cifar10` for CIFAR10 dataset; `cifar100` for CIFAR100 dataset and `fake` for fake images for testing.
-
-For example, `config.dorefa.eval.imagenet.fp.resnet18` inidcates to evaluate the ResNet-18 network on imagenet dataset with full precision.
-
-Run `bash train.sh config.dorefa.eval.imagenet.fp.resnet18` to test the PreBN ResNet-18 on imagenet. Expected accuracy: Top-1(70.1) and Top-5(89.3).
+Besides, `tools.py` provides many useful functions for debug / verbose / model convert. Refer [tools.md](./doc/tools.md) for detailed usage.
 
 ## Algorithms
 
-The project consists of 
-
 1. LQnet:
-
-Method | Model | A/W | Paper Reported | My Top-1  | Comment 
---- |:---:|:---:|:---:|:---:|:---:
-LQ-net | ResNet-18 | 2/2 | 64.9 | 64.9 | PreBN,bacs 
-LQ-net | ResNet-18 | 2/2 | - | 65.9 | PreBN,bacs,fm-qg=8
-
-To test:
-
-```
-bash train.sh config.lq-net.eval.dali.2bit.resnet18
-```
-
-```
-bash train.sh config.lq-net.eval.dali.2bit.resnet18-fg8
-```
-
 
 Please cite if you use this method
 
@@ -82,61 +87,18 @@ Please cite if you use this method
 }
 ```
 
+## Contributors
 
-2. Dorefa-net
+Current Contributors:
 
-Please cite if you use this method
-
-```BibTeX
-```
-
-3. PACT
-
-Please cite if you use this method
-
-```BibTeX
-```
+- Blueardour
+- Bohan
+- Jing
+- Chunlei
 
 
-4. LSQ/TET
+To contribute, PR is appreciated and it is also possible to contact me by email: blueardour@gamil.com
 
-Please cite if you use this method
-
-```BibTeX
-```
-
-
-5. Group-net
-
-Please cite if you use this method
-
-```BibTeX
-```
-
-
-6. Xnor-net
-
-Please cite if you use this method
-
-```BibTeX
-```
-
-
-7. Bi-Real net
-
-Please cite if you use this method
-
-```BibTeX
-```
-
-8. FATNN
-
-Please cite if you use this method
-
-```BibTeX
-```
-
-## to be contiune
-
+## License
 
 
