@@ -1,6 +1,9 @@
 
 ## Training tricks
 
+- Learning rate
+
+- Activation Function
 
 ## Speed on real platform
 
