@@ -2,6 +2,17 @@
 
 ## Install
 
+1. download the [custom detectron2 project](https://github.com/blueardour/detectron2). See what is modified below.
+
+```
+cd /workspace/git/
+git clone https://github.com/blueardour/detectron2
+```
+
+Install it based on the original [install.md](https://github.com/facebookresearch/detectron2/blob/master/INSTALL.md)
+
+2. install prerequisite package according to [classification.md](./classification.md)
+
 ## Dataset
 
 refer [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md)
