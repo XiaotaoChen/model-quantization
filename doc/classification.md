@@ -66,6 +66,16 @@ Besides, `tools.py` provides many useful functions for debug / verbose / model c
 
 ## Training script options
 
+### Option parsing
+
+Common options are parsed in `util/config.py`. Quantization related options are separated in the `main.py`.
+
+### activation and weight quantization options
+
+The script provides indepdent configration for the activation and weight, respectively. Options such as `xx_bit`, `xx_level`, `xx_enable`, `xx_half_range` are easy to understand (`xx` is `fm` for activation or `wt` for weight ). We here explain more about other advanced options. 
+
+1. `xx_quant_group` indicates the group amount for the quantization parameter along the channel dimension.
+
 ### Weight decay
 
 Three major related options.
