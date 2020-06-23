@@ -62,3 +62,20 @@ bash start_on_terminate.sh [current training thread pid] [next round config.xxxx
 ```
 
 Besides, `tools.py` provides many useful functions for debug / verbose / model convert. Refer [tools.md](./doc/tools.md) for detailed usage.
+
+
+## Training script options
+
+### Weight decay
+
+Three major related options.
+
+1. `--wd` set the default L2 weight decay value.
+
+2. Weight decay is originally proposed to avoid ovrefit for the large amount of paramters. For some small tensors, for example the parameters in BatchNorm layer (as well as custom defined quantization parameter, such as clip-value), weight decay is advocated to be zero. `--decay_small` is for whether decay those small tensor or not.
+
+3. `--custom_decay_list` and `--custom_decay` are combined for specific custom decay value to certain parameters. For example, in PACT, the clip_boudary can own its independent weight decay for regularition. The combination filter paramter name according to `--custom_decay_list` and assgin the weight decay to `--custom_decay`.
+
+
+### Learning rate
+
