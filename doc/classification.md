@@ -66,26 +66,28 @@ Besides, `tools.py` provides many useful functions for debug / verbose / model c
 
 ## Training script options
 
-1. Option parsing
+- Option parsing
 
 Common options are parsed in `util/config.py`. Quantization related options are separated in the `main.py`.
 
-2. Activation and weight quantization options
+- Activation and weight quantization options
 
 The script provides indepdent configration for the activation and weight, respectively. Options such as `xx_bit`, `xx_level`, `xx_enable`, `xx_half_range` are easy to understand (`xx` is `fm` for activation or `wt` for weight ). We here explain more about other advanced options. 
 
-1). `xx_quant_group` indicates the group amount for the quantization parameter along the channel dimension.
+1. `xx_quant_group` indicates the group amount for the quantization parameter along the channel dimension.
 
-3.  Weight decay
+2.
+
+- Weight decay
 
 Three major related options.
 
-1). `--wd` set the default L2 weight decay value.
+1. `--wd` set the default L2 weight decay value.
 
-2). Weight decay is originally proposed to avoid ovrefit for the large amount of paramters. For some small tensors, for example the parameters in BatchNorm layer (as well as custom defined quantization parameter, such as clip-value), weight decay is advocated to be zero. `--decay_small` is for whether decay those small tensor or not.
+2. Weight decay is originally proposed to avoid ovrefit for the large amount of paramters. For some small tensors, for example the parameters in BatchNorm layer (as well as custom defined quantization parameter, such as clip-value), weight decay is advocated to be zero. `--decay_small` is for whether decay those small tensor or not.
 
-3). `--custom_decay_list` and `--custom_decay` are combined for specific custom decay value to certain parameters. For example, in PACT, the clip_boudary can own its independent weight decay for regularition. The combination filter paramter name according to `--custom_decay_list` and assgin the weight decay to `--custom_decay`.
+3. `--custom_decay_list` and `--custom_decay` are combined for specific custom decay value to certain parameters. For example, in PACT, the clip_boudary can own its independent weight decay for regularition. The combination filter paramter name according to `--custom_decay_list` and assgin the weight decay to `--custom_decay`.
 
 
-4. Learning rate
+- Learning rate
 
