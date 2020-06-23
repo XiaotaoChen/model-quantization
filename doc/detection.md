@@ -57,7 +57,7 @@ new file:   third_party/quantization
 
 ## Training and Test
 
-Training and testing follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) )
+Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ). Just adapt the quantization need by modifying the configration file.
 
 Example configurations for quantization are provided in `AdelaiDet/config`
 
