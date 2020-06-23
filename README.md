@@ -70,7 +70,7 @@ Current Contributors:
 - [liuchunlei0430](https://github.com/liuchunlei0430)
 
 
-To contribute, PR is appreciated and it is also possible to contact me by email: blueardour@gamil.com
+To contribute, PR is appreciated and suggestions are welcome to discuss with me by email: blueardour@gamil.com
 
 ## License
 
