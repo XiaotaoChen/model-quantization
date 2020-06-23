@@ -32,6 +32,7 @@ imagenet | Group-Net | ResNet-18 | 1/1 | - | 63.9 | cabs,bireal,base=5,without-s
 
 ### Detection
 
+Selected results are listed in the following table. More data and detailed instructions can be found in [detection.md](./doc/detection.md)
 
 Dataset | Task Method | Quantization method | Model | A/W | Reported | Top-1  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
