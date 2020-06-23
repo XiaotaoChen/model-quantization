@@ -11,7 +11,7 @@ git clone https://github.com/blueardour/detectron2
 
 Install it based on the original [install.md](https://github.com/facebookresearch/detectron2/blob/master/INSTALL.md)
 
-2. install prerequisite package according to [classification.md](./classification.md)
+2. install dependent package according to [classification.md](./classification.md)
 
 ## Dataset
 
