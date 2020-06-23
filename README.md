@@ -105,10 +105,10 @@ Please cite if you use this method
 
 Current Contributors:
 
-- Blueardour
-- Bohan
-- Jing
-- Chunlei
+- [Blueardour](https://github.com/blueardour)
+- [bohanzhuang](https://github.com/bohanzhuang)
+- [liujingcs](https://github.com/liujingcs)
+- [liuchunlei0430](https://github.com/liuchunlei0430)
 
 
 To contribute, PR is appreciated and it is also possible to contact me by email: blueardour@gamil.com
