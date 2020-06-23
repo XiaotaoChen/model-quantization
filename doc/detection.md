@@ -12,7 +12,7 @@ Facebook detectron2 has not support for some works such as `FCOS`. Try the [aim-
 
 ```
 cd /workspace/git/
-git clone https://github.com/blueardour/uofa-AdelaiDet
+git clone https://github.com/blueardour/uofa-AdelaiDet AdelaiDet
 # notice to change to the quantization branch
 git checkout quantization
 ```
