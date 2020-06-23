@@ -39,10 +39,10 @@ COCO | Retina-Net | - | Torch-18 | 32/32 | - | - |
 
 ## Update History
 
-- Add classification quantization
-- Detection (to do)
-- Segmentation (to do)
-- OCR (to do)
+- Detection (preparing)
+
+- 2020.06.23 Add classification quantization
+
 
 
 ## Algorithms
