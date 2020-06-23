@@ -70,6 +70,12 @@ Besides, `tools.py` provides many useful functions for debug / verbose / model c
 
 Common options are parsed in `util/config.py`. Quantization related options are separated in the `main.py`.
 
+- Keyword
+
+The `--keyword` option is one of most important varibale to control the model architecture and quantization algorithm choice.
+
+For customed resnet, refer [resnet.md](./resnet.md) for more information.
+
 - Activation and weight quantization options
 
 The script provides indepdent configration for the activation and weight, respectively. Options such as `xx_bit`, `xx_level`, `xx_enable`, `xx_half_range` are easy to understand (`xx` is `fm` for activation or `wt` for weight ). We here explain more about other advanced options. 
