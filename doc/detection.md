@@ -35,7 +35,7 @@ ls -l third_party
 
 refer [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md)
 
-## What is modified
+## What is modified in the detectron2 project
 
 The main modification of the project to add quantization support lay in the followsing files.  Use `vimdiff` to check the difference.
 
