@@ -24,6 +24,13 @@ As the orignal project, `custom AdelaiDet` depends on `custom detectron2`.  Inst
 
 2. install dependent package according to [classification.md](./classification.md)
 
+3. make sure the symbol link is correct.
+```
+cd /workspace/git/detectron2
+ls -l third_party
+# the third_party/quantization should point to /workspace/git/model-quantization/models
+```
+
 ## Dataset
 
 refer [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md)
