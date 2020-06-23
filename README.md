@@ -32,6 +32,11 @@ imagenet | Group-Net | ResNet-18 | 1/1 | - | 63.9 | cabs,bireal,base=5,without-s
 
 ### Detection
 
+
+Dataset | Task Method | Quantization method | Model | A/W | Reported | Top-1  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
+COCO | Retina-Net | - | Torch-18 | 32/32 | - | - | 
+
 ## Update History
 
 - Add classification quantization
