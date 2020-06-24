@@ -119,4 +119,5 @@ To contribute, PR is appreciated and it is also possible to contact me by email:
 
 ## License
 
+See LICENSE
 
