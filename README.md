@@ -72,7 +72,7 @@ Please cite if you use this method
 
 6. Group-Net
 
-7. Fixup Initilization
+7. Fixup Initilization / Mixup
 
 8. TResnet
 
