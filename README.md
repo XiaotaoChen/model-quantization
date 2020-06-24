@@ -50,10 +50,9 @@ COCO | Retina-Net | - | Torch-18 | 32/32 | - | - |
 
 ## Algorithms
 
-1. LQnet:
-
 Please cite if you use this method
 
+1. LQnet:
 ```BibTeX
 @inproceedings{zhang2018lq,
   title={LQ-Nets: Learned Quantization for Highly Accurate and Compact Deep Neural Networks},
@@ -62,6 +61,22 @@ Please cite if you use this method
         year={2018}
 }
 ```
+
+2. Dorefa-net
+
+3. PACT
+
+4. LSQ / TET
+
+5. Xnor-Net / Xnor-Net++
+
+6. Group-Net
+
+7. Fixup Initilization
+
+8. TResnet
+
+
 
 ## Contributors
 
