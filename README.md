@@ -27,6 +27,8 @@ imagenet | LQ-net | ResNet-18 | 2/2 | - | 65.9 | PreBN,bacs,fm-qg=8
 imagenet | LSQ | Torch-R18 | 2/2 | 67.6 | 67.3 | vanilla resnet(paper use pre act)
 imagenet | Dorefa-Net | ResNet-18 | 2/2 | - | 64.1 | PreBN,bacs
 imagenet | Group-Net | ResNet-18 | 1/1 | - | 63.9 | cabs,bireal,base=5,without-softgate
+imagenet | Xnor-Net | ResNet-18 | 1/1 | - | 52.0 | cbsa,fm_triangle,wt_pass,No-ReLU
+imagenet | Xnor-Net | ResNet-18 | 1/1 | - | 50.5 | cbsa,fm_STE,wt_pass,No-ReLU
 
 `Torch-Rxx` indicates the ResNet architecture from Pytorch (so-called vanilla structure). `ResNet-xx` represnets the variants of ResNet. Minior differences can be found in the structure. See [resnet.md](./doc/resnet.md) for the architecture description and  [classification.md](./doc/classification.md) for how to control the choice by different configuration.
 
