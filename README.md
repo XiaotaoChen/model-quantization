@@ -42,9 +42,10 @@ COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5 | 1x
 COCO | Retina-Net | - | Torch-18 | 32/32 | - | 32.8 | 1x, FPN-BN,Head-GN
 COCO | Retina-Net | - | Torch-18 | 32/32 | - | 33.0 | 1x, FPN-BN,Head-BN
 COCO | Retina-Net | - | Torch-34 | 32/32 | - | 35.2 | 1x
-COCO | Retina-Net | - | Torch-50 | 32/32 | 37.4 | 36.6 | 1x
-COCO | Retina-Net | - | Torch-50 | 32/32 | 37.4 | 37.8 | 1x, FPN-BN,Head-BN
-COCO | Retina-Net | - | MSRA-R50 | 32/32 | 37.4 | 36.4 | 1x
+COCO | Retina-Net | - | Torch-50 | 32/32 | - | 36.6 | 1x
+COCO | Retina-Net | - | Torch-50 | 32/32 | - | 37.8 | 1x, FPN-BN,Head-BN
+COCO | Retina-Net | - | MSRA-R50 | 32/32 | - | 36.4 | 1x
+COCO | - | - | - | - | - | - | Above experiments conducted in 2020 Q1, performance might be better by the newest code
 
 
 ## Update History
