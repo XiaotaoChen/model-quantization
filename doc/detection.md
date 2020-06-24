@@ -35,6 +35,8 @@ ls -l third_party
 # the third_party/quantization should point to /workspace/git/model-quantization/models
 ```
 
+Currently I link the dependentant with symbol link. As these projects will update separatedly, submodule with version management is considered when all scripts being already.
+
 ## Dataset
 
 refer [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md)
