@@ -1,0 +1,10 @@
+ninja
+torch
+torchvision
+pandas
+tensorboardX
+gpuinfo
+
+#
+IPython
+

@@ -1,21 +1,24 @@
 
 import logging
 
-from .resnet_ import resnet18, resnet20, resnet32, resnet34, resnet44, resnet50, resnet101
-from .resnet  import resnet18 as pytorch_resnet18
-from .resnet  import resnet34 as pytorch_resnet34
-from .resnet  import resnet50 as pytorch_resnet50
-from .resnet  import resnet101 as pytorch_resnet101
-#from .vgg import vgg16_bn as pytorch_vgg16bn
-
-#from .alexnet_ import alexnet as alexnet_  # revise from XNOR-Net-PyTorch
-#from .nin_ import nin as nin_
-#from .vgg_small_ import vgg_small
-
-#from .mobilenet import mobilenetv2, mobilenetv1
-#from .densenet import densenet121
-#from .nasnet import nasnet
-#from .squeezenet import squeezenet
+try:
+    from .resnet_ import resnet18, resnet20, resnet32, resnet34, resnet44, resnet50, resnet101
+    from .resnet  import resnet18 as pytorch_resnet18
+    from .resnet  import resnet34 as pytorch_resnet34
+    from .resnet  import resnet50 as pytorch_resnet50
+    from .resnet  import resnet101 as pytorch_resnet101
+    #from .vgg import vgg16_bn as pytorch_vgg16bn
+    
+    #from .alexnet_ import alexnet as alexnet_  # revise from XNOR-Net-PyTorch
+    #from .nin_ import nin as nin_
+    #from .vgg_small_ import vgg_small
+    
+    #from .mobilenet import mobilenetv2, mobilenetv1
+    #from .densenet import densenet121
+    #from .nasnet import nasnet
+    #from .squeezenet import squeezenet
+except:
+    pass
 
 third_party = True
 try:
