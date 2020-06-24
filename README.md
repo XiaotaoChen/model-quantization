@@ -36,9 +36,9 @@ imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 50.5 | cbsa,fm_STE,wt_pass,No-ReL
 
 Selected results are listed in the following table. More data and detailed instructions can be found in [detection.md](./doc/detection.md)
 
-Dataset | Task Method | Quantization method | Model | A/W | Reported | Top-1  | Comment 
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
-COCO | Retina-Net | - | Torch-18 | 32/32 | - | - | 
+COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5432 | 
 
 ## Update History
 
