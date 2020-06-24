@@ -38,7 +38,9 @@ Selected results are listed in the following table. More data and detailed instr
 
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
-COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5432 | 
+COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5 | 
+COCO | Retina-Net | - | Torch-18 | 32/32 | - | 32.8 | FPN-BN,Head-GN
+COCO | Retina-Net | - | Torch-18 | 32/32 | - | 33.0 | FPN-BN,Head-BN
 
 ## Update History
 
