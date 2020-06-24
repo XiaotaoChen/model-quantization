@@ -70,12 +70,13 @@ Please cite if you use this method
 
 5. Xnor-Net / Xnor-Net++
 
-6. Group-Net
+6. Bi-Real Net
 
-7. Fixup Initilization / Mixup
+7. Group-Net
 
 8. TResnet
 
+9. Fixup Initilization / Mixup
 
 
 ## Contributors
