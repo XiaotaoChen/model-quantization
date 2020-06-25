@@ -9,3 +9,5 @@ Refer the `orign` and `xx_grad_type` options in [classification.md](./classifica
 Add `gamma` for extra learnable magnitude scale.
 
 Notice the `padding_after_quant` option.
+
+Also refer to [xnor-net.md](./xnor-net.md)
