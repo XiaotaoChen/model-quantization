@@ -51,7 +51,7 @@ Both training and testing employ the `train.sh` script. Directly call the `main.
 bash train.sh config.xxxx
 ```
 
-`config.xxxx` is the configuration file, which contains network architecture, quantization related and training related parameters. For more about the supported options, refer below [Training script options](./classification.md#Training-script-options) and the `config` subfolder.
+`config.xxxx` is the configuration file, which contains network architecture, quantization related and training related parameters. For more about the supported options, refer below [Training script options](./classification.md#Training-script-options) and [config.md](./config.md). Also refer the examples in `config` subfolder.
 
 Sometime the training is time-consuming. `start_on_terminate.sh` can be used to wait the process to terminate and start another round of training.
 
