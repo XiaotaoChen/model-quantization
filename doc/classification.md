@@ -128,7 +128,7 @@ Three major related options.
 
 3. sgdr (with restart)
 
-4. `--custom_lr_list` and `--custom_lr` are provided simiar withe beforemetioned weight decay to specific custom learning rate for certain paramaters.
+4. `--custom_lr_list` and `--custom_lr` are provided simiarly with beforemetioned weight decay to specific custom learning rate for certain paramaters.
 
 - mix precision training
 
