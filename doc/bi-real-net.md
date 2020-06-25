@@ -7,3 +7,5 @@ Triangle gradient instead of the STE also improves the performance.
 Refer the `orign` and `xx_grad_type` options in [classification.md](./classification.md#Training-script-options)
 
 Add `gamma` for extra learnable magnitude scale.
+
+Notice the `padding_after_quant` option.
