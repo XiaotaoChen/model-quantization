@@ -99,19 +99,80 @@ Please cite if you use this method
 
 2. Dorefa-net
 
+```BibTeX
+@article{zhou2016dorefa,
+	title={DoReFa-Net: Training low bitwidth convolutional neural networks with low bitwidth gradients},
+	author={Zhou, Shuchang and Wu, Yuxin and Ni, Zekun and Zhou, Xinyu and Wen, He and Zou, Yuheng},
+	journal={arXiv preprint arXiv:1606.06160},
+	year={2016}
+}
+```
+
 3. PACT
 
+```BibTeX
+@article{choi2018pact,
+  title={Pact: Parameterized clipping activation for quantized neural networks},
+  author={Choi, Jungwook and Wang, Zhuo and Venkataramani, Swagath and Chuang, Pierce I-Jen and Srinivasan, Vijayalakshmi and Gopalakrishnan, Kailash},
+  journal={arXiv preprint arXiv:1805.06085},
+  year={2018}
+}
+```
+
 4. LSQ / TET
+```BibTeX
+@inproceedings{esser2019learned,
+  title={Learned step size quantization},
+  author={Esser, Steven K and McKinstry, Jeffrey L and Bablani, Deepika and Appuswamy, Rathinakumar and Modha, Dharmendra S},
+  booktitle=ICLR,
+  year=2020
+}
+```
 
 5. Xnor-Net / Xnor-Net++
 
+```BibTeX
+% XNOR-net
+@inproceedings{rastegari2016xnor,
+	title={Xnor-net: Imagenet classification using binary convolutional neural networks},
+	author={Rastegari, Mohammad and Ordonez, Vicente and Redmon, Joseph and Farhadi, Ali},
+	booktitle=ECCV,
+	pages={525--542},
+	year={2016}
+}
+```
+
 6. Bi-Real Net
+
+```BibTeX
+@article{liu2018bi,
+  title={Bi-Real Net: Binarizing Deep Network Towards Real-Network Performance},
+  author={Liu, Zechun and Luo, Wenhan and Wu, Baoyuan and Yang, Xin and Liu, Wei and Cheng, Kwang-Ting},
+  journal={arXiv preprint arXiv:1811.01335},
+  year={2018}
+}
+```
 
 7. Group-Net
 
+```BibTeX
+@inproceedings{zhuang2019structured,
+  title={Structured Binary Neural Network for Accurate Image Classification and Semantic Segmentation},
+  author={Zhuang, Bohan and Shen, Chunhua and Tan, Mingkui and Liu, Lingqiao and Reid, Ian},
+  booktitle=CVPR,
+  year={2019}
+}
+```
+
 8. TResnet
 
+```BibTeX
+```
+
 9. Fixup Initilization / Mixup
+
+```BibTeX
+```
 
 
 ## Contributors
