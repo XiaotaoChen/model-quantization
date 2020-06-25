@@ -2,6 +2,8 @@
 
 ## Dashboard
 
+Here lists selected experiment result. The performance is potentially being better if effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
+
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5 | 1x
@@ -26,7 +28,6 @@ COCO | FCOS | Dorefa-Net | Torch-18 | 2/2 | - | 30.3 | 1x,FPN-BN, Quantize-All
 COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 32.6 | 1x,FPN-BN, Quantize-Backbone
 COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 26.2 | 1x,FPN-BN, Quantize-All
 
-Here lists selected experiment result. The performance is potentially being better if effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
 
 ## Install
 
