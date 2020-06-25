@@ -127,6 +127,15 @@ Please cite if you use this method
   booktitle=ICLR,
   year=2020
 }
+
+@misc{jin2019efficient,
+    title={Towards Efficient Training for Neural Network Quantization},
+    author={Qing Jin and Linjie Yang and Zhenyu Liao},
+    year={2019},
+    eprint={1912.10207},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
 ```
 
 5. Xnor-Net / Xnor-Net++
@@ -139,6 +148,15 @@ Please cite if you use this method
 	booktitle=ECCV,
 	pages={525--542},
 	year={2016}
+}
+
+@misc{bulat2019xnornet,
+    title={XNOR-Net++: Improved Binary Neural Networks},
+    author={Adrian Bulat and Georgios Tzimiropoulos},
+    year={2019},
+    eprint={1909.13863},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
 }
 ```
 
@@ -167,11 +185,36 @@ Please cite if you use this method
 8. TResnet
 
 ```BibTeX
+@misc{ridnik2020tresnet,
+    title={TResNet: High Performance GPU-Dedicated Architecture},
+    author={Tal Ridnik and Hussam Lawen and Asaf Noy and Itamar Friedman and Emanuel Ben Baruch and Gilad Sharir},
+    year={2020},
+    eprint={2003.13630},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
 ```
 
 9. Fixup Initilization / Mixup
 
 ```BibTeX
+@misc{zhang2019fixup,
+    title={Fixup Initialization: Residual Learning Without Normalization},
+    author={Hongyi Zhang and Yann N. Dauphin and Tengyu Ma},
+    year={2019},
+    eprint={1901.09321},
+    archivePrefix={arXiv},
+    primaryClass={cs.LG}
+}
+
+@misc{zhang2017mixup,
+    title={mixup: Beyond Empirical Risk Minimization},
+    author={Hongyi Zhang and Moustapha Cisse and Yann N. Dauphin and David Lopez-Paz},
+    year={2017},
+    eprint={1710.09412},
+    archivePrefix={arXiv},
+    primaryClass={cs.LG}
+}
 ```
 
 
