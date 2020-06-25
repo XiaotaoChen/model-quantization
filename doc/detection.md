@@ -2,6 +2,7 @@
 
 ## Dashboard
 
+Here lists selected experiment result. The performance is potentially being better if effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
 
 ## Install
 
