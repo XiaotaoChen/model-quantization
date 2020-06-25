@@ -22,7 +22,7 @@ cd $FASTDIR/git/model-quantization
 # python 3 is required
 pip install -r requirement.txt
 ```
-For Pytorch, the quantization project for classification task has no stricted requirement. Version above `Torch 1.0` should all work fine. However, seems the [detection](./detection.md) project requires a higher version pytorch. They current require `Torch 1.4`+.
+For Pytorch, the quantization project for classification task has no stricted requirement. Version above `Torch 1.0` should all work fine. However, seems the [detection](./detection.md) project requires a higher version pytorch. They currently require `Torch 1.4`+.
 
 3. Install Nvidia Image preprocess packages and mix precision training packages (optional)
 
@@ -51,7 +51,7 @@ Both training and testing employ the `train.sh` script. Directly call the `main.
 bash train.sh config.xxxx
 ```
 
-`config.xxxx` is the configuration file, which contains network architecture, quantization related and training related parameters. For more about the supported options, refer [config.md](./doc/config.md) and the `config` subfolder.
+`config.xxxx` is the configuration file, which contains network architecture, quantization related and training related parameters. For more about the supported options, refer below `Training script options` and the `config` subfolder.
 
 Sometime the training is time-consuming. `start_on_terminate.sh` can be used to wait the process to terminate and start another round of training.
 
