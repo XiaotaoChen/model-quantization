@@ -226,7 +226,8 @@ def main():
     args.weights_dir = os.path.join(args.weights_dir, args.model)
     utils.check_folder(args.weights_dir)
 
-    utils.setup_logging(os.path.join(args.log_dir, 'tools.txt'), resume=True)
+    if os.path.exists(args.log_dir):
+        utils.setup_logging(os.path.join(args.log_dir, 'tools.txt'), resume=True)
     #args.old = os.path.join(args.weights_dir, args.old)
     #args.new = os.path.join(args.weights_dir, args.new)
 
@@ -251,10 +252,13 @@ def main():
 
     if 'verbose' in config.keys():
         if torch.cuda.is_available():
-            disk_checkpoint = torch.load(args.pretrained)
+            checkpoint = torch.load(args.pretrained)
         else:  # force cpu mode
-            disk_checkpoint = torch.load(args.pretrained, map_location='cpu')
-        checkpoint = getattr(disk_checkpoint, 'state_dict', disk_checkpoint)
+            checkpoint = torch.load(args.pretrained, map_location='cpu')
+        if 'state_dict' in checkpoint:
+            checkpoint = checkpoint['state_dict']
+        if 'model' in checkpoint:
+            checkpoint = checkpoint['model']
         for name, value in checkpoint.items():
             if ('quant_activation' in name or 'quant_weight' in name) and name.split('.')[-1] in args.verbose_list:
                 print(name, value.shape, value.requires_grad)
@@ -263,8 +267,10 @@ def main():
                 if 'num_batches_tracked' not in name:
                     if isinstance(value, torch.Tensor):
                         print(name, value.shape, value.requires_grad)
-                    else:
+                    elif isinstance(value, int) or isinstance(value, float) or isinstance(value, str):
                         print(name, value, type(value))
+                    else:
+                        print(name, type(value))
 
     if 'load' in config.keys():
         model_name = args.model
@@ -303,7 +309,15 @@ def main():
             mapping = None
             logging.info('no valid mapping')
         else:
-            mapping = {k: mapping_to[i] for i, k in enumerate(mapping_from) }
+            mapping = dict()
+            for i, k in enumerate(mapping_from):
+                if '{' in k and '}' in k and '{' in mapping_to[i] and '}' in mapping_to[i]:
+                    item = k.split('{')
+                    for v in item[1].strip('}').split(","):
+                        v = v.strip()
+                        mapping[item[0] + v] = mapping_to[i].split('{')[0] + v
+                else:
+                    mapping[k] = mapping_to[i] 
 
         raw = 'raw' in config.keys()
         if not os.path.isfile(args.old):
