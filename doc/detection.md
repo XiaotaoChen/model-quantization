@@ -2,7 +2,6 @@
 
 ## Dashboard
 
-The quantization performance demoonstration.
 
 ## Install
 
