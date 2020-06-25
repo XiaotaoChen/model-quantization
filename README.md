@@ -64,7 +64,7 @@ Above experiments conducted in 2020 Q1, performance might be better by the newes
 
 ### Segmentation
 
-Selected results are listed in the following table. More data and detailed instructions can be found in [segmentation.md](./doc/segmentation.md)
+Selected results are listed in the following table. More data and detailed instructions can be found in [detection.md](./doc/detection.md).
 
 Dataset | Task Method | Quantization method | Model | A/W | Reported | seg AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
