@@ -73,7 +73,7 @@ COCO | BlendMask | - | Torch-18 | 32/32 | - | 29.7 | 550-R-18-aux-1x-FPN-BN,FP16
 COCO | BlendMask | - | Torch-50 | 32/32 | - | 33.9 | 550-R-50-aux-1x,FP16
 COCO | BlendMask | - | Torch-50 | 32/32 | - | 36.1 | 550-R-50-aux-3x,FP16
 
-Above experiments conducted in 2020 Q1, performance might be better by the newest code. See [segmentation.md](./doc/segmentation.md).
+Above experiments conducted in 2020 Q1, performance might be better by the newest code. See [detection.md](./doc/detection.md).
 
 ## Update History
 
