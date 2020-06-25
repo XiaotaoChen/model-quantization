@@ -62,7 +62,7 @@ bash start_on_terminate.sh [current training thread pid] [next round config.xxxx
 # Ctl+A D to detach screen to backend
 ```
 
-Besides, `tools.py` provides many useful functions for debug / verbose / model convert. Refer [tools.md](./doc/tools.md) for detailed usage.
+Besides, `tools.py` provides many useful functions for debug / verbose / model convert. Refer [tools.md](./tools.md) for detailed usage.
 
 
 ## Training script options
