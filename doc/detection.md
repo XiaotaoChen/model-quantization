@@ -2,7 +2,32 @@
 
 ## Dashboard
 
-The quantization performance demoonstration.
+Here lists selected experiment result. The performance is potentially being better if effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
+
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
+COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5 | 1x
+COCO | Retina-Net | - | Torch-18 | 32/32 | - | 32.8 | 1x, FPN-BN,Head-GN
+COCO | Retina-Net | - | Torch-18 | 32/32 | - | 33.0 | 1x, FPN-BN,Head-BN
+COCO | Retina-Net | - | Torch-34 | 32/32 | - | 35.2 | 1x
+COCO | Retina-Net | - | Torch-50 | 32/32 | - | 36.6 | 1x
+COCO | Retina-Net | - | Torch-50 | 32/32 | - | 37.8 | 1x, FPN-BN,Head-BN
+COCO | Retina-Net | - | MSRA-R50 | 32/32 | - | 36.4 | 1x
+COCO | FCOS | - | MSRA-R50 | 32/32 | - | 38.6 | 1x
+COCO | FCOS | - | Torch-50 | 32/32 | - | 38.4 | 1x
+COCO | FCOS | - | Torch-50 | 32/32 | - | 38.5 | 1x,FPN-BN
+COCO | FCOS | - | Torch-50 | 32/32 | - | 38.9 | 1x,FPN-BN,Head-BN
+COCO | FCOS | - | Torch-34 | 32/32 | - | 37.3 | 1x
+COCO | FCOS | - | Torch-18 | 32/32 | - | 32.2 | 1x
+COCO | FCOS | - | Torch-18 | 32/32 | - | 33.4 | 1x,FPN-BN
+COCO | FCOS | - | Torch-18 | 32/32 | - | 33.9 | 1x,FPN-BN, FP16
+COCO | FCOS | - | Torch-18 | 32/32 | - | 33.9 | 1x,FPN-BN,Head-BN
+COCO | FCOS | - | Torch-18 | 32/32 | - | 34.3 | 1x,FPN-SyncBN,Head-SyncBN
+COCO | FCOS | Dorefa-Net | Torch-18 | 2/2 | - | 33.4 | 1x,FPN-BN, Quantize-Backbone
+COCO | FCOS | Dorefa-Net | Torch-18 | 2/2 | - | 30.3 | 1x,FPN-BN, Quantize-All
+COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 32.6 | 1x,FPN-BN, Quantize-Backbone
+COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 26.2 | 1x,FPN-BN, Quantize-All
+
 
 ## Install
 
@@ -11,6 +36,9 @@ The quantization performance demoonstration.
 ```
 cd /workspace/git/
 git clone https://github.com/blueardour/detectron2
+# checkout the quantization branch
+cd detectron2
+git checkout quantization
 ```
 Facebook detectron2 has not support for some works such as `FCOS`. Try the [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) for more task support. Note, for the `aim-uofa/AdelaiDet`, it is also necessary to clone my custom branch (I'm considering to merge the `quantization` branch in my repo to the official repo if it is possible).
 
@@ -34,6 +62,8 @@ cd /workspace/git/detectron2
 ls -l third_party
 # the third_party/quantization should point to /workspace/git/model-quantization/models
 ```
+
+Currently I link the dependentant with symbol link. As these projects will update separatedly, submodule with version management is considered when all scripts being already.
 
 ## Dataset
 
@@ -59,7 +89,9 @@ new file:   third_party/quantization
 
 Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ). Just adapt the quantization need by modifying the configration file.
 
-Example configurations for quantization are provided in `AdelaiDet/config`
+Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config` . In `detectron2` and `aim-uofa/AdelaiDet` project, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task.
+
+Refer option introduction in [classification.md](./classification.md#Training-script-options)
 
 ## License and contribution 
 
