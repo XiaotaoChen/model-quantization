@@ -5,6 +5,9 @@
 
 - Activation Function
 
+- Initilization
+
+
 ## Speed on real platform
 
 I developed acceleration code of low bit quantization and evaluted the quantized model on real platforms.
