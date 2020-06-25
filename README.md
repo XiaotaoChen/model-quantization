@@ -182,7 +182,7 @@ Please cite if you use this method
 }
 ```
 
-8. TResnet
+8. TResnet (The work is not quantization oriented, but might insipre efficent inference)
 
 ```BibTeX
 @misc{ridnik2020tresnet,
@@ -195,7 +195,7 @@ Please cite if you use this method
 }
 ```
 
-9. Fixup Initilization / Mixup
+9. Fixup Initilization / Mixup (The work is not quantization oriented, but might insipre quantization in specific tasks)
 
 ```BibTeX
 @misc{zhang2019fixup,
