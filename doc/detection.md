@@ -9,7 +9,7 @@ Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Com
 COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5 | 1x
 
 
-***The following table is based on an old repo, Refer other table for latest result***
+***The following table is based on an old repo, Refer other tables for latest result***
 
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
