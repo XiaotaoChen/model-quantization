@@ -125,6 +125,8 @@ The performance of quantization network is approved to be possible improved with
 
 - Empoly normalization (such as GroupNorm or BatchNorm) to the tower in the Head module. (No-share BatchNorm is demonstrate the superior performance)
 
+- Quantization is employed on all convolution layer wrapper in `detectron2/layer/wrapper.py`, namely the `Conv2D` module. For layers natively call `nn.conv2d` will keep in full precision.
+
 ## License and contribution 
 
 See [README.md](../README.md)
