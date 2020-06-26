@@ -69,7 +69,7 @@ git checkout quantization
 
 The custom project [custom detectron2](https://github.com/blueardour/detectron2) and [custom AdelaiDet](https://github.com/blueardour/uofa-AdelaiDet) will upgrade regularly from origin repo.
 
-As the orignal project, `custom AdelaiDet` depends on `custom detectron2`.  Install those two projects based on the original install instructions.
+Similar with the orignal project, `custom AdelaiDet` depends on `custom detectron2`.  Install those two projects based on the original install instructions.
 
 2. install dependent package according to [classification.md](./classification.md)
 
