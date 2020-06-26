@@ -1,13 +1,22 @@
-# Quantization object detection/segmentation tasks
+# Quantization various computer vision tasks
+
+The framework is able to provide quantization support for all kinds of tasks that the Detectron2 project integrates.
 
 ## Dashboard
 
 Here lists selected experiment result. The performance is potentially being better if effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
 
+### Detection
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 
+### Instance Segmentation
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 
+### Text spotting
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 
 ***The following table is based on an old repo, Refer other tables for latest result***
 
