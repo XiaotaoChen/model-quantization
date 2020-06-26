@@ -116,7 +116,15 @@ The overall flow of the quantization on detection/ segmentation tasks are as fol
  - Finetune the detection /segmentation model with double initilization for quantization.  
  
    We provide `WEIGHT_EXTRA` option to load an extra pretrain model. When quantization, provide the `overall_full.pt` as extra initilization. Also, override some of the initilization with another pretrianed model - the formatted `backbone_low.pt`.
-  
+
+# Special Notice on the Structure of Quantizaiton
+
+The performance of quantization network is approved to be possible improved with the following tricks.
+
+- Employ normalization (such as BatchNorm) and no-linearity (such as ReLU) to the FPN module.
+
+- Empoly normalization (such as GroupNorm or BatchNorm) to the tower in the Head module. (No-share BatchNorm is demonstrate the superior performance)
+
 ## License and contribution 
 
 See [README.md](../README.md)
