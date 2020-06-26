@@ -4,6 +4,9 @@
 
 Here lists selected experiment result. The performance is potentially being better if effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
 
+
+***This table is based on an old repo, Refer next table for latest result ***
+
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5 | 1x
