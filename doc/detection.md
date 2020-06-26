@@ -4,7 +4,7 @@ The framework is able to provide quantization support for all kinds of tasks tha
 
 ## Dashboard
 
-Here lists selected experiment result. The performance is potentially being better if effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
+Here lists selected experiment result. The performance is potentially being better if more effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
 
 ### Detection
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
