@@ -84,7 +84,9 @@ Currently I link the dependentant with symbol link. As these projects will updat
 
 ## Dataset
 
-refer [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md)
+refer detectron2 datasets: [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md)
+
+and or specific datasets from [AdelaiDet](https://github.com/aim-uofa/AdelaiDet)
 
 ## What is modified in the detectron2 project
 
