@@ -322,7 +322,8 @@ def main(args=None):
         params += [custom_hyper]
 
         if 'debug' in args.keyword:
-            logging.info("{}, decay {}, lr {}".format(key, custom_hyper.get('weight_decay', "default"), custom_hyper.get('lr', "default")))
+            logging.info("{}, decay {}, lr {}, constant {}".
+                    format(key, custom_hyper.get('weight_decay', "default"), custom_hyper.get('lr', "default"), custom_hyper.get('lr_constant', "No") ))
 
     optimizer = None
     if args.optimizer == "ADAM":
