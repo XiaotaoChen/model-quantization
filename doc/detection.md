@@ -113,9 +113,9 @@ The overall flow of the quantization on detection/ segmentation tasks are as fol
   
   Refer the resulted model as `overall_full.pt`
  
- - Finetune the detection /segmentation model with double initilization for quantization.
+ - Finetune the detection /segmentation model with double initilization for quantization.  
  
- We provide `WEIGHT_EXTRA` option to load an extra pretrain model. When quantization, provide the `overall_full.pt` as extra initilization. Also, override some of the initilization with another pretrianed model - the formatted `backbone_low.pt`.
+   We provide `WEIGHT_EXTRA` option to load an extra pretrain model. When quantization, provide the `overall_full.pt` as extra initilization. Also, override some of the initilization with another pretrianed model - the formatted `backbone_low.pt`.
   
 ## License and contribution 
 
