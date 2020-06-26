@@ -11,7 +11,7 @@
 
   This strategy show little improvement in the BNN trainging for image classification task, however, behave consideration benefit for higher bit quantization. It is specially important for detection and segmentation tasks.
 
-  ***More specifically, for detection and segmentation tasks, double initilization is highly recommended.***  Double initilization inidcates when quantization the model by finetuning, first 
+  ***More specifically, for detection and segmentation tasks, double initilization is highly recommended.***  See [detection.md](./detection.md#Speical-Guide-for-quantization)
 
 
 ## Speed on real platform
