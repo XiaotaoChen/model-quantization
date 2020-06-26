@@ -1,6 +1,6 @@
 # Quantization various computer vision tasks
 
-The framework is able to provide quantization support for all kinds of tasks that the Detectron2 project integrates.
+The framework is able to provide quantization support for all kinds of tasks that the `Detectron2` and `AdelaiDet` projects integrate.
 
 ## Dashboard
 
