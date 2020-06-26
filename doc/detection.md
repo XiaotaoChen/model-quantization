@@ -6,7 +6,7 @@ Here lists selected experiment result. The performance is potentially being bett
 
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
-COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5 | 1x
+
 
 
 ***The following table is based on an old repo, Refer other tables for latest result***
