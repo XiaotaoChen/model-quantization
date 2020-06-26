@@ -87,6 +87,8 @@ d. `xnor` for xnor-net
 
 Structure control keyword:
 
+The structure of course is firstly decided by the model architecture choosing (by `--arch` or `--model`). For resnet, the official resnet model is provide with `pytorch-resnetxx` and more flexible resnet architecture can be realized by setting the `--arch` or `--model` with `resnetxx`. For the latter case, more options are needed for execution flow:
+
 a. `origin` to choose whether the bi-real skip connection is perfered.
 
 b. `bacs` or `cbas` so on indicate the layer order in a resnet block. For example, `bacs` is a kind of pre-activation structure, representing in a resnet block, first normalization layer, then activation layer, then convolution layer and last skip connection layer. For pre-activation structure, `preBN` is required for the first resnet block.  Refer [resnet.md](./resnet.md) for more information.

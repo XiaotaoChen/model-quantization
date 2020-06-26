@@ -7,6 +7,12 @@
 
 - Initilization
 
+  For quantization in all kinds of tasks, it is advised to first train the full precision model and then quantization by fintuning with the full precision model as the initilization.
+
+  This strategy shows little improvement in the BNN training for image classification task, however, poses considerable benefit for higher bit quantization. It is specially important for detection and segmentation tasks.
+
+  ***More specifically, for detection and segmentation tasks, double initilization is highly recommended.***  See [detection.md](./detection.md#Speical-Guide-for-quantization)
+
 
 ## Speed on real platform
 

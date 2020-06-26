@@ -1,9 +1,26 @@
-# Quantization object detection/segmentation tasks
+# Quantization various computer vision tasks
+
+The framework is able to provide quantization support for all kinds of tasks that the `Detectron2` and `AdelaiDet` projects integrate.
 
 ## Dashboard
 
-Here lists selected experiment result. The performance is potentially being better if effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
+Here lists selected experiment result. The performance is potentially being better if more effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
 
+### Detection
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
+
+### Instance Segmentation
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
+
+### Text spotting
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
+
+***The following table is based on an old repo, Refer other tables for latest result***
+
+### Detection
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5 | 1x
@@ -52,7 +69,7 @@ git checkout quantization
 
 The custom project [custom detectron2](https://github.com/blueardour/detectron2) and [custom AdelaiDet](https://github.com/blueardour/uofa-AdelaiDet) will upgrade regularly from origin repo.
 
-As the orignal project, `custom AdelaiDet` depends on `custom detectron2`.  Install those two projects based on the original install instructions.
+Similar with the orignal project, `custom AdelaiDet` depends on `custom detectron2`.  Install those two projects based on the original install instructions.
 
 2. install dependent package according to [classification.md](./classification.md)
 
@@ -67,11 +84,13 @@ Currently I link the dependentant with symbol link. As these projects will updat
 
 ## Dataset
 
-refer [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md)
+refer detectron2 datasets: [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md)
+
+and or specific datasets from [AdelaiDet](https://github.com/aim-uofa/AdelaiDet)
 
 ## What is modified in the detectron2 project
 
-The main modification of the project to add quantization support lay in the followsing files.  Use `vimdiff` to check the difference.
+The main modification of the project to add quantization support lays in the followsing files.  Use `vimdiff` to check the difference.
 
 ```
 modified:   detectron2/checkpoint/detection_checkpoint.py
@@ -89,9 +108,43 @@ new file:   third_party/quantization
 
 Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ). Just adapt the quantization need by modifying the configration file.
 
-Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config` . In `detectron2` and `aim-uofa/AdelaiDet` project, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task.
+Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config` . In `detectron2` and `aim-uofa/AdelaiDet` project, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task. Refer option introduction in [classification.md](./classification.md#Training-script-options)
 
-Refer option introduction in [classification.md](./classification.md#Training-script-options)
+## Speical Guide for quantization
+
+The overall flow of the quantization on detection/ segmentation tasks are as follows, some of them can be omit if pretrained model alreay exist.
+
+- Train full precision backbone network on Imagenet
+
+  Refer the resulted model as `backbone_full.pt`
+
+- Finetune the low bit model (backbone network)
+
+  Refer [classification.md](./classification.md) for fintuning with `backbone_full.pt` as initilization.
+  
+  Refer the resulted model as `backbone_low.pt`
+  
+- Export `backbone_full.pt` and `backbone_low.pt` detectron2 project format. 
+
+  To import customed pretrained model / pytorch resnet paramters to this project, refer the `renaming function` provide in `tools.py` demonstrated in [tools.md](./tools.md)
+
+- Train in full precision of the detection /segmentation task with formatted `backbone_full.pt` as initilization.
+  
+  Refer the resulted model as `overall_full.pt`
+ 
+ - Finetune the detection /segmentation model with double initilization for quantization.  
+ 
+   We provide `WEIGHT_EXTRA` option to load an extra pretrain model. When quantization, provide the `overall_full.pt` as extra initilization. Also, override some of the initilization with another pretrianed model - the formatted `backbone_low.pt`.
+
+## Special Notice on the Structure of Quantizaiton
+
+The performance of quantization network is approved to be possible improved with the following tricks.
+
+- Employ normalization (such as BatchNorm) and no-linearity (such as ReLU) to the FPN module.
+
+- Empoly normalization (such as GroupNorm or BatchNorm) to the tower in the Head module. (No-share BatchNorm is demonstrate the superior performance)
+
+- Quantization is employed on all convolution layer wrapper in `detectron2/layer/wrapper.py`, namely the `Conv2D` module. For layers natively call `nn.conv2d` will keep in full precision.
 
 ## License and contribution 
 
