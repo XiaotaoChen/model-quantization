@@ -110,6 +110,8 @@ Training and testing methods follow original projects ( [detectron2](https://git
 
 Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config` . In `detectron2` and `aim-uofa/AdelaiDet` project, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task. Refer option introduction in [classification.md](./classification.md#Training-script-options)
 
+See above [examples](./detection.md#Examples) for demonostration.
+
 ## Speical Guide for quantization
 
 The overall flow of the quantization on detection/ segmentation tasks are as follows, some of them can be omit if pretrained model alreay exist.
@@ -196,6 +198,21 @@ cd /workspace/git/AdelaiDet
 python tools/train_net.py --config configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml
 ```
 Compare the accuracy with the one in step 3.
+
+### Segmentation
+
+- Resnet18-Blendmask Quantization by LSQ into 2-bit model
+
+  Similar with the detection flow, but with different configuration file
+  ```
+  cd /workspace/git/AdelaiDet
+  # add other options, such as the GPU number as needed
+  # full precision pretrain
+  python tools/train_net.py --config configs/BlendMask/550_R_18_1x-full_syncbn.yaml
+  # finetune
+  python tools/train_net.py --config configs/BlendMask/550_R_18_1x-full_syncbn-lsq-2bit.yaml
+  ```
+
 
 ## License and contribution 
 
