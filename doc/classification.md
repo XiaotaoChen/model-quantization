@@ -43,6 +43,10 @@ mkdir -p /data/imagenet
 # cifar dataset can be downloaded on the fly
 ```
 
+## Pretrained model
+
+We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
+
 ## Quick Start
 
 Both training and testing employ the `train.sh` script. Directly call the `main.py` is also possible.
