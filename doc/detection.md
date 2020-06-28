@@ -159,7 +159,7 @@ The performance of quantization network is approved to be possible improved with
    
    2-bit LSQ model: `weights/pytorch-resnet18/lsq_best_model_a2w2.pth`
    
-2. import model from classification project to detection project
+2. import model from classification project to detection project.
 
 ```
 cd /workspace/git/model-quantization
@@ -172,6 +172,8 @@ python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weigh
 
 3. train full precision FCOS-R18-1x
 
+Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml`
+
 ```
 cd /workspace/git/AdelaiDet
 # add other options, such as the GPU number as needed
@@ -180,6 +182,8 @@ python tools/train_net.py --config-file configs/FCOS-Detection/R_18_1x-Full-Sync
 This step would obtain the pretrained model in `output/fcos/R_18_1x-Full-SyncBN/model_final.pth`
 
 4. fintune to get quantization model
+
+Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml`
 
 ```
 cd /workspace/git/AdelaiDet
