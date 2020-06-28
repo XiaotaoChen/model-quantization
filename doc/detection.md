@@ -146,6 +146,48 @@ The performance of quantization network is approved to be possible improved with
 
 - Quantization is employed on all convolution layer wrapper in `detectron2/layer/wrapper.py`, namely the `Conv2D` module. For layers natively call `nn.conv2d` will keep in full precision.
 
+## Examples
+
+### Detection
+
+- Resnet18-FCOS Quantization by LSQ into 2-bit model
+
+1. imagenet full precision and 2-bit LSQ quantization model draw from classification project (download pretrained model from [classification.md](./classification.md))
+   Prepare your own model if other configuraton is required
+   
+   full precision model: `weights/pytorch-resnet18/resnet18_w32a32.pth`
+   
+   2-bit LSQ model: `weights/pytorch-resnet18/lsq_best_model_a2w2.pth`
+   
+2. import model from classification project to detection project
+
+```
+cd /workspace/git/model-quantization
+# prepare the weights/det-resnet18/mf.txt and weights/det-resnet18/mt.txt
+# the two files are created manually with the parameter renaming
+python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/resnet18_w32a32.pth --new weights/det-resnet18/resnet18_w32a32.pth
+
+python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/lsq_best_model_a2w2.pth --new weights/det-resnet18/lsq_best_model_a2w2.pth
+```
+
+3. train full precision FCOS-R18-1x
+
+```
+cd /workspace/git/AdelaiDet
+# add other options, such as the GPU number as needed
+python tools/train_net.py --config-file configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml
+```
+This step would obtain the pretrained model in `output/fcos/R_18_1x-Full-SyncBN/model_final.pth`
+
+4. fintune to get quantization model
+
+```
+cd /workspace/git/AdelaiDet
+# add other options, such as the GPU number as needed
+python tools/train_net.py --config configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml
+```
+Compare the accuracy with the one in step 3.
+
 ## License and contribution 
 
 See [README.md](../README.md)
