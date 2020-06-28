@@ -186,6 +186,9 @@ cd /workspace/git/AdelaiDet
 # add other options, such as the GPU number as needed
 python tools/train_net.py --config-file configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml
 ```
+
+***Check the parameters on the backbone are re-loaded correctly****
+
 This step would obtain the pretrained model in `output/fcos/R_18_1x-Full-SyncBN/model_final.pth`
 
 4. fintune to get quantization model
@@ -197,6 +200,9 @@ cd /workspace/git/AdelaiDet
 # add other options, such as the GPU number as needed
 python tools/train_net.py --config configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml
 ```
+
+***Check the parameters in double initialization are re-loaded correctly****
+
 Compare the accuracy with the one in step 3.
 
 ### Segmentation
