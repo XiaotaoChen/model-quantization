@@ -146,6 +146,11 @@ The performance of quantization network is approved to be possible improved with
 
 - Quantization is employed on all convolution layer wrapper in `detectron2/layer/wrapper.py`, namely the `Conv2D` module. For layers natively call `nn.conv2d` will keep in full precision.
 
+
+## Pretrained  model
+
+We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
+
 ## Examples
 
 ### Detection
