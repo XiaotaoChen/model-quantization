@@ -1,0 +1,87 @@
+backbone.bottom_up.stem.conv1.weight
+backbone.bottom_up.stem.conv1.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+
+backbone.bottom_up.res2.0.conv1.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res2.0.conv1.quant_activation.clip_val
+backbone.bottom_up.res2.0.conv1.quant_weight.clip_val
+backbone.bottom_up.res2.0.conv1.weight
+
+backbone.bottom_up.res2.0.conv2.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res2.0.conv2.quant_activation.clip_val
+backbone.bottom_up.res2.0.conv2.quant_weight.clip_val
+backbone.bottom_up.res2.0.conv2.weight
+
+backbone.bottom_up.res2.1.conv1.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res2.1.conv1.quant_activation.clip_val
+backbone.bottom_up.res2.1.conv1.quant_weight.clip_val
+backbone.bottom_up.res2.1.conv1.weight
+backbone.bottom_up.res2.1.conv2.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res2.1.conv2.quant_activation.clip_val
+backbone.bottom_up.res2.1.conv2.quant_weight.clip_val
+backbone.bottom_up.res2.1.conv2.weight
+
+backbone.bottom_up.res3.0.conv1.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res3.0.conv1.quant_activation.clip_val
+backbone.bottom_up.res3.0.conv1.quant_weight.clip_val
+backbone.bottom_up.res3.0.conv1.weight
+backbone.bottom_up.res3.0.conv2.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res3.0.conv2.quant_activation.clip_val
+backbone.bottom_up.res3.0.conv2.quant_weight.clip_val
+backbone.bottom_up.res3.0.conv2.weight
+backbone.bottom_up.res3.0.shortcut.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res3.0.shortcut.quant_activation.clip_val
+backbone.bottom_up.res3.0.shortcut.quant_weight.clip_val
+backbone.bottom_up.res3.0.shortcut.weight
+
+backbone.bottom_up.res3.1.conv1.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res3.1.conv1.quant_activation.clip_val
+backbone.bottom_up.res3.1.conv1.quant_weight.clip_val
+backbone.bottom_up.res3.1.conv1.weight
+backbone.bottom_up.res3.1.conv2.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res3.1.conv2.quant_activation.clip_val
+backbone.bottom_up.res3.1.conv2.quant_weight.clip_val
+backbone.bottom_up.res3.1.conv2.weight
+
+backbone.bottom_up.res4.0.conv1.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res4.0.conv1.quant_activation.clip_val
+backbone.bottom_up.res4.0.conv1.quant_weight.clip_val
+backbone.bottom_up.res4.0.conv1.weight
+backbone.bottom_up.res4.0.conv2.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res4.0.conv2.quant_activation.clip_val
+backbone.bottom_up.res4.0.conv2.quant_weight.clip_val
+backbone.bottom_up.res4.0.conv2.weight
+backbone.bottom_up.res4.0.shortcut.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res4.0.shortcut.quant_activation.clip_val
+backbone.bottom_up.res4.0.shortcut.quant_weight.clip_val
+backbone.bottom_up.res4.0.shortcut.weight
+
+backbone.bottom_up.res4.1.conv1.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res4.1.conv1.quant_activation.clip_val
+backbone.bottom_up.res4.1.conv1.quant_weight.clip_val
+backbone.bottom_up.res4.1.conv1.weight
+backbone.bottom_up.res4.1.conv2.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res4.1.conv2.quant_activation.clip_val
+backbone.bottom_up.res4.1.conv2.quant_weight.clip_val
+backbone.bottom_up.res4.1.conv2.weight
+
+backbone.bottom_up.res5.0.conv1.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res5.0.conv1.quant_activation.clip_val
+backbone.bottom_up.res5.0.conv1.quant_weight.clip_val
+backbone.bottom_up.res5.0.conv1.weight
+backbone.bottom_up.res5.0.conv2.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res5.0.conv2.quant_activation.clip_val
+backbone.bottom_up.res5.0.conv2.quant_weight.clip_val
+backbone.bottom_up.res5.0.conv2.weight
+backbone.bottom_up.res5.0.shortcut.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res5.0.shortcut.quant_activation.clip_val
+backbone.bottom_up.res5.0.shortcut.quant_weight.clip_val
+backbone.bottom_up.res5.0.shortcut.weight
+
+backbone.bottom_up.res5.1.conv1.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res5.1.conv1.quant_activation.clip_val
+backbone.bottom_up.res5.1.conv1.quant_weight.clip_val
+backbone.bottom_up.res5.1.conv1.weight
+backbone.bottom_up.res5.1.conv2.norm.{bias, num_batches_tracked, running_mean, running_var, weight}
+backbone.bottom_up.res5.1.conv2.quant_activation.clip_val
+backbone.bottom_up.res5.1.conv2.quant_weight.clip_val
+backbone.bottom_up.res5.1.conv2.weight
