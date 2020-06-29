@@ -48,7 +48,9 @@ COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 26.2 | 1x,FPN-BN, Quantize-All
 
 ## Install
 
-1. download the [custom detectron2](https://github.com/blueardour/detectron2) project. See what is modified below.
+1. install dependent package according to [classification.md](./classification.md)
+
+2. download the [custom detectron2](https://github.com/blueardour/detectron2) project. See what is modified below.
 
 ```
 cd /workspace/git/
@@ -77,8 +79,6 @@ python setup.py build develop
 The custom project [custom detectron2](https://github.com/blueardour/detectron2) and [custom AdelaiDet](https://github.com/blueardour/uofa-AdelaiDet) will upgrade regularly from origin repo.
 
 Similar with the orignal project, `custom AdelaiDet` depends on `custom detectron2`.  Install those two projects based on the original install instructions.
-
-2. install dependent package according to [classification.md](./classification.md)
 
 3. make sure the symbol link is correct.
 ```
