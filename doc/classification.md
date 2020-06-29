@@ -43,6 +43,10 @@ mkdir -p /data/imagenet
 # cifar dataset can be downloaded on the fly
 ```
 
+## Pretrained model
+
+We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
+
 ## Quick Start
 
 Both training and testing employ the `train.sh` script. Directly call the `main.py` is also possible.
@@ -63,6 +67,12 @@ bash start_on_terminate.sh [current training thread pid] [next round config.xxxx
 ```
 
 Besides, `tools.py` provides many useful functions for debug / verbose / model convert. Refer [tools.md](./tools.md) for detailed usage.
+
+***ALl complains about the following two warnings do not matter the project.***
+```
+Failing to import plugin, ModuleNotFoundError("No module named 'plugin'")
+loading third party model failed cannot import name 'model_zoo' from 'third_party' (unknown location)
+```
 
 
 ## Training script options
