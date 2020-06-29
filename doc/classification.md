@@ -22,7 +22,7 @@ cd $FASTDIR/git/model-quantization
 # python 3 is required
 pip install -r requirement.txt
 ```
-For Pytorch, the quantization project for classification task has no stricted requirement. Version above `Torch 1.0` should all work fine. However, seems the [detection](./detection.md) project requires a higher version pytorch. They currently require `Torch 1.4`+.
+For the version of Pytorch, the quantization project for classification task has no stricted requirement. Version above `Torch 1.0` should all work fine. However, seems the [detection](./detection.md) project requires a higher version pytorch. They currently require `Torch 1.4`+.
 
 3. Install Nvidia Image preprocess packages and mix precision training packages (optional)
 
