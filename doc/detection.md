@@ -81,12 +81,6 @@ git checkout quantization
 # install
 python setup.py build develop
 
-### other install options
-#python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
-## (add --user if you don't have permission)
-#
-## Or if you are on macOS
-#CC=clang CXX=clang++ python -m pip install ......
 ```
 
 
