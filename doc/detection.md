@@ -158,7 +158,7 @@ The overall flow of the quantization on detection/ segmentation tasks are as fol
  
    We provide `WEIGHT_EXTRA` option to load an extra pretrain model. When quantization, provide the `overall_full.pt` as extra initilization. Also, override some of the initilization with another pretrianed model - the formatted `backbone_low.pt`.
 
-## Special Notice on the Structure of Quantizaiton
+## Special Notice on the Model Structure Revision for Quantizaiton
 
 The performance of quantization network is approved to be possible improved with the following tricks.
 
@@ -171,7 +171,7 @@ The performance of quantization network is approved to be possible improved with
 - We provide an option `quantization.scope` to flexible choose the layers/blocks which are scheduled to be quantized.
 
 
-## Pretrained  model
+## Pretrained model
 
 We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
 
