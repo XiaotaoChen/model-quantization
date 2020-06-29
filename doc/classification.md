@@ -10,10 +10,11 @@ git clone https://github.com/blueardour/model-quantization
 git clone https://github.com/blueardour/pytorch-utils
 cd model-quantization
 ln -s ../pytorch-utils utils
-# log and weight folders (optional, if symbol link not created, the script will create these folders under the project path)
-mkdir -p /data/pretrained/pytorch/model-quantization/{exp,weights}
-ln -s /data/pretrained/pytorch/model-quantization/exp .
-ln -s /data/pretrained/pytorch/model-quantization/weights .
+
+# create separate log and weight folders (optional, if symbol link not created, the script will create these folders under the project path)
+#mkdir -p /data/pretrained/pytorch/model-quantization/{exp,weights}
+#ln -s /data/pretrained/pytorch/model-quantization/exp .
+#ln -s /data/pretrained/pytorch/model-quantization/weights .
 ```
 
 2. install prerequisite packages
