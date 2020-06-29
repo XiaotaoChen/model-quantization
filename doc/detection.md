@@ -61,6 +61,13 @@ git checkout quantization
 
 # install 
 pip install -e .
+
+### other install options
+#python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
+## (add --user if you don't have permission)
+#
+## Or if you are on macOS
+#CC=clang CXX=clang++ python -m pip install ......
 ```
 Facebook detectron2 has not support for some works such as `FCOS` and `Blendmask`. Try the [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) for more task support. Note, for the `aim-uofa/AdelaiDet`, it is also necessary to clone my custom branch (I'm considering to merge the `quantization` branch in my repo to the official repo if it is possible).
 
