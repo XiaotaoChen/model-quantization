@@ -1,5 +1,5 @@
 
-# EasyQuantization: A flexible and unified framework to make the model quantization easier.
+# QTool: A low bit quantization toolbox for computer vision neural networks
 
 This project collects model quantization algorithms in the publication.
 
