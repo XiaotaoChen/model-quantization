@@ -48,7 +48,9 @@ COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 26.2 | 1x,FPN-BN, Quantize-All
 
 ## Install
 
-1. download the [custom detectron2](https://github.com/blueardour/detectron2) project. See what is modified below.
+1. install dependent package according to [classification.md](./classification.md)
+
+2. download the [custom detectron2](https://github.com/blueardour/detectron2) project. See what is modified below.
 
 ```
 cd /workspace/git/
@@ -56,6 +58,19 @@ git clone https://github.com/blueardour/detectron2
 # checkout the quantization branch
 cd detectron2
 git checkout quantization
+
+# install 
+pip install -e .
+
+### other install options
+## (add --user if you don't have permission)
+#
+## Or if you are on macOS
+#CC=clang CXX=clang++ python -m pip install ......
+
+
+# link classification pretrained weight
+ln -s ../model-quanitzation/weights .
 ```
 Facebook detectron2 has not support for some works such as `FCOS` and `Blendmask`. Try the [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) for more task support. Note, for the `aim-uofa/AdelaiDet`, it is also necessary to clone my custom branch (I'm considering to merge the `quantization` branch in my repo to the official repo if it is possible).
 
@@ -65,13 +80,19 @@ git clone https://github.com/blueardour/uofa-AdelaiDet AdelaiDet
 # notice to change to the quantization branch
 cd AdelaiDet
 git checkout quantization
+
+# install
+python setup.py build develop
+
+# link classification pretrained weight
+ln -s ../model-quanitzation/weights .
 ```
+
+
 
 The custom project [custom detectron2](https://github.com/blueardour/detectron2) and [custom AdelaiDet](https://github.com/blueardour/uofa-AdelaiDet) will upgrade regularly from origin repo.
 
 Similar with the orignal project, `custom AdelaiDet` depends on `custom detectron2`.  Install those two projects based on the original install instructions.
-
-2. install dependent package according to [classification.md](./classification.md)
 
 3. make sure the symbol link is correct.
 ```
@@ -104,13 +125,18 @@ new file:   third_party/convert_to_quantization.py
 new file:   third_party/quantization
 ```
 
+Highly recommend to check the `detectron2/engine/defaults.py` to see which options are added for the low bit quantization.
+```
+git difftool quantization master detectron2/config/defaults.py
+```
+
 ## Training and Test
 
-Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ). Just adapt the quantization need by modifying the configration file.
+Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ). Just adapt the quantization to your need by modifying the configration file.
 
 Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config` . In `detectron2` and `aim-uofa/AdelaiDet` project, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task. Refer option introduction in [classification.md](./classification.md#Training-script-options)
 
-See above [examples](./detection.md#Examples) for demonostration.
+See below [examples](./detection.md#Examples) for demonstration.
 
 ## Speical Guide for quantization
 
@@ -126,19 +152,19 @@ The overall flow of the quantization on detection/ segmentation tasks are as fol
   
   Refer the resulted model as `backbone_low.pt`
   
-- Export `backbone_full.pt` and `backbone_low.pt` detectron2 project format. 
+- Import `backbone_full.pt` and `backbone_low.pt` into detectron2 project format. 
 
-  To import customed pretrained model / pytorch resnet paramters to this project, refer the `renaming function` provide in `tools.py` demonstrated in [tools.md](./tools.md)
+  To import the pretrained models in correct format, refer the `renaming function` provide in `tools.py` demonstrated in [tools.md](./tools.md) and also the [examples](./detection.md#Examples).
 
-- Train in full precision of the detection /segmentation task with formatted `backbone_full.pt` as initilization.
+- Train in full precision of the detection/segmentation tasks with formatted `backbone_full.pt` as initilization.
   
   Refer the resulted model as `overall_full.pt`
  
- - Finetune the detection /segmentation model with double initilization for quantization.  
+ - Finetune low bit detection/segmentation model with double initilization.  
  
-   We provide `WEIGHT_EXTRA` option to load an extra pretrain model. When quantization, provide the `overall_full.pt` as extra initilization. Also, override some of the initilization with another pretrianed model - the formatted `backbone_low.pt`.
+   We provide `WEIGHT_EXTRA` option to load an extra pretrain model. When quantization, provide the `overall_full.pt` as extra initilization. Override some of the initilization (the backbone in most cases) with corresponding pretrianed model - the formatted `backbone_low.pt`.
 
-## Special Notice on the Structure of Quantizaiton
+## Special Notice on the Model Structure Revision for Quantizaiton
 
 The performance of quantization network is approved to be possible improved with the following tricks.
 
@@ -146,10 +172,12 @@ The performance of quantization network is approved to be possible improved with
 
 - Empoly normalization (such as GroupNorm or BatchNorm) to the tower in the Head module. (No-share BatchNorm is demonstrate the superior performance)
 
-- Quantization is employed on all convolution layer wrapper in `detectron2/layer/wrapper.py`, namely the `Conv2D` module. For layers natively call `nn.conv2d` will keep in full precision.
+- Quantization is employed on all convolution layer wrappered in `detectron2/layer/wrapper.py`, namely the `Conv2D` module. For layers natively call `nn.conv2d` will keep in full precision.
+
+- We provide an option `quantization.scope` to flexible choose the layers/blocks which are scheduled to be quantized. By default, the first and last layers of the model are not quantized.
 
 
-## Pretrained  model
+## Pretrained model
 
 We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
 
@@ -176,6 +204,8 @@ python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weigh
 
 python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/lsq_best_model_a2w2.pth --new weights/det-resnet18/lsq_best_model_a2w2.pth
 ```
+
+The `mf.txt` and `mt.txt` files for the Resnet18 are uploaded in the `model-quantization` project as an example.
 
 3. train full precision FCOS-R18-1x
 
