@@ -130,7 +130,7 @@ Training and testing methods follow original projects ( [detectron2](https://git
 
 Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config` . In `detectron2` and `aim-uofa/AdelaiDet` project, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task. Refer option introduction in [classification.md](./classification.md#Training-script-options)
 
-See above [examples](./detection.md#Examples) for demonstration.
+See below [examples](./detection.md#Examples) for demonstration.
 
 ## Speical Guide for quantization
 
