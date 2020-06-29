@@ -111,6 +111,8 @@ new file:   third_party/convert_to_quantization.py
 new file:   third_party/quantization
 ```
 
+Specially check the `detectron2/engine/defaults.py` to see which options are added for the low bit quantization.
+
 ## Training and Test
 
 Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ). Just adapt the quantization need by modifying the configration file.
