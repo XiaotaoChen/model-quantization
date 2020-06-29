@@ -10,6 +10,7 @@ else
 fi
 
 
+script=main.py
 train_batch=20
 val_batch=20
 dataset='imagenet'
@@ -39,7 +40,7 @@ fi
 
 nvidia-smi
 
-python main.py --dataset $dataset --root $root \
+python $script --dataset $dataset --root $root \
   --model $model --base $base \
   --epochs $epochs -b $train_batch -v $val_batch \
   --case $case --keyword $keyword \

@@ -37,7 +37,7 @@ try:
 except (ImportError, RuntimeError, FileNotFoundError) as e:
     plugin_enable=False
 
-def get_parameter():
+def get_parser():
     # default parameters for various projects
     parser = utils.get_parser()
 
@@ -99,6 +99,10 @@ def get_parameter():
     parser.add_argument('--custom_lr_list', default='', type=str)
     parser.add_argument('--custom_lr', default=1e-5, type=float)
 
+    return parser
+
+def get_parameter():
+    parser = get_parser()
     args = parser.parse_args()
 
     if isinstance(args.lr_custom_step, str):
