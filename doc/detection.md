@@ -110,6 +110,8 @@ Training and testing methods follow original projects ( [detectron2](https://git
 
 Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config` . In `detectron2` and `aim-uofa/AdelaiDet` project, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task. Refer option introduction in [classification.md](./classification.md#Training-script-options)
 
+See above [examples](./detection.md#Examples) for demonostration.
+
 ## Speical Guide for quantization
 
 The overall flow of the quantization on detection/ segmentation tasks are as follows, some of them can be omit if pretrained model alreay exist.
@@ -145,6 +147,78 @@ The performance of quantization network is approved to be possible improved with
 - Empoly normalization (such as GroupNorm or BatchNorm) to the tower in the Head module. (No-share BatchNorm is demonstrate the superior performance)
 
 - Quantization is employed on all convolution layer wrapper in `detectron2/layer/wrapper.py`, namely the `Conv2D` module. For layers natively call `nn.conv2d` will keep in full precision.
+
+
+## Pretrained  model
+
+We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
+
+## Examples
+
+### Detection
+
+- Resnet18-FCOS Quantization by LSQ into 2-bit model
+
+1. imagenet full precision and 2-bit LSQ quantization model draw from classification project (download pretrained model from [classification.md](./classification.md))
+   Prepare your own model if other configuraton is required
+   
+   full precision model: `weights/pytorch-resnet18/resnet18_w32a32.pth`
+   
+   2-bit LSQ model: `weights/pytorch-resnet18/lsq_best_model_a2w2.pth`
+   
+2. import model from classification project to detection project.
+
+```
+cd /workspace/git/model-quantization
+# prepare the weights/det-resnet18/mf.txt and weights/det-resnet18/mt.txt
+# the two files are created manually with the parameter renaming
+python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/resnet18_w32a32.pth --new weights/det-resnet18/resnet18_w32a32.pth
+
+python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/lsq_best_model_a2w2.pth --new weights/det-resnet18/lsq_best_model_a2w2.pth
+```
+
+3. train full precision FCOS-R18-1x
+
+Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml`
+
+```
+cd /workspace/git/AdelaiDet
+# add other options, such as the GPU number as needed
+python tools/train_net.py --config-file configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml
+```
+
+***Check the parameters on the backbone are re-loaded correctly****
+
+This step would obtain the pretrained model in `output/fcos/R_18_1x-Full-SyncBN/model_final.pth`
+
+4. fintune to get quantization model
+
+Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml`
+
+```
+cd /workspace/git/AdelaiDet
+# add other options, such as the GPU number as needed
+python tools/train_net.py --config configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml
+```
+
+***Check the parameters in double initialization are re-loaded correctly****
+
+Compare the accuracy with the one in step 3.
+
+### Segmentation
+
+- Resnet18-Blendmask Quantization by LSQ into 2-bit model
+
+  Similar with the detection flow, but with different configuration file
+  ```
+  cd /workspace/git/AdelaiDet
+  # add other options, such as the GPU number as needed
+  # full precision pretrain
+  python tools/train_net.py --config configs/BlendMask/550_R_18_1x-full_syncbn.yaml
+  # finetune
+  python tools/train_net.py --config configs/BlendMask/550_R_18_1x-full_syncbn-lsq-2bit.yaml
+  ```
+
 
 ## License and contribution 
 
