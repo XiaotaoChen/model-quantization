@@ -119,7 +119,7 @@ new file:   third_party/convert_to_quantization.py
 new file:   third_party/quantization
 ```
 
-Specially check the `detectron2/engine/defaults.py` to see which options are added for the low bit quantization. For example,
+Highly recommend to check the `detectron2/engine/defaults.py` to see which options are added for the low bit quantization.
 ```
 git difftool quantization master detectron2/config/defaults.py
 ```
