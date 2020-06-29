@@ -146,17 +146,17 @@ The overall flow of the quantization on detection/ segmentation tasks are as fol
   
   Refer the resulted model as `backbone_low.pt`
   
-- Export `backbone_full.pt` and `backbone_low.pt` detectron2 project format. 
+- Import `backbone_full.pt` and `backbone_low.pt` into detectron2 project format. 
 
-  To import customed pretrained model / pytorch resnet paramters to this project, refer the `renaming function` provide in `tools.py` demonstrated in [tools.md](./tools.md)
+  To import the pretrained models in correct format, refer the `renaming function` provide in `tools.py` demonstrated in [tools.md](./tools.md) and also the [examples](./detection.md#Examples).
 
-- Train in full precision of the detection /segmentation task with formatted `backbone_full.pt` as initilization.
+- Train in full precision of the detection/segmentation tasks with formatted `backbone_full.pt` as initilization.
   
   Refer the resulted model as `overall_full.pt`
  
- - Finetune the detection /segmentation model with double initilization for quantization.  
+ - Finetune low bit detection/segmentation model with double initilization.  
  
-   We provide `WEIGHT_EXTRA` option to load an extra pretrain model. When quantization, provide the `overall_full.pt` as extra initilization. Also, override some of the initilization with another pretrianed model - the formatted `backbone_low.pt`.
+   We provide `WEIGHT_EXTRA` option to load an extra pretrain model. When quantization, provide the `overall_full.pt` as extra initilization. Override some of the initilization (the backbone in most cases) with corresponding pretrianed model - the formatted `backbone_low.pt`.
 
 ## Special Notice on the Model Structure Revision for Quantizaiton
 
