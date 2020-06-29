@@ -199,6 +199,8 @@ python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weigh
 python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/lsq_best_model_a2w2.pth --new weights/det-resnet18/lsq_best_model_a2w2.pth
 ```
 
+The `mf.txt` and `mt.txt` files for the Resnet18 are uploaded in the `model-quantization` project as an example.
+
 3. train full precision FCOS-R18-1x
 
 Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml`
