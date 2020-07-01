@@ -5,7 +5,7 @@ This project provides aboundant choices of quantization strategies (such as the 
 
 ## Dashboard
 
-The dashboard collects the perfromance of quantization algoirthms for different architectures. Computer vision tasks such as image classification, detetion, segmentation are inlcuded. Note that detection and segmentation might employ a seperate repo with this one as a submodule.
+The dashboard collects the perfromance of quantization algoirthms for different architectures. Computer vision tasks such as image classification, detetion, segmentation are inlcuded. Note that detection and segmentation might employ a separate repo with this one as a submodule.
 
 ### Classification
 
