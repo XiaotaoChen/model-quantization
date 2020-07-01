@@ -77,9 +77,14 @@ COCO | BlendMask | - | Torch-50 | 32/32 | - | 36.1 | 550-R-50-aux-3x,FP16
 
 Above experiments conducted in 2020 Q1, performance might be better by the newest code. See [detection.md](./doc/detection.md).
 
+### Text parsing
+
+in progress
+
 ## Update History
 
 - Super Resolution (preparing)
+- Text parsing (preparing)
 - Instance Segmentation (preparing)
 - Object Detection (preparing)
 - 2020.06.23 Add classification quantization
