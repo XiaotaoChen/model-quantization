@@ -12,6 +12,8 @@
   This strategy shows little improvement in the BNN training for image classification task, however, poses considerable benefit for higher bit quantization. It is specially important for detection and segmentation tasks.
 
   ***More specifically, for detection and segmentation tasks, double initilization is highly recommended.***  See [detection.md](./detection.md#Speical-Guide-for-quantization)
+  
+  Another trick about the Initilization is the `Initilization according statistic on small amount of data`. It means, before the finetuning procedure, we first take samples in the dataset and initilize the custom varibales (for example, the `clip_val` in Dorefa-net based methods or the `basis` in LQ-net) based these samples. We provide the support by add the `stable`, `warmup` and `custom-update` options.
 
 
 ## Speed on real platform
