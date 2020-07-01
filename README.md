@@ -11,9 +11,9 @@ The dashboard collects the perfromance of quantization algoirthms for different 
 
 Refer [classification.md](./doc/classification.md) for detailed instructions.
 
-Both the Top-1(\%) from original paper and the reproduction are listed. Corresponding training and testing configruations can be found in the `config` folder. Limited among of experiement results are listed. Users are encouraged to try different configurations to implement their own targets.
+Both the Top-1(\%) from original paper and the reproduction are listed. Corresponding training and testing configruations can be found in the `config` folder. Selected experiement results are listed. Users are encouraged to try different configurations to implement their own targets.
 
-Note that the performance among different methods is obtained based on different training hyper-parameters. The accuracy in the table will not be the evidence of superior of one algorithms over another. Training hyper-parameters and tricks such as `weight normalization` play a considerable role on improving the performance. See my experience summary of training quantization networks in [experience.md](./doc/experience.md).
+Note that the performance among different methods is obtained based on different training hyper-parameters. The accuracy in the table will not be the evidence of superior of one algorithm over another. Training hyper-parameters and tricks (such as `weight normalization`) play a considerable role on improving the performance. See my experience summary of training quantization networks in [experience.md](./doc/experience.md).
 
 Dataset | Method | Model | A/W | Reported | Top-1  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:
