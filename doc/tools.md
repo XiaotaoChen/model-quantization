@@ -1,7 +1,7 @@
 
 # A independent script for debug / model converting
 
-Selected functions which is commonly used.
+This page presents selected functions which is commonly used.
 
 ## Model import and paramter renaming.
 
@@ -15,7 +15,7 @@ Following the commands for looking up items and converting (Remove the brackets 
 # cd weights/pytorch-resnet50/
 # download pretrained model by
 # wget https://download.pytorch.org/models/resnet50-19c8e357.pth
-python tools.py --keyword verbose --verbose_list all --pretrained [weights/pytorch-resnet50/resnet50-19c8e357.pth]
+python tools.py --keyword verbose --verbose_list all --old [weights/pytorch-resnet50/resnet50-19c8e357.pth]
 ```
 
 2. renaming parameter
@@ -25,4 +25,4 @@ Export pytorch official resnet model to Detectron2 format as initilization model
 python tools.py --keyword update[,raw]  --mf [weights/det-resnet50/mapping_from.txt] --mt [weights/det-resnet50/mapping_to.txt] --old [weights/pytorch-resnet50/resnet50-19c8e357.pth] --new [weights/det-resnet50/official-r50.pth]
 ```
 
-Add `raw` in the keyword to generate the model file with/without `state_dict` segment.
+Add `raw` in the keyword to generate the model file with/without `state_dict` key.

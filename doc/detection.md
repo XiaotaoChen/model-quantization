@@ -1,26 +1,15 @@
 # Quantization various computer vision tasks
 
-The framework is able to provide quantization support for all kinds of tasks that the `Detectron2` and `AdelaiDet` projects integrate.
+The framework is able to provide quantization support for all kinds of tasks that the `Detectron2` and `AdelaiDet` projects integrate. Mix precision training is also available as a benefit.
 
 ## Dashboard
 
 Here lists selected experiment result. The performance is potentially being better if more effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
 
 ### Detection
-Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
---- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 
-### Instance Segmentation
-Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
---- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
+As the project is keeping upgrade, the pretrained model provided in below [link](./detection.md#Pretrained-model) might show better performance compared with the one in table.
 
-### Text spotting
-Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
---- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
-
-***The following table is based on an old repo, Refer other tables for latest result***
-
-### Detection
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5 | 1x
@@ -40,15 +29,27 @@ COCO | FCOS | - | Torch-18 | 32/32 | - | 33.4 | 1x,FPN-BN
 COCO | FCOS | - | Torch-18 | 32/32 | - | 33.9 | 1x,FPN-BN, FP16
 COCO | FCOS | - | Torch-18 | 32/32 | - | 33.9 | 1x,FPN-BN,Head-BN
 COCO | FCOS | - | Torch-18 | 32/32 | - | 34.3 | 1x,FPN-SyncBN,Head-SyncBN
-COCO | FCOS | Dorefa-Net | Torch-18 | 2/2 | - | 33.4 | 1x,FPN-BN, Quantize-Backbone
-COCO | FCOS | Dorefa-Net | Torch-18 | 2/2 | - | 30.3 | 1x,FPN-BN, Quantize-All
+COCO | FCOS | LSQ | Torch-18 | 2/2 | - | 33.4 | 1x,FPN-BN, Quantize-Backbone
+COCO | FCOS | LSQ | Torch-18 | 2/2 | - | 30.3 | 1x,FPN-BN, Quantize-All
 COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 32.6 | 1x,FPN-BN, Quantize-Backbone
 COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 26.2 | 1x,FPN-BN, Quantize-All
+
+In the comment, `FPN-BN` indicates adding BN and RELU in the FPN; `FP16` implies the case is trained in FP16 (half float) mode; `Head-BN` represents the prospoal header employes non shared BatchNorm.
+
+### Instance Segmentation
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
+
+### Text spotting
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 
 
 ## Install
 
 1. install dependent package according to [classification.md](./classification.md)
+
+***Note a known issue for the FP16 training. Training with FP16 and SyncBN on multi-GPU seems to cause NAN loss for current project. Use normal BN instead***
 
 2. download the [custom detectron2](https://github.com/blueardour/detectron2) project. See what is modified below.
 
@@ -130,17 +131,21 @@ Highly recommend to check the `detectron2/engine/defaults.py` to see which optio
 git difftool quantization master detectron2/config/defaults.py
 ```
 
+## Pretrained model
+
+We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
+
 ## Training and Test
 
-Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ). Just adapt the quantization to your need by modifying the configration file.
+  Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ). Just adapt the quantization to your need by modifying the configration file.
 
-Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config` . In `detectron2` and `aim-uofa/AdelaiDet` project, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task. Refer option introduction in [classification.md](./classification.md#Training-script-options)
+  Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config` . In `detectron2` and `aim-uofa/AdelaiDet` project, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task. Refer option introduction in [classification.md](./classification.md#Training-script-options)
 
-See below [examples](./detection.md#Examples) for demonstration.
+  If you want to test the low bit quantization model, just download the pretrained model and run the test. If training is required, see below [examples](./detection.md#Examples) for demonstration.
 
 ## Speical Guide for quantization
 
-The overall flow of the quantization on detection/ segmentation tasks are as follows, some of them can be omit if pretrained model alreay exist.
+  The overall flow of the quantization on detection/ segmentation tasks are as follows, some of them can be omit if pretrained model alreay exist.
 
 - Train full precision backbone network on Imagenet
 
@@ -166,20 +171,16 @@ The overall flow of the quantization on detection/ segmentation tasks are as fol
 
 ## Special Notice on the Model Structure Revision for Quantizaiton
 
-The performance of quantization network is approved to be possible improved with the following tricks.
+  The performance of quantization network is approved to be possible improved with the following tricks.
 
-- Employ normalization (such as BatchNorm) and no-linearity (such as ReLU) to the FPN module.
+- Employ normalization (such as BatchNorm) and non-linearity (such as ReLU) to the FPN module. (We found this revision will slightly improve the full precision performance.)
 
-- Empoly normalization (such as GroupNorm or BatchNorm) to the tower in the Head module. (No-share BatchNorm is demonstrate the superior performance)
+- Empoly normalization (such as GroupNorm or BatchNorm) to the tower in the Head module. (No-share BatchNorm is demonstrated to achieve superior performance.)
 
 - Quantization is employed on all convolution layer wrappered in `detectron2/layer/wrapper.py`, namely the `Conv2D` module. For layers natively call `nn.conv2d` will keep in full precision.
 
 - We provide an option `quantization.scope` to flexible choose the layers/blocks which are scheduled to be quantized. By default, the first and last layers of the model are not quantized.
 
-
-## Pretrained model
-
-We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
 
 ## Examples
 
@@ -196,44 +197,44 @@ We provide pretrained models gradually in [google drive](https://drive.google.co
    
 2. import model from classification project to detection project.
 
-```
-cd /workspace/git/model-quantization
-# prepare the weights/det-resnet18/mf.txt and weights/det-resnet18/mt.txt
-# the two files are created manually with the parameter renaming
-python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/resnet18_w32a32.pth --new weights/det-resnet18/resnet18_w32a32.pth
-
-python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/lsq_best_model_a2w2.pth --new weights/det-resnet18/lsq_best_model_a2w2.pth
-```
-
-The `mf.txt` and `mt.txt` files for the Resnet18 are uploaded in the `model-quantization` project as an example.
+  ```
+  cd /workspace/git/model-quantization
+  # prepare the weights/det-resnet18/mf.txt and weights/det-resnet18/mt.txt
+  # the two files are created manually with the parameter renaming
+  python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/resnet18_w32a32.pth --new weights/det-resnet18/resnet18_w32a32.pth
+  
+  python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/lsq_best_model_a2w2.pth --new weights/det-resnet18/lsq_best_model_a2w2.pth
+  ```
+  
+  The `mf.txt` and `mt.txt` files for the Resnet18 are uploaded in the `model-quantization` project as an example. The files for Resnet50 are also provided. Refer [tools.md](/tools.md) for more instructions.
 
 3. train full precision FCOS-R18-1x
 
-Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml`
+  Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml`
+  
+  ```
+  cd /workspace/git/AdelaiDet
+  # add other options, such as the GPU number as needed
+  python tools/train_net.py --config-file configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml
+  ```
+  
+  ***Check the parameters on the backbone are re-loaded correctly***
 
-```
-cd /workspace/git/AdelaiDet
-# add other options, such as the GPU number as needed
-python tools/train_net.py --config-file configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml
-```
-
-***Check the parameters on the backbone are re-loaded correctly****
-
-This step would obtain the pretrained model in `output/fcos/R_18_1x-Full-SyncBN/model_final.pth`
+  This step would obtain the pretrained model in `output/fcos/R_18_1x-Full-SyncBN/model_final.pth`
 
 4. fintune to get quantization model
 
-Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml`
-
-```
-cd /workspace/git/AdelaiDet
-# add other options, such as the GPU number as needed
-python tools/train_net.py --config configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml
-```
-
-***Check the parameters in double initialization are re-loaded correctly****
-
-Compare the accuracy with the one in step 3.
+  Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml`
+  
+  ```
+  cd /workspace/git/AdelaiDet
+  # add other options, such as the GPU number as needed
+  python tools/train_net.py --config configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml
+  ```
+  
+  ***Check the parameters in double initialization are re-loaded correctly***
+  
+  Compare the accuracy with the one in step 3.
 
 ### Segmentation
 

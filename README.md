@@ -1,19 +1,19 @@
 
 # QTool: A low bit quantization toolbox for computer vision neural networks
 
-This project is a collection of toolboxs targeting at quantizing the image classification neural networks into low bit counterparts. Associated projects demonstrate that this project can be easily employed for other computer vision tasks, such as detection and segmentation.
+This project provides aboundant choices of quantization strategies (such as the quantization algoirthms, training schedules and empirical tricks) for quantizing the image classification neural networks into low bit counterparts. Associated projects demonstrate that this project can also benefit other computer vision tasks, such as object detection, segmentation and text parsing. Pretrained models are provided to show high standard of the code on achiving appealing quantization performance. 
 
 ## Dashboard
 
-The dashboard collects the perfromance of quantization algoirthms for different architectures. Computer vision tasks such as image classification, detetion, segmentation are inlcuded. Note that detection and segmentation might employ a seperate repo with this one as a submodule.
+The dashboard collects the perfromance of quantization algoirthms for different architectures. Computer vision tasks such as image classification, detetion, segmentation are inlcuded. Note that detection and segmentation might employ a separate repo with this one as a submodule.
 
 ### Classification
 
 Refer [classification.md](./doc/classification.md) for detailed instructions.
 
-Both the Top-1(\%) from original paper and the reproduction are listed. Corresponding training and testing configruations can be found in the `config` folder. Limited among of experiement results are listed. Users are encouraged to try different configurations to implement their own targets.
+Both the Top-1(\%) from original paper and the reproduction are listed. Corresponding training and testing configruations can be found in the `config` folder. Selected experiement results are listed. Users are encouraged to try different configurations to implement their own targets.
 
-Note that the performance among different methods is obtained based on different training hyper-parameters. The accuracy in the table will not be the evidence of superior of one algorithms over another. Training hyper-parameters and tricks such as `weight normalization` play a considerable role on improving the performance. See my experience summary of training quantization networks in [experience.md](./doc/experience.md).
+Note that the performance among different methods is obtained based on different training hyper-parameters. The accuracy in the table will not be the evidence of superior of one algorithm over another. Training hyper-parameters and tricks (such as `weight normalization`) play a considerable role on improving the performance. See my experience summary of training quantization networks in [experience.md](./doc/experience.md).
 
 Dataset | Method | Model | A/W | Reported | Top-1  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:
@@ -32,7 +32,7 @@ imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 50.5 | cbsa,fm_STE,wt_pass,No-ReL
 imagenet | LSQ | Torch-R18 | 1/1 | - | 58.5 | ReLU,wt-var-mean,wtg=1
 
 
-`Torch-Rxx` indicates the ResNet architecture from Pytorch (so-called vanilla structure). `ResNet-xx` represnets the variants of ResNet. Minior differences can be found in the structure. See [resnet.md](./doc/resnet.md) for the architecture description and  [classification.md](./doc/classification.md) for how to control the choice by different configuration.
+`Torch-Rxx` indicates the ResNet architecture from Pytorch (so-called vanilla structure). `ResNet-xx` represnets the variants of ResNet. Minior differences are observed from different implementation from other projects. We provide flexible structure control to build compatibility of those projects. See [resnet.md](./doc/resnet.md) for the architecture description and [classification.md](./doc/classification.md) for how to control the choice by different configuration.
 
 ### Detection
 
@@ -77,9 +77,14 @@ COCO | BlendMask | - | Torch-50 | 32/32 | - | 36.1 | 550-R-50-aux-3x,FP16
 
 Above experiments conducted in 2020 Q1, performance might be better by the newest code. See [detection.md](./doc/detection.md).
 
+### Text parsing
+
+in progress
+
 ## Update History
 
 - Super Resolution (preparing)
+- Text parsing (preparing)
 - Instance Segmentation (preparing)
 - Object Detection (preparing)
 - 2020.06.23 Add classification quantization
