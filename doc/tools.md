@@ -1,7 +1,7 @@
 
 # A independent script for debug / model converting
 
-Selected functions which is commonly used.
+This page presents selected functions which is commonly used.
 
 ## Model import and paramter renaming.
 
@@ -15,7 +15,7 @@ Following the commands for looking up items and converting (Remove the brackets 
 # cd weights/pytorch-resnet50/
 # download pretrained model by
 # wget https://download.pytorch.org/models/resnet50-19c8e357.pth
-python tools.py --keyword verbose --verbose_list all --pretrained [weights/pytorch-resnet50/resnet50-19c8e357.pth]
+python tools.py --keyword verbose --verbose_list all --old [weights/pytorch-resnet50/resnet50-19c8e357.pth]
 ```
 
 2. renaming parameter
