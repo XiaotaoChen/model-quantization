@@ -7,7 +7,7 @@ This page presents selected functions which is commonly used.
 
 Some times models are trained by the old repo. When importing the pretrained model to new repo, some variable /paramters name might be changed.
 
-Following the commands for looking up items and converting (Remove the brackets when testing, brackets only indicates the enclosed one can be replaced with other string).
+Following the commands for looking up items and converting (***Remove the brackets when testing, brackets only indicates the enclosed one can be replaced with other string***).
 
 1. looking up item in the model file.
 
@@ -26,3 +26,8 @@ python tools.py --keyword update[,raw]  --mf [weights/det-resnet50/mapping_from.
 ```
 
 Add `raw` in the keyword to generate the model file with/without `state_dict` key.
+
+Another example for LSQ 2bit model converting:
+```
+ python ../model-quantization/tools.py --keyword update,raw --mf weights/det-resnet50/mf_lsq_2bit.txt --mt weights/det-resnet50/mt_lsq_2bit.txt --old weights/pytorch-resnet50/lsq_best_model_a2w2-new.pth --new weights/det-resnet50/lsq_best_model_a2w2.pth
+```
