@@ -182,7 +182,10 @@ def main(args=None):
     if args.resume:
         if utils.check_file(args.resume_file):
             logging.info("resuming from %s" % args.resume_file)
-            checkpoint = torch.load(args.resume_file)
+            if torch.cuda.is_available():
+                checkpoint = torch.load(args.resume_file)
+            else:
+                checkpoint = torch.load(args.resume_file, map_location='cpu')
             if 'epoch' in checkpoint:
                 epoch = checkpoint['epoch']
                 logging.info("resuming ==> last epoch: %d" % epoch)
@@ -203,7 +206,10 @@ def main(args=None):
     else:
         if utils.check_file(args.pretrained):
             logging.info("load pretrained from %s" % args.pretrained)
-            checkpoint = torch.load(args.pretrained)
+            if torch.cuda.is_available():
+                checkpoint = torch.load(args.pretrained)
+            else:
+                checkpoint = torch.load(args.pretrained, map_location='cpu')
             logging.info("load pretrained ==> last epoch: %d" % checkpoint.get('epoch', 0))
             logging.info("load pretrained ==> last best_acc: %f" % checkpoint.get('best_acc', 0))
             logging.info("load pretrained ==> last learning_rate: %f" % checkpoint.get('learning_rate', 0))

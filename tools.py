@@ -20,7 +20,10 @@ def export_onnx(args):
 
     if utils.check_file(args.old):
         print("load pretrained from %s" % args.old)
-        checkpoint = torch.load(args.old)
+        if torch.cuda.is_available():
+            checkpoint = torch.load(args.old)
+        else:  # force cpu mode
+            checkpoint = torch.load(args.old, map_location='cpu')
         print("load pretrained ==> last epoch: %d" % checkpoint.get('epoch', 0))
         print("load pretrained ==> last best_acc: %f" % checkpoint.get('best_acc', 0))
         print("load pretrained ==> last learning_rate: %f" % checkpoint.get('learning_rate', 0))
@@ -116,9 +119,12 @@ def main():
             return
         if utils.check_file(args.old):
             raw = 'raw' in config.keys()
-            checkpoint = torch.load(args.old)
+            if torch.cuda.is_available():
+                checkpoint = torch.load(args.old)
+            else:  # force cpu mode
+                checkpoint = torch.load(args.old, map_location='cpu')
             try:
-                utils.load_state_dict(model, checkpoint.get('state_dict', None) if not raw else checkpoint, verbose=True)
+                utils.load_state_dict(model, checkpoint.get('state_dict', None) if not raw else checkpoint, verbose=False)
             except RuntimeError:
                 print("Loading pretrained model failed")
             print("Loading pretrained model OK")
