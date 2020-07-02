@@ -168,7 +168,7 @@ The overall flow of the quantization on detection/ segmentation tasks are as fol
 
 The performance of quantization network is approved to be possible improved with the following tricks.
 
-- Employ normalization (such as BatchNorm) and no-linearity (such as ReLU) to the FPN module.
+- Employ normalization (such as BatchNorm) and non-linearity (such as ReLU) to the FPN module.
 
 - Empoly normalization (such as GroupNorm or BatchNorm) to the tower in the Head module. (No-share BatchNorm is demonstrate the superior performance)
 
