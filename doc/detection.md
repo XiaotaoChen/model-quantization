@@ -128,6 +128,10 @@ Highly recommend to check the `detectron2/engine/defaults.py` to see which optio
 git difftool quantization master detectron2/config/defaults.py
 ```
 
+## Pretrained model
+
+We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
+
 ## Training and Test
 
 Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ). Just adapt the quantization to your need by modifying the configration file.
@@ -174,10 +178,6 @@ The performance of quantization network is approved to be possible improved with
 
 - We provide an option `quantization.scope` to flexible choose the layers/blocks which are scheduled to be quantized. By default, the first and last layers of the model are not quantized.
 
-
-## Pretrained model
-
-We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
 
 ## Examples
 
