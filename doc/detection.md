@@ -168,9 +168,9 @@ The overall flow of the quantization on detection/ segmentation tasks are as fol
 
 The performance of quantization network is approved to be possible improved with the following tricks.
 
-- Employ normalization (such as BatchNorm) and non-linearity (such as ReLU) to the FPN module.
+- Employ normalization (such as BatchNorm) and non-linearity (such as ReLU) to the FPN module. (We found this revision will slightly improve the full precision performance.)
 
-- Empoly normalization (such as GroupNorm or BatchNorm) to the tower in the Head module. (No-share BatchNorm is demonstrate the superior performance)
+- Empoly normalization (such as GroupNorm or BatchNorm) to the tower in the Head module. (No-share BatchNorm is demonstrated to achieve superior performance.)
 
 - Quantization is employed on all convolution layer wrappered in `detectron2/layer/wrapper.py`, namely the `Conv2D` module. For layers natively call `nn.conv2d` will keep in full precision.
 
@@ -205,7 +205,7 @@ python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weigh
 python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/lsq_best_model_a2w2.pth --new weights/det-resnet18/lsq_best_model_a2w2.pth
 ```
 
-The `mf.txt` and `mt.txt` files for the Resnet18 are uploaded in the `model-quantization` project as an example.
+The `mf.txt` and `mt.txt` files for the Resnet18 are uploaded in the `model-quantization` project as an example. (The files for Resnet50 are also provided.)
 
 3. train full precision FCOS-R18-1x
 
