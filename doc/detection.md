@@ -42,6 +42,8 @@ Dataset | Task Method | Quantization method | Model | A/W | Reported | BBox AP /
 COCO | Blenmask | LSQ | Torch-18 | 32/32 | - | xx/xxx | 1x,550-R-18-Full-BN
 COCO | Blenmask | LSQ | Torch-18 | 2/2 | - | xx/xxx | 1x,550-R-18-Full-BN, Quantize-All
 
+In the comment, `Full-BN` indicates combining `FPN-BN` and `Head-BN`.
+
 ### Text spotting
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
