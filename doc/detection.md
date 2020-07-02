@@ -1,6 +1,6 @@
 # Quantization various computer vision tasks
 
-The framework is able to provide quantization support for all kinds of tasks that the `Detectron2` and `AdelaiDet` projects integrate.
+The framework is able to provide quantization support for all kinds of tasks that the `Detectron2` and `AdelaiDet` projects integrate. Mix precision training is also available as a benefit.
 
 ## Dashboard
 
@@ -34,6 +34,7 @@ COCO | FCOS | LSQ | Torch-18 | 2/2 | - | 30.3 | 1x,FPN-BN, Quantize-All
 COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 32.6 | 1x,FPN-BN, Quantize-Backbone
 COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 26.2 | 1x,FPN-BN, Quantize-All
 
+In the comment, `FPN-BN` indicates adding BN and RELU in the FPN; `FP16` implies the case is trained in FP16 (half float) mode; `Head-BN` represents the prospoal header employes non shared BatchNorm.
 
 ### Instance Segmentation
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
@@ -47,6 +48,8 @@ Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Com
 ## Install
 
 1. install dependent package according to [classification.md](./classification.md)
+
+***Note a known issue for the FP16 training. Training with FP16 and SyncBN on multi-GPU seems to cause NAN loss for current project. Use normal BN instead***
 
 2. download the [custom detectron2](https://github.com/blueardour/detectron2) project. See what is modified below.
 
