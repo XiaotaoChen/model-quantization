@@ -7,20 +7,7 @@ The framework is able to provide quantization support for all kinds of tasks tha
 Here lists selected experiment result. The performance is potentially being better if more effort is paid on tuning. See [experience.md](experience.md) to communicate training skills with me.
 
 ### Detection
-Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
---- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 
-### Instance Segmentation
-Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
---- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
-
-### Text spotting
-Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
---- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
-
-***The following table is based on an old repo, Refer other tables for latest result***
-
-### Detection
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5 | 1x
@@ -40,10 +27,19 @@ COCO | FCOS | - | Torch-18 | 32/32 | - | 33.4 | 1x,FPN-BN
 COCO | FCOS | - | Torch-18 | 32/32 | - | 33.9 | 1x,FPN-BN, FP16
 COCO | FCOS | - | Torch-18 | 32/32 | - | 33.9 | 1x,FPN-BN,Head-BN
 COCO | FCOS | - | Torch-18 | 32/32 | - | 34.3 | 1x,FPN-SyncBN,Head-SyncBN
-COCO | FCOS | Dorefa-Net | Torch-18 | 2/2 | - | 33.4 | 1x,FPN-BN, Quantize-Backbone
-COCO | FCOS | Dorefa-Net | Torch-18 | 2/2 | - | 30.3 | 1x,FPN-BN, Quantize-All
+COCO | FCOS | LSQ | Torch-18 | 2/2 | - | 33.4 | 1x,FPN-BN, Quantize-Backbone
+COCO | FCOS | LSQ | Torch-18 | 2/2 | - | 30.3 | 1x,FPN-BN, Quantize-All
 COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 32.6 | 1x,FPN-BN, Quantize-Backbone
 COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 26.2 | 1x,FPN-BN, Quantize-All
+
+
+### Instance Segmentation
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
+
+### Text spotting
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 
 
 ## Install
