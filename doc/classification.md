@@ -94,7 +94,7 @@ b. `pact` for PACT
 
 c. `dorefa` for dorefa-net. Besides, additional keyword of `lsq` for learned step size, `non-uniform` for FATNN.
 
-d. `xnor` for xnor-net
+d. `xnor` for xnor-net. if `gamma` is combined with the `xnor` in the keyword, a separated learnable scale cofficient is added (It namely becomes the XNor-net++).
 
 Structure control keyword:
 
