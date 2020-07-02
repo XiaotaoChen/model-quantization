@@ -112,6 +112,10 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
   
   f. Skip connection realization. Two choices are provided. One is a avgpooling with stride followed by a conv1x1 with stride=1. The other is just one conv1x1 with stride as demanded. `singleconv` in `keyword` is used for the choice.
   
+  g. `fixup` is used to enable the architecture in Fixup Initlization. 
+  
+  h. the option `base` which is a standalone option rather a word in the `keyword` list is used to realize the branch configuration in Group-Net
+  
   Self-defined `keyword` is suported and can be easily realized according the user's own desire. As introduced above, the options can be combined to build up different variant architecutures. Examples can be found in the `config` subfolder.
 
 - Activation and weight quantization options
