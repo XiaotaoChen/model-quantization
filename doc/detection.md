@@ -37,7 +37,7 @@ COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 26.2 | 1x,FPN-BN, Quantize-All
 In the comment, `FPN-BN` indicates adding BN and RELU in the FPN; `FP16` implies the case is trained in FP16 (half float) mode; `Head-BN` represents the prospoal header employes non shared BatchNorm.
 
 ### Instance Segmentation
-Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+Dataset | Task Method | Quantization method | Model | A/W | Reported | BBox AP / Seg AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 
 ### Text spotting
