@@ -71,7 +71,7 @@ pip install -e .
 
 
 # link classification pretrained weight
-ln -s ../model-quanitzation/weights .
+ln -s ../model-quantization/weights .
 ```
 Facebook detectron2 has not support for some works such as `FCOS` and `Blendmask`. Try the [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) for more task support. Note, for the `aim-uofa/AdelaiDet`, it is also necessary to clone my custom branch (I'm considering to merge the `quantization` branch in my repo to the official repo if it is possible).
 
@@ -86,7 +86,7 @@ git checkout quantization
 python setup.py build develop
 
 # link classification pretrained weight
-ln -s ../model-quanitzation/weights .
+ln -s ../model-quantization/weights .
 ```
 
 
