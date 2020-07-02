@@ -8,7 +8,7 @@ Here lists selected experiment result. The performance is potentially being bett
 
 ### Detection
 
-As the project is keeping upgrade, the pretrained model provided in below link (./detection.md#Pretrained-model) might show better performance compared the one in table.
+As the project is keeping upgrade, the pretrained model provided in below [link](./detection.md#Pretrained-model) might show better performance compared the one in table.
 
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
