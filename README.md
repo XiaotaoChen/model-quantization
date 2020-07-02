@@ -240,5 +240,5 @@ To contribute, PR is appreciated and suggestions are welcome to discuss with me 
 
 ## License
 
-See LICENSE
+For academic use, this project is licensed under the 2-clause BSD License. See LICENSE file.
 
