@@ -86,7 +86,7 @@ git checkout quantization
 python setup.py build develop
 
 # link classification pretrained weight
-ln -s ../model-quanitzation/weights .
+ln -s ../model-quantization/weights .
 ```
 
 
