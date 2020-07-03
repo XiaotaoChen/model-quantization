@@ -28,7 +28,7 @@ class TResNetStem(nn.Module):
         assert kernel_size in [1, 3], "Error reshape conv kernel"
         if kernel_size == 1:
             self.conv = conv1x1(in_channel*stride*stride, out_channel, args=args, force_fp=force_fp)
-        else if kernel_size == 3:
+        elif kernel_size == 3:
             self.conv = conv3x3(in_channel*stride*stride, out_channel, args=args, force_fp=force_fp)
 
     def forward(self, x):
