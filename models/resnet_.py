@@ -115,6 +115,11 @@ class BasicBlock(nn.Module):
         else:
             self.seq = None
 
+        if 'ReShapeResolution' in args.keyword and stride != 1:
+            self.shrink = TResNetStem(planes, stride, )
+            pass
+            
+
         if 'bacs' in args.keyword or 'bcas' in args.keyword: 
             self.bn1 = nn.ModuleList([norm(inplanes, args, feature_stride=feature_stride) for j in range(args.base)])
             if 'fix' in self.args.keyword:
