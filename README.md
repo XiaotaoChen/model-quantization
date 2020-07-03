@@ -236,9 +236,9 @@ Current Contributors:
 - [liuchunlei0430](https://github.com/liuchunlei0430)
 
 
-To contribute, PR is appreciated and suggestions are welcome to discuss with me by email: blueardour@gamil.com
+To contribute, PR is appreciated and suggestions are welcome to discuss. Private conact is available at blueardour@gmail.com
 
 ## License
 
-See LICENSE
+For academic use, this project is licensed under the 2-clause BSD License. See LICENSE file.
 
