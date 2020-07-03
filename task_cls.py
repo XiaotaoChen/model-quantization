@@ -46,6 +46,7 @@ def get_parser():
     parser.add_argument('--width_alpha', default=1.0, type=float, help='channel alpha')
     parser.add_argument('--block_alpha', default=1.0, type=float)
     parser.add_argument('--se_reduction', default=16, type=int, help='ratio in Squeeze-Excition Module')
+    parser.add_argument('--stem_kernel', default=1, type=int)
 
     # config for activation quantization
     parser.add_argument('--fm_bit', default=None, type=float)

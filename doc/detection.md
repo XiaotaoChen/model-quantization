@@ -37,8 +37,12 @@ COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 26.2 | 1x,FPN-BN, Quantize-All
 In the comment, `FPN-BN` indicates adding BN and RELU in the FPN; `FP16` implies the case is trained in FP16 (half float) mode; `Head-BN` represents the prospoal header employes non shared BatchNorm.
 
 ### Instance Segmentation
-Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+Dataset | Task Method | Quantization method | Model | A/W | Reported | BBox AP / Seg AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
+COCO | Blenmask | LSQ | Torch-18 | 32/32 | - | 32.3/29.1 | 1x,550-R-18-Full-BN
+COCO | Blenmask | LSQ | Torch-18 | 2/2 | - | 25.3/23.0 | 1x,550-R-18-Full-BN, Quantize-All
+
+In the comment, `Full-BN` indicates combining `FPN-BN` and `Head-BN`.
 
 ### Text spotting
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
@@ -71,7 +75,7 @@ pip install -e .
 
 
 # link classification pretrained weight
-ln -s ../model-quanitzation/weights .
+ln -s ../model-quantization/weights .
 ```
 Facebook detectron2 has not support for some works such as `FCOS` and `Blendmask`. Try the [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) for more task support. Note, for the `aim-uofa/AdelaiDet`, it is also necessary to clone my custom branch (I'm considering to merge the `quantization` branch in my repo to the official repo if it is possible).
 
@@ -86,7 +90,7 @@ git checkout quantization
 python setup.py build develop
 
 # link classification pretrained weight
-ln -s ../model-quanitzation/weights .
+ln -s ../model-quantization/weights .
 ```
 
 
@@ -206,7 +210,7 @@ We provide pretrained models gradually in [google drive](https://drive.google.co
   python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/lsq_best_model_a2w2.pth --new weights/det-resnet18/lsq_best_model_a2w2.pth
   ```
   
-  The `mf.txt` and `mt.txt` files for the Resnet18 are uploaded in the `model-quantization` project as an example. The files for Resnet50 are also provided. Refer [tools.md](/tools.md) for more instructions.
+  The `mf.txt` and `mt.txt` files for the Resnet18 are uploaded in the `model-quantization` project as an example. The files for Resnet50 are also provided. Refer [tools.md](./tools.md) for more instructions.
 
 3. train full precision FCOS-R18-1x
 
