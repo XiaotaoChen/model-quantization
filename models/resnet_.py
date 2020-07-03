@@ -22,10 +22,10 @@ class DCHR(nn.Module):
 
 # TResNet: High Performance GPU-Dedicated Architecture (https://arxiv.org/pdf/2003.13630v1.pdf)
 class TResNetStem(nn.Module):
-    def __init__(self, channel, stride=4):
+    def __init__(self, channel, stride=4, kernel_size=1):
         super(TResNetStem, self).__init__()
         self.stride = stride
-        self.conv1 = nn.Conv2d(3*stride*stride, channel, kernel_size=1, padding=0)
+        self.conv1 = nn.Conv2d(3*stride*stride, channel, kernel_size=kernel_size, padding=kernel_size//2)
 
     def forward(self, x):
         B, C, H, W = x.shape
@@ -390,10 +390,14 @@ class ResNet(nn.Module):
         if 'cifar10' in args.keyword or 'cifar100' in args.keyword:
             self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=3, stride=1, padding=1, bias=False)
             self.maxpool = nn.Sequential()
-        elif 'TResNetStem' in args.keyword:
+        elif 'TResNetStem' in args.keyword or 'TResNetStemMaxPool' in args.keyword:
+            if 'TResNetStemMaxPool' in args.keyword:
+                self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+                self.conv1 = TResNetStem(self.input_channel, 2, args.stem_kernel)
+            else:
+                self.maxpool = nn.Sequential()
+                self.conv1 = TResNetStem(self.input_channel, 4, args.stem_kernel)
             self.feature_stride = 4
-            self.conv1 = TResNetStem(self.input_channel, self.feature_stride)
-            self.maxpool = nn.Sequential()
         else:
             self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)
             self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
