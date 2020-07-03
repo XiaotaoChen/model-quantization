@@ -22,10 +22,10 @@ class DCHR(nn.Module):
 
 # TResNet: High Performance GPU-Dedicated Architecture (https://arxiv.org/pdf/2003.13630v1.pdf)
 class TResNetStem(nn.Module):
-    def __init__(self, channel, stride=4, kernel_size=1):
+    def __init__(self, out_channel, in_channel=3, stride=4, kernel_size=1):
         super(TResNetStem, self).__init__()
         self.stride = stride
-        self.conv1 = nn.Conv2d(3*stride*stride, channel, kernel_size=kernel_size, padding=kernel_size//2)
+        self.conv1 = nn.Conv2d(in_channel*stride*stride, out_channel, kernel_size=kernel_size, padding=kernel_size//2)
 
     def forward(self, x):
         B, C, H, W = x.shape
@@ -104,21 +104,43 @@ class BasicBlock(nn.Module):
 
         if 'cbas' in args.keyword:
             self.seq = seq_c_b_a_s
+            order = 'cbas'
         elif 'cbsa' in args.keyword: # default architecture in Pytorch
             self.seq = seq_c_b_s_a
+            order = 'cbsa'
         elif 'cabs' in args.keyword: # group-net
             self.seq = seq_c_a_b_s
+            order = 'cabs'
         elif 'bacs' in args.keyword:
             self.seq = seq_b_a_c_s
+            order = 'bacs'
         elif 'bcas' in args.keyword:
             self.seq = seq_b_c_a_s
+            order = 'bcas'
         else:
             self.seq = None
+            order = 'none'
 
+        self.order = getattr(args, "order", 'none')
         if 'ReShapeResolution' in args.keyword and stride != 1:
-            self.shrink = TResNetStem(planes, stride, )
-            pass
-            
+            shrink = []
+            if self.order == 'none':
+                self.order = order
+            for i in self.order:
+                if i == 'c':
+                    shrink.append(TResNetStem(planes, in_channel=inplanes, stride=stride))
+                if i == 'b':
+                    if 'preBN' in args.keyword:
+                        shrink.append(norm(inplanes, args))
+                    else:
+                        shrink.append(norm(planes, args))
+                if i == 'a':
+                    shrink.append(actv(arg))
+            self.shrink = nn.Sequential(*shrink)
+            inplanes = planes
+            stride = 1
+        else:
+            self.shrink = None
 
         if 'bacs' in args.keyword or 'bcas' in args.keyword: 
             self.bn1 = nn.ModuleList([norm(inplanes, args, feature_stride=feature_stride) for j in range(args.base)])
@@ -192,6 +214,10 @@ class BasicBlock(nn.Module):
 
 
     def forward(self, x):
+
+        if self.shrink is not None:
+            x = self.shrink(x)
+
         if not self.enable_skip:
             residual = x
 
@@ -398,10 +424,10 @@ class ResNet(nn.Module):
         elif 'TResNetStem' in args.keyword or 'TResNetStemMaxPool' in args.keyword:
             if 'TResNetStemMaxPool' in args.keyword:
                 self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-                self.conv1 = TResNetStem(self.input_channel, 2, args.stem_kernel)
+                self.conv1 = TResNetStem(self.input_channel, stride=2, kernel_size=args.stem_kernel)
             else:
                 self.maxpool = nn.Sequential()
-                self.conv1 = TResNetStem(self.input_channel, 4, args.stem_kernel)
+                self.conv1 = TResNetStem(self.input_channel, stride=4, kernel_size=args.stem_kernel)
             self.feature_stride = 4
         else:
             self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)
