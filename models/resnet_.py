@@ -22,17 +22,21 @@ class DCHR(nn.Module):
 
 # TResNet: High Performance GPU-Dedicated Architecture (https://arxiv.org/pdf/2003.13630v1.pdf)
 class TResNetStem(nn.Module):
-    def __init__(self, out_channel, in_channel=3, stride=4, kernel_size=1):
+    def __init__(self, out_channel, in_channel=3, stride=4, kernel_size=1, force_fp=True, args=None):
         super(TResNetStem, self).__init__()
         self.stride = stride
-        self.conv1 = nn.Conv2d(in_channel*stride*stride, out_channel, kernel_size=kernel_size, padding=kernel_size//2)
+        assert kernel_size in [1, 3], "Error reshape conv kernel"
+        if kernel_size == 1:
+            self.conv = conv1x1(in_channel*stride*stride, out_channel, args=args, force_fp=force_fp)
+        else if kernel_size == 3:
+            self.conv = conv3x3(in_channel*stride*stride, out_channel, args=args, force_fp=force_fp)
 
     def forward(self, x):
         B, C, H, W = x.shape
         x = x.reshape(B, C, H // self.stride, self.stride, W // self.stride, self.stride)
         x = x.transpose(4, 3).reshape(B, C, 1, H // self.stride, W // self.stride, self.stride * self.stride)
         x = x.transpose(2, 5).reshape(B, C * self.stride * self.stride, H // self.stride, W // self.stride)
-        x = self.conv1(x)
+        x = self.conv(x)
         return x
 
 def seq_c_b_a_s(x, conv, relu, bn, skip, skip_enbale):
@@ -94,6 +98,9 @@ class BasicBlock(nn.Module):
         if self.addition_skip and args.verbose:
             logging.info("warning: add addition skip, not the origin resnet")
 
+        # quantize skip connection ?
+        real_skip = 'real_skip' in args.keyword
+
         qconv3x3 = conv3x3
         qconv1x1 = conv1x1
         for i in range(2):
@@ -128,7 +135,7 @@ class BasicBlock(nn.Module):
                 self.order = order
             for i in self.order:
                 if i == 'c':
-                    shrink.append(TResNetStem(planes, in_channel=inplanes, stride=stride))
+                    shrink.append(TResNetStem(planes, in_channel=inplanes, stride=stride, args=args, force_fp=real_skip))
                 if i == 'b':
                     if 'preBN' in args.keyword:
                         shrink.append(norm(inplanes, args))
@@ -152,7 +159,6 @@ class BasicBlock(nn.Module):
 
         # downsample branch
         self.enable_skip = stride != 1 or inplanes != planes
-        real_skip = 'real_skip' in args.keyword
         downsample = []
         if stride != 1:
             downsample.append(nn.AvgPool2d(stride))
