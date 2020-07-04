@@ -31,6 +31,11 @@ imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 52.0 | cbsa,fm_triangle,wt_pass,N
 imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 50.5 | cbsa,fm_STE,wt_pass,No-ReLU
 imagenet | LSQ | Torch-R18 | 1/1 | - | 58.5 | ReLU,wt-var-mean,wtg=1
 
+cifar100 |  - | ResNet-20 | 32/32 | - | 66.56 | cbsa, efficientquant, order c
+cifar100 |  - | ResNet-20 | 32/32 | - | 75.13 | cbsa, efficientquant, order cb
+cifar100 |  - | ResNet-20 | 32/32 | - | 71.82 | cbsa, efficientquant, order ca
+cifar100 |  - | ResNet-20 | 32/32 | - | 66.90 | cbsa, efficientquant, order cba
+cifar100 |  - | ResNet-20 | 32/32 | - | 66.88 | cbsa, efficientquant, baseline
 
 `Torch-Rxx` indicates the ResNet architecture from Pytorch (so-called vanilla structure). `ResNet-xx` represnets the variants of ResNet. Minior differences are observed from different implementation from other projects. We provide flexible structure control to build compatibility of those projects. See [resnet.md](./doc/resnet.md) for the architecture description and [classification.md](./doc/classification.md) for how to control the choice by different configuration.
 
