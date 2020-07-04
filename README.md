@@ -30,7 +30,6 @@ imagenet | Group-Net | ResNet-18 | 1/1 | - | 63.9 | cabs,bireal,base=5,without-s
 imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 52.0 | cbsa,fm_triangle,wt_pass,No-ReLU
 imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 50.5 | cbsa,fm_STE,wt_pass,No-ReLU
 imagenet | LSQ | Torch-R18 | 1/1 | - | 58.5 | ReLU,wt-var-mean,wtg=1
-
 cifar100 |  - | ResNet-20 | 32/32 | - | 66.56 | cbsa, efficientquant, order c
 cifar100 |  - | ResNet-20 | 32/32 | - | 75.13 | cbsa, efficientquant, order cb
 cifar100 |  - | ResNet-20 | 32/32 | - | 71.82 | cbsa, efficientquant, order ca
