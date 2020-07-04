@@ -93,7 +93,8 @@ def get_parser():
 
     # record / debug runtime information
     parser.add_argument('--probe_iteration', default=1, type=int)
-    parser.add_argument('--probe_list', default=[], type=int, nargs='+')
+    parser.add_argument('--probe_index', default=[], type=int, nargs='+')
+    parser.add_argument('--probe_list', default='', type=str)
 
     # specific custom learning rate or weight decay for certain parameters
     parser.add_argument('--custom_decay_list', default='', type=str)
@@ -115,6 +116,8 @@ def get_parameter():
         args.custom_decay_list = [x.strip() for x in args.custom_decay_list.split(',')]
     if isinstance(args.custom_lr_list, str):
         args.custom_lr_list = [x.strip() for x in args.custom_lr_list.split(',')]
+    if isinstance(args.probe_list, str):
+        args.probe_list = [x.strip() for x in args.probe_list.split(',')]
     return args
 
 def main(args=None):
