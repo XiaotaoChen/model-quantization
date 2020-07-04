@@ -269,6 +269,15 @@ class quantization(nn.Module):
         elif 'proxquant' in self.args.keyword:
             return x * self.prox + y * (1 - self.prox)
         else:
+            if 'probe' in self.args.keyword and self.index >= 0 and not self.training and self.tag == 'fm':
+                for item in self.args.probe_list:
+                    if 'before-quant' == item:
+                        torch.save(x, "log/{}-activation-latent.pt".format(self.index))
+                    elif 'after-quant' == item:
+                        torch.save(y, "log/{}-activation-quant.pt".format(self.index))
+                    elif hasattr(self, item):
+                        torch.save(getattr(self, item), "log/{}-activation-{}.pt".format(self.index, item))
+                self.index = -1
             return y
 
     def forward(self, x):
