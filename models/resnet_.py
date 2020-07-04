@@ -22,17 +22,21 @@ class DCHR(nn.Module):
 
 # TResNet: High Performance GPU-Dedicated Architecture (https://arxiv.org/pdf/2003.13630v1.pdf)
 class TResNetStem(nn.Module):
-    def __init__(self, channel, stride=4, kernel_size=1):
+    def __init__(self, out_channel, in_channel=3, stride=4, kernel_size=1, force_fp=True, args=None):
         super(TResNetStem, self).__init__()
         self.stride = stride
-        self.conv1 = nn.Conv2d(3*stride*stride, channel, kernel_size=kernel_size, padding=kernel_size//2)
+        assert kernel_size in [1, 3], "Error reshape conv kernel"
+        if kernel_size == 1:
+            self.conv = conv1x1(in_channel*stride*stride, out_channel, args=args, force_fp=force_fp)
+        elif kernel_size == 3:
+            self.conv = conv3x3(in_channel*stride*stride, out_channel, args=args, force_fp=force_fp)
 
     def forward(self, x):
         B, C, H, W = x.shape
         x = x.reshape(B, C, H // self.stride, self.stride, W // self.stride, self.stride)
         x = x.transpose(4, 3).reshape(B, C, 1, H // self.stride, W // self.stride, self.stride * self.stride)
         x = x.transpose(2, 5).reshape(B, C * self.stride * self.stride, H // self.stride, W // self.stride)
-        x = self.conv1(x)
+        x = self.conv(x)
         return x
 
 def seq_c_b_a_s(x, conv, relu, bn, skip, skip_enbale):
@@ -94,6 +98,9 @@ class BasicBlock(nn.Module):
         if self.addition_skip and args.verbose:
             logging.info("warning: add addition skip, not the origin resnet")
 
+        # quantize skip connection ?
+        real_skip = 'real_skip' in args.keyword
+
         qconv3x3 = conv3x3
         qconv1x1 = conv1x1
         for i in range(2):
@@ -104,16 +111,43 @@ class BasicBlock(nn.Module):
 
         if 'cbas' in args.keyword:
             self.seq = seq_c_b_a_s
+            order = 'cbas'
         elif 'cbsa' in args.keyword: # default architecture in Pytorch
             self.seq = seq_c_b_s_a
+            order = 'cbsa'
         elif 'cabs' in args.keyword: # group-net
             self.seq = seq_c_a_b_s
+            order = 'cabs'
         elif 'bacs' in args.keyword:
             self.seq = seq_b_a_c_s
+            order = 'bacs'
         elif 'bcas' in args.keyword:
             self.seq = seq_b_c_a_s
+            order = 'bcas'
         else:
             self.seq = None
+            order = 'none'
+
+        self.order = getattr(args, "order", 'none')
+        if 'ReShapeResolution' in args.keyword and stride != 1:
+            shrink = []
+            if self.order == 'none':
+                self.order = order
+            for i in self.order:
+                if i == 'c':
+                    shrink.append(TResNetStem(planes, in_channel=inplanes, stride=stride, args=args, force_fp=real_skip))
+                if i == 'b':
+                    if 'preBN' in args.keyword:
+                        shrink.append(norm(inplanes, args))
+                    else:
+                        shrink.append(norm(planes, args))
+                if i == 'a':
+                    shrink.append(actv(args))
+            self.shrink = nn.Sequential(*shrink)
+            inplanes = planes
+            stride = 1
+        else:
+            self.shrink = None
 
         if 'bacs' in args.keyword or 'bcas' in args.keyword: 
             self.bn1 = nn.ModuleList([norm(inplanes, args, feature_stride=feature_stride) for j in range(args.base)])
@@ -125,7 +159,6 @@ class BasicBlock(nn.Module):
 
         # downsample branch
         self.enable_skip = stride != 1 or inplanes != planes
-        real_skip = 'real_skip' in args.keyword
         downsample = []
         if stride != 1:
             downsample.append(nn.AvgPool2d(stride))
@@ -187,6 +220,10 @@ class BasicBlock(nn.Module):
 
 
     def forward(self, x):
+
+        if self.shrink is not None:
+            x = self.shrink(x)
+
         if not self.enable_skip:
             residual = x
 
@@ -393,10 +430,10 @@ class ResNet(nn.Module):
         elif 'TResNetStem' in args.keyword or 'TResNetStemMaxPool' in args.keyword:
             if 'TResNetStemMaxPool' in args.keyword:
                 self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-                self.conv1 = TResNetStem(self.input_channel, 2, args.stem_kernel)
+                self.conv1 = TResNetStem(self.input_channel, stride=2, kernel_size=args.stem_kernel)
             else:
                 self.maxpool = nn.Sequential()
-                self.conv1 = TResNetStem(self.input_channel, 4, args.stem_kernel)
+                self.conv1 = TResNetStem(self.input_channel, stride=4, kernel_size=args.stem_kernel)
             self.feature_stride = 4
         else:
             self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)

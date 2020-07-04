@@ -17,8 +17,8 @@ try:
     #from .densenet import densenet121
     #from .nasnet import nasnet
     #from .squeezenet import squeezenet
-except:
-    pass
+except (ImportError, RuntimeError, FileNotFoundError, PermissionError) as e:
+    print('import classification model failed', e)
 
 third_party = True
 try:

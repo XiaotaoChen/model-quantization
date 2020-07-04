@@ -19,6 +19,7 @@ class quantization(nn.Module):
     def __init__(self, args=None, tag='fm', shape=[], feature_stride=None, logger=None):
         super(quantization, self).__init__()
         if args is None:
+            self.enable = False
             return
 
         self.args = args
@@ -239,12 +240,18 @@ class quantization(nn.Module):
             pass
 
     def init_based_on_warmup(self, data=None):
+        if not self.enable:
+            return
+
         with torch.no_grad():
             if self.method == 'dorefa' and data is not None:
                 pass
         return
 
     def init_based_on_pretrain(self, weight=None):
+        if not self.enable:
+            return
+
         with torch.no_grad():
             if self.method == 'dorefa' and 'non-uniform' in self.args.keyword:
                 pass
