@@ -142,7 +142,7 @@ class BasicBlock(nn.Module):
                     else:
                         shrink.append(norm(planes, args))
                 if i == 'a':
-                    shrink.append(actv(arg))
+                    shrink.append(actv(args))
             self.shrink = nn.Sequential(*shrink)
             inplanes = planes
             stride = 1
