@@ -40,6 +40,7 @@ cifar100 |  LSQ | ResNet-20 | 2/2 | - | 73.84 | cbsa, efficientquant, order cb, 
 cifar100 |  LSQ | ResNet-20 | 2/2 | - | 69.98 | cbsa, efficientquant, order ca, real shortcut
 cifar100 |  LSQ | ResNet-20 | 2/2 | - | 58.94 | cbsa, efficientquant, order cba, real shortcut
 cifar100 |  LSQ | ResNet-20 | 2/2 | - | 63.25 | cbsa, efficientquant, baseline, real shortcut
+cifar100 |  LSQ | ResNet-20 | 2/2 | - | 73.59 | cbsa, efficientquant, order cb, 2bit shortcut
 
 `Torch-Rxx` indicates the ResNet architecture from Pytorch (so-called vanilla structure). `ResNet-xx` represnets the variants of ResNet. Minior differences are observed from different implementation from other projects. We provide flexible structure control to build compatibility of those projects. See [resnet.md](./doc/resnet.md) for the architecture description and [classification.md](./doc/classification.md) for how to control the choice by different configuration.
 
