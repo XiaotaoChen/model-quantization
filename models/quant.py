@@ -475,7 +475,7 @@ def conv5x5(in_planes, out_planes, stride=1, groups=1, args=None, force_fp=False
     return custom_conv(in_planes, out_planes, kernel_size=5, stride=stride, padding=2, groups=groups,
             args=args, force_fp=force_fp, feature_stride=feature_stride)
 
-def conv3x3(in_planes, out_planes, stride=1, groups=1, args=None, force_fp=False, feature_stride=1):
+def conv3x3(in_planes, out_planes, stride=1, groups=1, args=None, force_fp=False, feature_stride=1, keepdim=True):
     "3x3 convolution with padding"
     return custom_conv(in_planes, out_planes, kernel_size=3, stride=stride, padding=1, groups=groups,
             args=args, force_fp=force_fp, feature_stride=feature_stride)

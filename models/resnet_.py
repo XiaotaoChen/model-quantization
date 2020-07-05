@@ -5,6 +5,7 @@ import numpy as np
 
 from .quant import conv3x3, conv1x1
 from .layers import norm, actv
+from .prone import qprone
 
 # double_channel_half_resolution
 class DCHR(nn.Module):
@@ -101,8 +102,6 @@ class BasicBlock(nn.Module):
         # quantize skip connection ?
         real_skip = 'real_skip' in args.keyword
 
-        qconv3x3 = conv3x3
-        qconv1x1 = conv1x1
         for i in range(2):
             setattr(self, 'relu%d' % (i+1), nn.ModuleList([actv(args) for j in range(args.base)]))
         if 'fix' in self.args.keyword and ('cbas' in self.args.keyword or 'cbsa' in self.args.keyword):
@@ -157,6 +156,22 @@ class BasicBlock(nn.Module):
             self.bn1 = nn.ModuleList([norm(planes, args, feature_stride=feature_stride*stride) for j in range(args.base)])
         self.bn2 = nn.ModuleList([norm(planes, args, feature_stride=feature_stride*stride) for j in range(args.base)])
 
+        keepdim = True
+        qconv3x3 = conv3x3
+        qconv1x1 = conv1x1
+        if 'prone' in args.keyword:
+            qconv3x3 = qprone
+            keepdim = 'vof-resolution' not in args.keyword
+            bn_before_reshape = 'bn-before-reshape' in args.keyword
+            if 'preBN' in args.keyword:
+                if not keepdim:
+                    self.bn2 = nn.ModuleList([norm(planes*4*stride*stride, args) for j in range(args.base)])
+                # to be finished for other cases
+            else:
+                if not keepdim:
+                    self.bn1 = nn.ModuleList([norm(planes*4*stride*stride, args) for j in range(args.base)])
+                # to be finished for other cases
+
         # downsample branch
         self.enable_skip = stride != 1 or inplanes != planes
         downsample = []
@@ -195,7 +210,7 @@ class BasicBlock(nn.Module):
         else:
             self.skip = nn.Sequential(*downsample)
 
-        self.conv1 = nn.ModuleList([qconv3x3(inplanes, planes, stride, 1, args=args, feature_stride=feature_stride) for j in range(args.base)])
+        self.conv1 = nn.ModuleList([qconv3x3(inplanes, planes, stride, 1, args=args, feature_stride=feature_stride, keepdim=keepdim) for j in range(args.base)])
         self.conv2 = nn.ModuleList([qconv3x3(planes, planes, 1, 1, args=args, feature_stride=feature_stride*stride) for j in range(args.base)])
 
         if args.base == 1:
