@@ -161,7 +161,7 @@ class BasicBlock(nn.Module):
         qconv1x1 = conv1x1
         if 'prone' in args.keyword:
             qconv3x3 = qprone
-            keepdim = 'vof-resolution' not in args.keyword
+            keepdim = 'vof-resolution'  in args.keyword
             bn_before_reshape = 'bn-before-reshape' in args.keyword
             if 'preBN' in args.keyword:
                 if not keepdim:
@@ -169,7 +169,10 @@ class BasicBlock(nn.Module):
                 # to be finished for other cases
             else:
                 if not keepdim:
-                    self.bn1 = nn.ModuleList([norm(planes*4*stride*stride, args) for j in range(args.base)])
+                    self.bn1 = nn.ModuleList([norm(planes*stride*stride, args) for j in range(args.base)])
+                else:
+                    self.bn1 = nn.ModuleList([norm(planes, args) for j in range(args.base)])
+
                 # to be finished for other cases
 
         # downsample branch
@@ -582,7 +585,10 @@ class ResNet(nn.Module):
 
         if hasattr(self, '_out_features') and 'linear' not in self._out_features:
             return outputs
-
+        
+        B, C, H, W = x.shape
+        if H == 8:
+            x = x[:, :, 0:H-1, 0:W-1]
         x = self.bn2(x)
         x = self.avgpool(x)
         x = x.view(x.size(0), -1)
