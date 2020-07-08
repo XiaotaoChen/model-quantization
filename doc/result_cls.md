@@ -41,7 +41,7 @@ cifar100 |  LSQ | ResNet-20 | 2/2 | - | 73.59 | cbsa, ldq, order cb, 2bit shortc
 
 `Torch-Rxx` indicates the ResNet architecture from Pytorch (so-called vanilla structure). `ResNet-xx` represnets the variants of ResNet. Minior differences are observed from different implementation from other projects. We provide flexible structure control to build compatibility of those projects. See [resnet.md](./doc/resnet.md) for the architecture description and [classification.md](./doc/classification.md) for how to control the choice by different configuration.
 
-Other flags:
+Explanations on some flags:
 
 - cbsa / bacs:
   The resnet conv seq
@@ -54,4 +54,7 @@ Other flags:
   
 - fm_qg/ wt_qg:
   quantization group
+  
+- real shortcut / real-skip: the downsample layer is kept in full precision. Other wise the shortcut is quantized (eg. `2bit shortcut`)
+
 
