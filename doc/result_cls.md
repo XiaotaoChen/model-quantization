@@ -40,3 +40,16 @@ cifar100 |  LSQ | ResNet-20 | 2/2 | - | 63.25 | cbsa, ldq, baseline, real shortc
 cifar100 |  LSQ | ResNet-20 | 2/2 | - | 73.59 | cbsa, ldq, order cb, 2bit shortcut
 
 `Torch-Rxx` indicates the ResNet architecture from Pytorch (so-called vanilla structure). `ResNet-xx` represnets the variants of ResNet. Minior differences are observed from different implementation from other projects. We provide flexible structure control to build compatibility of those projects. See [resnet.md](./doc/resnet.md) for the architecture description and [classification.md](./doc/classification.md) for how to control the choice by different configuration.
+
+Other flags:
+
+- cbsa / bacs
+  The resnet conv seq
+- wt_var-mean:
+  apply weight normalization (type `var-mean`) on the weight
+  
+- ep40 / ep120:
+  training total epoch of 40 / 120
+- fm_qg/ wt_qg:
+  quantization group
+
