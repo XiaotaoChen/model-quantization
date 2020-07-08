@@ -3,6 +3,8 @@ Here lists selected experiment result. The performance is potentially being bett
 
 ### Detection
 
+For training and inference instructions, refer [detection.md](./detection.md).
+
 As the project is keeping upgrading, the pretrained model provided on [Google Drive](./detection.md#Pretrained-model) might show better performance compared with the one in table.
 
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
