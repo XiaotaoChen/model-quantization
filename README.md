@@ -3,12 +3,12 @@
 
 This project provides aboundant choices of quantization strategies (such as the quantization algoirthms, training schedules and empirical tricks) for quantizing the image classification neural networks into low bit counterparts. Associated projects demonstrate that this project can also benefit other computer vision tasks, such as object detection, segmentation and text parsing. Pretrained models are provided to show high standard of the code on achiving appealing quantization performance. 
 
-## Quantization result
+## Supported Task
 
-- [Classification](./doc/result_cls.md)
-- [Detection](./doc/result_det.md)
-- [Segmentation](./doc/result_seg.md)
-- [Text parsing](./doc/result_text.md)
+- [Classification](./doc/classification.md): [Performance](./doc/result_cls.md)
+- [Detection](./doc/detection.md): [Performance](./doc/result_det.md)
+- [Segmentation](./doc/detection.md): [Performance](./doc/result_seg.md)
+- [Text parsing](./doc/detection.md): [Performance](./doc/result_text.md)
 
 ## Update History
 
