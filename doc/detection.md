@@ -2,19 +2,11 @@
 
 The framework is able to provide quantization support for all kinds of tasks that the `Detectron2` and `AdelaiDet` projects integrate. Mix precision training is also available as a benefit.
 
+## Quanzation Reuslt
 
-### Instance Segmentation
-Dataset | Task Method | Quantization method | Model | A/W | Reported | BBox AP / Seg AP  | Comment 
---- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
-COCO | Blenmask | LSQ | Torch-18 | 32/32 | - | 32.3/29.1 | 1x,550-R-18-Full-BN
-COCO | Blenmask | LSQ | Torch-18 | 2/2 | - | 25.3/23.0 | 1x,550-R-18-Full-BN, Quantize-All
+- [Detction Performance](./result_det.md)
 
-In the comment, `Full-BN` indicates combining `FPN-BN` and `Head-BN`.
-
-### Text spotting
-Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
---- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
-
+- [Segmentation Performance](./result_seg.md)
 
 ## Install
 
