@@ -4,7 +4,7 @@
 
 For training and inference instructions, refer [detection.md](./detection.md).  
 
-
+We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
 
 Dataset | Task Method | Quantization method | Model | A/W | Reported | BBox AP / Seg AP  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
