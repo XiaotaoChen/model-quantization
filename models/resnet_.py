@@ -160,20 +160,18 @@ class BasicBlock(nn.Module):
         qconv3x3 = conv3x3
         qconv1x1 = conv1x1
         if 'prone' in args.keyword:
-            qconv3x3 = qprone
-            keepdim = 'vof-resolution'  in args.keyword
-            bn_before_reshape = 'bn-before-reshape' in args.keyword
-            if 'preBN' in args.keyword:
-                if not keepdim:
-                    self.bn2 = nn.ModuleList([norm(planes*4*stride*stride, args) for j in range(args.base)])
-                # to be finished for other cases
+            no_prone_skip = 'no_prone_skip' in args.keyword
+            keepdim = 'vof-resolution' in args.keyword
+            bn_before_restore = 'bn-before-restore' in args.keyword
+            if restore and not no_prone_skip:
+                qconv3x3 = qprone
+            if 'preBN' in args.keyword: # to be finished
+                raise NotImplementedError("preBN not supported for the Prone yet")
             else:
-                if not keepdim:
-                    self.bn1 = nn.ModuleList([norm(planes*stride*stride, args) for j in range(args.base)])
-                else:
-                    self.bn1 = nn.ModuleList([norm(planes, args) for j in range(args.base)])
-
-                # to be finished for other cases
+                if not keepdim: # to be finished
+                    self.bn1 = nn.ModuleList([norm(planes*4, args) for j in range(args.base)])
+                    if bn_before_restore:
+                        self.bn2 = nn.ModuleList([norm(planes*16, args) for j in range(args.base)])
 
         # downsample branch
         self.enable_skip = stride != 1 or inplanes != planes
