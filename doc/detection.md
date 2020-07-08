@@ -12,7 +12,7 @@ The framework is able to provide quantization support for all kinds of tasks tha
 
 1. install dependent package according to [classification.md](./classification.md)
 
-***Note a known issue for the FP16 training. Training with FP16 and SyncBN on multi-GPU seems to cause NAN loss for current project. Use normal BN instead***
+***Note a known issue for the FP16 training: Training with FP16 and SyncBN on multi-GPU seems to cause NAN loss for current project. Use normal BN instead***
 
 2. download the [custom detectron2](https://github.com/blueardour/detectron2) project. See what is modified below.
 
