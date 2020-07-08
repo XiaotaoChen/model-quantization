@@ -1,6 +1,8 @@
 
 Please cite if you use dedicated method.
 
+## Quantization related publication
+
 1. LQnet:
 ```BibTeX
 @inproceedings{zhang2018lq,
