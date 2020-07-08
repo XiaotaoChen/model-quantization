@@ -160,10 +160,10 @@ class BasicBlock(nn.Module):
         qconv3x3 = conv3x3
         qconv1x1 = conv1x1
         if 'prone' in args.keyword:
-            no_prone_skip = 'no_prone_skip' in args.keyword
-            keepdim = 'vof-resolution' in args.keyword
-            bn_before_restore = 'bn-before-restore' in args.keyword
-            if restore and not no_prone_skip:
+            no_prone_downsample = 'no_prone_downsample' in args.keyword
+            keepdim = 'vof_resolution' in args.keyword
+            bn_before_restore = 'bn_before_restore' in args.keyword
+            if keepdim and not no_prone_downsample:
                 qconv3x3 = qprone
             if 'preBN' in args.keyword: # to be finished
                 raise NotImplementedError("preBN not supported for the Prone yet")
@@ -584,9 +584,11 @@ class ResNet(nn.Module):
         if hasattr(self, '_out_features') and 'linear' not in self._out_features:
             return outputs
         
-        B, C, H, W = x.shape
-        if H == 8:
-            x = x[:, :, 0:H-1, 0:W-1]
+        if 'keep_resolution' in self.args.keyword:
+            B, C, H, W = x.shape
+            if H == 8:
+                x = x[:, :, 0:H-1, 0:W-1]
+
         x = self.bn2(x)
         x = self.avgpool(x)
         x = x.view(x.size(0), -1)
