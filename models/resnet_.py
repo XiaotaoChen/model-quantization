@@ -127,6 +127,7 @@ class BasicBlock(nn.Module):
             self.seq = None
             order = 'none'
 
+        # lossless downsample network on
         self.order = getattr(args, "order", 'none')
         if 'ReShapeResolution' in args.keyword and stride != 1:
             shrink = []
@@ -147,6 +148,7 @@ class BasicBlock(nn.Module):
             stride = 1
         else:
             self.shrink = None
+        # lossless downsample network off
 
         if 'bacs' in args.keyword or 'bcas' in args.keyword: 
             self.bn1 = nn.ModuleList([norm(inplanes, args, feature_stride=feature_stride) for j in range(args.base)])
@@ -156,15 +158,16 @@ class BasicBlock(nn.Module):
             self.bn1 = nn.ModuleList([norm(planes, args, feature_stride=feature_stride*stride) for j in range(args.base)])
         self.bn2 = nn.ModuleList([norm(planes, args, feature_stride=feature_stride*stride) for j in range(args.base)])
 
+        # Prone network on
         keepdim = True
         qconv3x3 = conv3x3
         qconv1x1 = conv1x1
+        extra_padding = 0
         if 'prone' in args.keyword:
-            no_prone_downsample = 'no_prone_downsample' in args.keyword
-            keepdim = 'vof_resolution' in args.keyword
+            keepdim = 'restore_shape' in args.keyword
             bn_before_restore = 'bn_before_restore' in args.keyword
-            if keepdim and not no_prone_downsample:
-                qconv3x3 = qprone
+            qconv3x3 = qprone
+
             if 'preBN' in args.keyword: # to be finished
                 raise NotImplementedError("preBN not supported for the Prone yet")
             else:
@@ -172,6 +175,11 @@ class BasicBlock(nn.Module):
                     self.bn1 = nn.ModuleList([norm(planes*4, args) for j in range(args.base)])
                     if bn_before_restore:
                         self.bn2 = nn.ModuleList([norm(planes*16, args) for j in range(args.base)])
+
+            if stride != 1 and (args.input_size // feature_stride) % (2*stride) != 0:
+                extra_padding = ((2*stride) - ((args.input_size // feature_stride) % (2*stride))) // 2
+                logging.warning("extra pad for Prone is added to be {}".format(extra_padding))
+        # Prone network off
 
         # downsample branch
         self.enable_skip = stride != 1 or inplanes != planes
@@ -203,17 +211,23 @@ class BasicBlock(nn.Module):
                 if isinstance(n, nn.AvgPool2d):
                     downsample[i] = nn.Sequential()
                 if isinstance(n, nn.Conv2d):
-                    downsample[i] = qconv1x1(inplanes, planes, stride=stride, args=args, force_fp=real_skip, feature_stride=feature_stride)
+                    downsample[i] = qconv1x1(inplanes, planes, stride=stride, padding=extra_padding, args=args, force_fp=real_skip, feature_stride=feature_stride)
         if 'DCHR' in args.keyword: # try if any performance improvement when aligning resolution without downsample 
             if args.verbose:
-                logging.info("warning: DCHR is used in the block")
+                logging.warning("warning: DCHR is used in the block")
             self.skip = DCHR(stride)
         else:
             self.skip = nn.Sequential(*downsample)
 
-        self.conv1 = nn.ModuleList([qconv3x3(inplanes, planes, stride, 1, args=args, feature_stride=feature_stride, keepdim=keepdim) for j in range(args.base)])
+        # second conv
         self.conv2 = nn.ModuleList([qconv3x3(planes, planes, 1, 1, args=args, feature_stride=feature_stride*stride) for j in range(args.base)])
 
+        # first conv
+        if 'prone' in args.keyword and 'no_prone_downsample' in args.keyword and stride != 1 and keepdim:
+            qconv3x3 = conv3x3
+        self.conv1 = nn.ModuleList([qconv3x3(inplanes, planes, stride, 1, padding=extra_padding+1, args=args, feature_stride=feature_stride, keepdim=keepdim) for j in range(args.base)])
+
+        # scales
         if args.base == 1:
             self.scales = [1]
         else:
@@ -584,10 +598,10 @@ class ResNet(nn.Module):
         if hasattr(self, '_out_features') and 'linear' not in self._out_features:
             return outputs
         
-        if 'keep_resolution' in self.args.keyword:
-            B, C, H, W = x.shape
-            if H == 8:
-                x = x[:, :, 0:H-1, 0:W-1]
+        #if 'keep_resolution' in self.args.keyword:
+        #    B, C, H, W = x.shape
+        #    if H == 8:
+        #        x = x[:, :, 0:H-1, 0:W-1]
 
         x = self.bn2(x)
         x = self.avgpool(x)

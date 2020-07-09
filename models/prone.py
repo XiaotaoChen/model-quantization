@@ -22,7 +22,7 @@ class Prone(nn.Module):
 
     def forward(self, x):
         # padding zero when cannot just be divided
-        B, C, H, W =x.shape
+        B, C, H, W = x.shape
         if H % self.stride != 0:
             pad = (self.stride - (H % self.stride)) // 2
             x = F.pad(x, _quadruple(pad), mode="constant", value=0)
@@ -40,7 +40,7 @@ class Prone(nn.Module):
             x = x.transpose(4, 3).reshape(B, C//4, H * 2, W * 2)
         return x
 
-def qprone(in_channel, out_channel, stride=1, group=1, args=None, force_fp=False, feature_stride=1, kernel_size=3, keepdim=True):
+def qprone(in_channel, out_channel, stride=1, group=1, padding=1, args=None, force_fp=False, feature_stride=1, kernel_size=3, keepdim=True):
     assert kernel_size in [3], "Only kernel size = 3 support"
     assert stride in [1, 2], "Stride must be 1 or 2"
     assert group in [1], "group must be 1"
