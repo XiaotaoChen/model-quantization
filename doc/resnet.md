@@ -20,7 +20,9 @@ Download the [QTool.png](./QTool.png) to view in a whole.
   Besides, set `alpha_width = 0.25` for CIFAR architecture to shrink the channel width.
 
 
-2. `fix_pooling` to choose whether the `bn` layer is moved before `maxpool` layer.
+2. `fix_pooling` to choose whether the `bn` layer should be moved before `maxpool` layer.
+
+3. `TRe` is an alternative implementation of the Stem.
 
 ## Body
 
