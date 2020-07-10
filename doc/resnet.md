@@ -5,6 +5,8 @@ To use the resnet architecture, one can set the `arch` option to either `resnet1
 
 For example, by add `origin,cbsa,fix_pooling,singleconv,fix` in the keyword, we obtain the pytorch official architecture (the same with the `pytorch-resnet18/34/50/101`). Fine-grain control is supported for the stem and body.
 
+Download the [QTool.png](./QTool.png) to view in a whole.
+
 ## Stem
 
 ![stem](./1.jpg)
