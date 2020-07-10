@@ -11,11 +11,19 @@ For example, by add `origin,cbsa,fix_pooling,singleconv,fix` in the keyword, we 
 
 ## Body
 
+- Default buildup
+
 ![stem](./2.jpg)
+
+- Lossless downsample network
 
 ![stem](./3.jpg)
 
+- Prone: Point-wise and Reshape Only Network
+
 ![stem](./4.jpg)
+
+- Specific Activation and Normalization
 
 ![stem](./5.jpg)
 
