@@ -11,10 +11,6 @@ Download the [QTool.png](./QTool.png) to view in a whole.
 
 ![stem](./1.jpg)
 
-## Body
-
-- Default buildup
-
 1. `imagenet` or `CIFAR10` / `CIFAR100` to change the first convolution hyperparameter (as well as the maxpool layer).
 
   For imagenet, the conv is `kernel_size7x7, stride=2, pad=3`.
@@ -25,6 +21,11 @@ Download the [QTool.png](./QTool.png) to view in a whole.
 
 
 2. `fix_pooling` to choose whether the `bn` layer is moved before `maxpool` layer.
+
+## Body
+
+- Default buildup
+
 
 ![stem](./2.jpg)
 
