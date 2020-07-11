@@ -158,11 +158,11 @@ class BasicBlock(nn.Module):
             self.bn1 = nn.ModuleList([norm(planes, args, feature_stride=feature_stride*stride) for j in range(args.base)])
         self.bn2 = nn.ModuleList([norm(planes, args, feature_stride=feature_stride*stride) for j in range(args.base)])
 
-        # Prone network on
         keepdim = True
         qconv3x3 = conv3x3
         qconv1x1 = conv1x1
         extra_padding = 0
+        # Prone network on
         if 'prone' in args.keyword:
             keepdim = 'restore_shape' in args.keyword
             bn_before_restore = 'bn_before_restore' in args.keyword
