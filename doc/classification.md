@@ -46,9 +46,7 @@ mkdir -p /data/imagenet
 
 ## Pretrained model
 
-Some of the results are listed in [result_cls.md](./result_cls.md).
-
-We provide some pretrained models in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
+Some of the quantization results are listed in [result_cls.md](./result_cls.md). We provide pretrained models in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
 
 ## Quick Start
 
