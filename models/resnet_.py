@@ -127,29 +127,6 @@ class BasicBlock(nn.Module):
             self.seq = None
             order = 'none'
 
-        # lossless downsample network on
-        self.order = getattr(args, "order", 'none')
-        if 'ReShapeResolution' in args.keyword and stride != 1:
-            shrink = []
-            if self.order == 'none':
-                self.order = order
-            for i in self.order:
-                if i == 'c':
-                    shrink.append(TResNetStem(planes, in_channel=inplanes, stride=stride, args=args, force_fp=real_skip))
-                if i == 'b':
-                    if 'preBN' in args.keyword:
-                        shrink.append(norm(inplanes, args))
-                    else:
-                        shrink.append(norm(planes, args))
-                if i == 'a':
-                    shrink.append(actv(args))
-            self.shrink = nn.Sequential(*shrink)
-            inplanes = planes
-            stride = 1
-        else:
-            self.shrink = None
-        # lossless downsample network off
-
         if 'bacs' in args.keyword or 'bcas' in args.keyword: 
             self.bn1 = nn.ModuleList([norm(inplanes, args, feature_stride=feature_stride) for j in range(args.base)])
             if 'fix' in self.args.keyword:
@@ -162,24 +139,6 @@ class BasicBlock(nn.Module):
         qconv3x3 = conv3x3
         qconv1x1 = conv1x1
         extra_padding = 0
-        # Prone network on
-        if 'prone' in args.keyword:
-            keepdim = 'restore_shape' in args.keyword
-            bn_before_restore = 'bn_before_restore' in args.keyword
-            qconv3x3 = qprone
-
-            if 'preBN' in args.keyword: # to be finished
-                raise NotImplementedError("preBN not supported for the Prone yet")
-            else:
-                if not keepdim: # to be finished
-                    self.bn1 = nn.ModuleList([norm(planes*4, args) for j in range(args.base)])
-                    if bn_before_restore:
-                        self.bn2 = nn.ModuleList([norm(planes*16, args) for j in range(args.base)])
-
-            if stride != 1 and (args.input_size // feature_stride) % (2*stride) != 0:
-                extra_padding = ((2*stride) - ((args.input_size // feature_stride) % (2*stride))) // 2
-                logging.warning("extra pad for Prone is added to be {}".format(extra_padding))
-        # Prone network off
 
         # downsample branch
         self.enable_skip = stride != 1 or inplanes != planes
@@ -219,13 +178,8 @@ class BasicBlock(nn.Module):
         else:
             self.skip = nn.Sequential(*downsample)
 
-        # second conv
-        self.conv2 = nn.ModuleList([qconv3x3(planes, planes, 1, 1, args=args, feature_stride=feature_stride*stride) for j in range(args.base)])
-
-        # first conv
-        if 'prone' in args.keyword and 'no_prone_downsample' in args.keyword and stride != 1 and keepdim:
-            qconv3x3 = conv3x3
         self.conv1 = nn.ModuleList([qconv3x3(inplanes, planes, stride, 1, padding=extra_padding+1, args=args, feature_stride=feature_stride, keepdim=keepdim) for j in range(args.base)])
+        self.conv2 = nn.ModuleList([qconv3x3(planes, planes, 1, 1, args=args, feature_stride=feature_stride*stride) for j in range(args.base)])
 
         # scales
         if args.base == 1:
