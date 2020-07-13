@@ -1,7 +1,7 @@
 
 Please cite if you use dedicated method.
 
-## Quantization related publication
+## Quantization related publications
 
 1. LQnet:
 ```BibTeX
