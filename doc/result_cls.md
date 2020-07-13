@@ -3,7 +3,7 @@
 
 Refer [classification.md](./classification.md) for detailed instructions.
 
-Both the Top-1(\%) from original paper and the reproduction are listed. Corresponding training and testing configruations can be found in the `config` folder. Selected experiement results are listed. Users are encouraged to try different configurations to implement their own targets.
+Both the Top-1(\%) from original paper and the reproduction are listed. Corresponding training and testing configurations can be found in the `config` folder. Selected experiment results are listed. Users are encouraged to try different configurations to implement their own targets.
 
 Note that the performance among different methods is obtained based on different training hyper-parameters. The accuracy in the table will not be the evidence of superior of one algorithm over another. Training hyper-parameters and tricks (such as `weight normalization`) play a considerable role on improving the performance. See the summary of my experience on training quantization networks in [experience.md](./experience.md).
 
