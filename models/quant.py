@@ -145,18 +145,6 @@ class quantization(nn.Module):
                 elif 'lsq' in self.args.keyword or 'fm_lsq' in self.args.keyword:
                     self.clip_val = nn.Parameter(torch.Tensor([self.boundary]))
                     self.quant_fm = dorefa.LSQ
-                elif 'non-uniform' in self.args.keyword or 'fm_non-uniform' in self.args.keyword:
-                    self.clip_val = nn.Parameter(torch.Tensor([self.boundary]), requires_grad = False)
-                    self.custom_ratio = self.ratio
-                    self.quant_fm = dorefa.RoundSTE
-                    assert self.num_levels <= 4, 'non-uniform target at 2bit, ter, bin'
-                    assert self.half_range or self.num_levels == 3, 'Full range quantization for activation supports ternary only'
-                    for i in range(self.num_levels-1):
-                        setattr(self, "alpha%d" % i, nn.Parameter(torch.ones(1)))
-                        getattr(self, "alpha%d" % i).data.fill_(self.scale / self.boundary)
-                    if 'gamma' in self.args.keyword:
-                        self.basis = nn.Parameter(torch.ones (1), requires_grad=False)
-                        self.auxil = nn.Parameter(torch.zeros(1), requires_grad=False)
                 else: # Dorefa-Net
                     self.quant_fm = dorefa.qfn
                     self.clip_val = self.boundary
@@ -168,15 +156,6 @@ class quantization(nn.Module):
                         self.clip_val = nn.Parameter(torch.zeros(self.quant_group, 1, 1, 1))
                     self.clip_val.data.fill_(self.boundary)
                     self.quant_wt = dorefa.LSQ
-                elif 'non-uniform' in self.args.keyword:
-                    self.quant_wt = dorefa.RoundSTE
-                    self.custom_ratio = self.ratio
-                    assert self.num_levels == 3, 'non-uniform quantization for weight targets at ter'
-                    for i in range(self.num_levels-1):
-                        setattr(self, "alpha%d" % i, nn.Parameter(torch.ones(self.quant_group, 1, 1, 1)))
-                        getattr(self, "alpha%d" % i).data.mul_(self.scale)
-                    if 'debug' in self.args.keyword:
-                        self.logger.info('debug: tag: {}, enter non-uniform'.format(self.tag))
                 elif 'wt_bin' in self.args.keyword and self.num_levels == 2:
                     self.quant_wt = dorefa.DorefaParamsBinarizationSTE
                 else:
@@ -319,35 +298,6 @@ class quantization(nn.Module):
                     y = torch.clamp(x, min=0) # might not necessary when ReLU is applied in the network
                     y = torch.where(y < self.clip_val, y, self.clip_val)
                     y = self.quant_fm.apply(y, self.num_levels, self.clip_val.detach(), self.adaptive)
-                elif 'non-uniform' in self.args.keyword or 'fm_non-uniform' in self.args.keyword:
-                    if self.half_range:
-                        y1 = x * self.alpha0
-                        y1 = torch.clamp(y1, min=0, max=1)
-                        y1 = self.quant_fm.apply(y1, self.custom_ratio)
-                        y = y1
-                        if self.num_levels >= 3:
-                            y2 = (x - 1.0/self.alpha0) * self.alpha1
-                            y2 = torch.clamp(y2, min=0, max=1)
-                            y2 = self.quant_fm.apply(y2, self.custom_ratio)
-                            y = y + y2
-                        if self.num_levels == 4:
-                            y3 = (x - (1.0/self.alpha0 + 1.0/self.alpha1)) * self.alpha2
-                            y3 = torch.clamp(y3, min=0, max=1)
-                            y3 = self.quant_fm.apply(y3, self.custom_ratio)
-                            y =  y + y3
-                    else:
-                        y1 = x * self.alpha0
-                        y1 = torch.clamp(y1, min=-1, max=0)
-                        y1 = self.quant_fm.apply(y1, self.custom_ratio)
-                        y2 = x * self.alpha1
-                        y2 = torch.clamp(y2, min=0, max=1)
-                        y2 = self.quant_fm.apply(y2, self.custom_ratio)
-                        y = y1 + y2
-                    if 'gamma' in self.args.keyword:
-                        if self.training:
-                            self.auxil.data = dorefa.non_uniform_scale(x.detach(), y.detach())
-                            self.update_bias(self.auxil.data)
-                        y = y * self.basis
                 else: # default dorefa
                     y = torch.clamp(x, min=0, max=self.clip_val)
                     y = self.quant_fm.apply(y, self.num_levels, self.clip_val, self.adaptive)
@@ -362,14 +312,6 @@ class quantization(nn.Module):
                     y = self.quant_wt.apply(y, self.num_levels - 1)
                     y = y * 2.0 - 1.0
                     y = y * self.clip_val
-                elif 'non-uniform' in self.args.keyword:
-                    y1 = x * self.alpha0
-                    y1 = torch.clamp(y1, min=-1, max=0)
-                    y1 = self.quant_wt.apply(y1, self.custom_ratio)
-                    y2 = x * self.alpha1
-                    y2 = torch.clamp(y2, min=0, max=1)
-                    y2 = self.quant_wt.apply(y2, self.custom_ratio)
-                    y = y1 + y2
                 elif 'wt_bin' in self.args.keyword and self.num_levels == 2:
                     y = self.quant_wt.apply(x, self.adaptive)
                 else:
