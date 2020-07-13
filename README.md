@@ -36,7 +36,7 @@ Also cite the corresponding publications when you choose [dedicated algorithms](
 
 ## Contribute
 
-To contribute, PR is appreciated and suggestions are welcome to discuss. Private contact is available at blueardour@gmail.com
+To contribute, PR is appreciated and suggestions are welcome to discuss with. Private contact is available at blueardour@gmail.com
 
 ## License
 
