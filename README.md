@@ -12,7 +12,7 @@ This project provides aboundant choices of quantization strategies (such as the 
 
 ## Update History
 
-- Text parsing (preparing)
+- Text parsing (ABC-Net in preparing)
 - 2020.07.08 Instance Segmentation
 - 2020.07.08 Object Detection
 - 2020.06.23 Add classification quantization
