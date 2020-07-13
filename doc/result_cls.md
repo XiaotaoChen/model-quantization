@@ -7,6 +7,7 @@ Both the Top-1(\%) from original paper and the reproduction are listed. Correspo
 
 Note that the performance among different methods is obtained based on different training hyper-parameters. The accuracy in the table will not be the evidence of superior of one algorithm over another. Training hyper-parameters and tricks (such as `weight normalization`) play a considerable role on improving the performance. See the summary of my experience on training quantization networks in [experience.md](./experience.md).
 
+We provide some pretrained models in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
 
 Dataset | Method | Model | A/W | Reported | Top-1  | Comment 
 --- |:---:|:---:|:---:|:---:|:---:|:---:
