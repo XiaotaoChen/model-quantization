@@ -2,12 +2,6 @@
 
 The framework is able to provide quantization support for all kinds of tasks that the `Detectron2` and `AdelaiDet` projects integrate. Mix precision training is also available as a benefit.
 
-## Quanzation Results
-
-- [Detection](./result_det.md)
-
-- [Segmentation](./result_seg.md)
-
 
 ## Install
 
@@ -70,6 +64,14 @@ refer detectron2 datasets: [datasets/README.md](https://github.com/facebookresea
 
 and specific datasets from [AdelaiDet](https://github.com/aim-uofa/AdelaiDet)
 
+## Pretrained model and quanzation Results
+
+- [Detection](./result_det.md)
+
+- [Segmentation](./result_seg.md)
+
+We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
+
 ## What is modified in the detectron2 project
 
 The `model-quantization` project is used as a plugin to other projects to provide the quantization support. We modify the following files to integrate the `model-quantization` project into the `detectron2` / `AdelaiDet` projects. Use `vimdiff` to check the difference. The `model-quantization` project is potential to be equipped into other projects in a similar way.
@@ -92,9 +94,7 @@ Highly recommend to check the `detectron2/engine/defaults.py` to see which optio
 git difftool quantization master detectron2/config/defaults.py
 ```
 
-## Pretrained model
 
-We provide pretrained models gradually in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
 
 ## Training and Test
 
