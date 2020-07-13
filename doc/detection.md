@@ -195,7 +195,6 @@ git difftool quantization master detectron2/config/defaults.py
   python tools/train_net.py --config configs/BlendMask/550_R_18_1x-full_syncbn-lsq-2bit.yaml
   ```
 
-
 ## License and contribution 
 
 See [README.md](../README.md)
