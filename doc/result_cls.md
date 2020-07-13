@@ -7,7 +7,7 @@ Both the Top-1(\%) from original paper and the reproduction are listed. Correspo
 
 Note that the performance among different methods is obtained based on different training hyper-parameters. The accuracy in the table will not be the evidence of superior of one algorithm over another. Training hyper-parameters and tricks (such as `weight normalization`) play a considerable role on improving the performance. See the summary of my experience on training quantization networks in [experience.md](./experience.md).
 
-We provide some pretrained models in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
+We provide pretrained models in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
 
 Dataset | Method | Model | A/W | Reported | Top-1  | Flags 
 --- |:---:|:---:|:---:|:---:|:---:|:---:
@@ -30,7 +30,7 @@ imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 50.5 | cbsa,fm_STE,wt_pass,No-ReL
 imagenet | LSQ | Torch-R18 | 1/1 | - | 58.5 | ReLU,wt-var-mean,wtg=1
 
 
-`Torch-Rxx` indicates the ResNet architecture from Pytorch (so-called vanilla structure). `ResNet-xx` represnets the variants of ResNet. Minior differences are observed from different implementation from other projects. We provide flexible structure control to build compatibility of those projects. See [resnet.md](./resnet.md) for the architecture description and [classification.md](./classification.md) for how to control the choice by different configuration.
+`Torch-Rxx` indicates the ResNet architecture from Pytorch (so-called vanilla structure). `ResNet-xx` represents  the variants of ResNet. Minor differences are observed from different implementation from other projects. We provide flexible structure control to build compatibility of those projects. See [resnet.md](./resnet.md) for the architecture description and [classification.md](./classification.md) for how to control the choice by different configuration.
 
 Explanations on some flags:
 
