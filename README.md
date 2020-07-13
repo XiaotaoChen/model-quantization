@@ -12,7 +12,6 @@ This project provides aboundant choices of quantization strategies (such as the 
 
 ## Update History
 
-- Super Resolution (preparing)
 - Text parsing (preparing)
 - 2020.07.08 Instance Segmentation
 - 2020.07.08 Object Detection
