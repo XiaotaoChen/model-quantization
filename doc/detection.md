@@ -134,8 +134,7 @@ We provide pretrained models gradually in [google drive](https://drive.google.co
 
 - Resnet18-FCOS Quantization by LSQ into 2-bit model
 
-1. imagenet full precision and 2-bit LSQ quantization model draw from classification project (download pretrained model from [classification.md](./classification.md))
-   Prepare your own model if other configuraton is required
+1. Pretrain the full precision and 2-bit backbone in the `model-quantization` project. We provide ResNet-18/50 pretrained models in the download link. Prepare your own model if other backbones are required. 
    
    full precision model: `weights/pytorch-resnet18/resnet18_w32a32.pth`
    
