@@ -74,7 +74,7 @@ We provide pretrained models gradually in [google drive](https://drive.google.co
 
 ## What is modified in the detectron2 project
 
-The `model-quantization` project is used as a plugin to other projects to provide the quantization support. We modify the following files to integrate the `model-quantization` project into the `detectron2` / `AdelaiDet` projects. Use `vimdiff` to check the difference. The `model-quantization` project is potential to be equipped into other projects in a similar way.
+The [`model-quantization`](https://github.com/blueardour/model-quantization) project can be used as a plugin to other projects to provide the quantization support. We modify the following files to integrate the `model-quantization` project into the `detectron2` / `AdelaiDet` projects. Use `vimdiff` to check the difference. The `model-quantization` project is potential to be equipped into other projects in a similar way.
 
 ```
 modified:   detectron2/checkpoint/detection_checkpoint.py
