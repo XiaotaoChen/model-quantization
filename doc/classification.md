@@ -136,7 +136,7 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
   
   2. Weight decay is originally proposed to avoid ovrefit for the large amount of paramters. For some small tensors, for example the parameters in BatchNorm layer (as well as custom defined quantization parameter, such as clip-value), weight decay is advocated to be zero. `--decay_small` is for whether decay those small tensor or not.
   
-  3. `--custom_decay_list` and `--custom_decay` are combined for specific custom decay value to certain parameters. For example, in PACT, the clip_boudary can own its independent weight decay for regularition. The combination filter paramter name according to `--custom_decay_list` and assgin the weight decay to `--custom_decay`.
+  3. `--custom_decay_list` and `--custom_decay` are combined for specific custom decay value to certain parameters. For example, in PACT, the clip_boudary can own its independent weight decay for regularition. The combination filter paramter name according to `--custom_decay_list` and assign the weight decay to `--custom_decay`.
 
 
 - Learning rate
@@ -147,11 +147,11 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
   
   3. sgdr (with restart)
   
-  4. `--custom_lr_list` and `--custom_lr` are provided simiarly with beforemetioned weight decay to specific custom learning rate for certain paramaters.
+  4. `--custom_lr_list` and `--custom_lr` are provided similarly with before mentioned weight decay to specific custom learning rate for certain parameters.
 
 - mix precision training
   options `--fp16` and `--opt_level [O1]` are provided for mix precision traning.
 
   1. FP32
   
-  2. FP16 with customed level, recommmond `O1` level.
+  2. FP16 with customed level, recommend `O1` level.
