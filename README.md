@@ -19,7 +19,18 @@ This project provides aboundant choices of quantization strategies (such as the 
 
 ## Citation
 
-Please cite the following work if you find the project helpful. 
+Please cite the following work if you find the project helpful.
+
+```
+@misc{chen2020qtool,
+author = {Peng Chen, Bohan Zhuang, Jing Liu and Chunlei Liu},
+title = {{QTool: A low bit quantization toolbox for computer vision neural networks}},
+year = {2020},
+howpublished = {\url{https://github.com/blueardour/model-quantization}},
+note = {Accessed: [Insert date here]}
+}
+```
+
 
 Also Cite correspoding publication when you choose [dedicated algorithms](./doc/reference.md).
 
