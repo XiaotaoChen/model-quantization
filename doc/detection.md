@@ -1,18 +1,19 @@
-# Quantization various computer vision tasks
+# Quantization for various computer vision tasks
 
 The framework is able to provide quantization support for all kinds of tasks that the `Detectron2` and `AdelaiDet` projects integrate. Mix precision training is also available as a benefit.
 
-## Quanzation Reuslt
+## Quanzation Results
 
-- [Detction Performance](./result_det.md)
+- [Detection](./result_det.md)
 
-- [Segmentation Performance](./result_seg.md)
+- [Segmentation](./result_seg.md)
+
 
 ## Install
 
-1. install dependent package according to [classification.md](./classification.md)
+1. install dependent packages according to [classification.md](./classification.md)
 
-***Note a known issue for the FP16 training: Training with FP16 and SyncBN on multi-GPU seems to cause NAN loss for current project. Use normal BN instead***
+***Note a known issue for the FP16 training: Training with FP16 and SyncBN on multi-GPU seems to cause NAN loss for current projects. Use normal BN instead***
 
 2. download the [custom detectron2](https://github.com/blueardour/detectron2) project. See what is modified below.
 
@@ -36,7 +37,7 @@ pip install -e .
 # link classification pretrained weight
 ln -s ../model-quantization/weights .
 ```
-Facebook detectron2 has not support for some works such as `FCOS` and `Blendmask`. Try the [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) for more task support. Note, for the `aim-uofa/AdelaiDet`, it is also necessary to clone my custom branch (I'm considering to merge the `quantization` branch in my repo to the official repo if it is possible).
+Facebook detectron2 does not support some works such as `FCOS` and `Blendmask`. Try the [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) for more tasks. Note, for the `aim-uofa/AdelaiDet`, it is also necessary to clone my custom branch (I'm considering to merge the `quantization` branch in my repo to the official repo if it is possible).
 
 ```
 cd /workspace/git/
@@ -52,11 +53,9 @@ python setup.py build develop
 ln -s ../model-quantization/weights .
 ```
 
+The custom project [custom detectron2](https://github.com/blueardour/detectron2) and [custom AdelaiDet](https://github.com/blueardour/uofa-AdelaiDet) will upgrade regularly from the origin repo.
 
-
-The custom project [custom detectron2](https://github.com/blueardour/detectron2) and [custom AdelaiDet](https://github.com/blueardour/uofa-AdelaiDet) will upgrade regularly from origin repo.
-
-Similar with the orignal project, `custom AdelaiDet` depends on `custom detectron2`.  Install those two projects based on the original install instructions.
+Similar with the orignal project, `custom AdelaiDet` depends on `custom detectron2`.  Install the two projects based on the original install instructions.
 
 3. make sure the symbol link is correct.
 ```
@@ -65,17 +64,15 @@ ls -l third_party
 # the third_party/quantization should point to /workspace/git/model-quantization/models
 ```
 
-Currently I link the dependentant with symbol link. As these projects will update separatedly, submodule with version management is considered when all scripts being already.
-
 ## Dataset
 
 refer detectron2 datasets: [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md)
 
-and or specific datasets from [AdelaiDet](https://github.com/aim-uofa/AdelaiDet)
+and specific datasets from [AdelaiDet](https://github.com/aim-uofa/AdelaiDet)
 
 ## What is modified in the detectron2 project
 
-The main modification of the project to add quantization support lays in the followsing files.  Use `vimdiff` to check the difference.
+The `model-quantization` project is used as a plugin to other projects to provide the quantization support. We modify the following files to integrate the `model-quantization` project into the `detectron2` / `AdelaiDet` projects. Use `vimdiff` to check the difference. The `model-quantization` project is potential to be equipped into other projects in a similar way.
 
 ```
 modified:   detectron2/checkpoint/detection_checkpoint.py
@@ -89,7 +86,8 @@ new file:   third_party/convert_to_quantization.py
 new file:   third_party/quantization
 ```
 
-Highly recommend to check the `detectron2/engine/defaults.py` to see which options are added for the low bit quantization.
+Highly recommend to check the `detectron2/engine/defaults.py` to see which options are added for the low-bit quantization.
+
 ```
 git difftool quantization master detectron2/config/defaults.py
 ```
@@ -100,50 +98,35 @@ We provide pretrained models gradually in [google drive](https://drive.google.co
 
 ## Training and Test
 
-  Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ). Just adapt the quantization to your need by modifying the configration file.
+  Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ).  To obtain the quantization version of given models, please modify corresponding configuration files by setting quantization related options.
 
-  Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config` . In `detectron2` and `aim-uofa/AdelaiDet` project, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task. Refer option introduction in [classification.md](./classification.md#Training-script-options)
+  Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config`. In `detectron2` and `aim-uofa/AdelaiDet` projects, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task. Refer option introduction in [classification.md](./classification.md#Training-script-options)
 
-  If you want to test the low bit quantization model, just download the pretrained model and run the test. If training is required, see below [examples](./detection.md#Examples) for demonstration.
+  If you want to test the low-bit quantization model only, just download the pretrained model and run the test. If training is required, see below [examples](./detection.md#Examples) for demonstration.
 
 ## Speical Guide for quantization
 
-  The overall flow of the quantization on detection/ segmentation tasks are as follows, some of them can be omit if pretrained model alreay exist.
+  The overall flow of the quantization on detection/ segmentation / text spotting tasks are as follows, some of them can be omit if the pretrained model already exists.
 
 - Train full precision backbone network on Imagenet
 
-  Refer the resulted model as `backbone_full.pt`
+  Refer the saved model as `backbone_full.pt`
 
-- Finetune the low bit model (backbone network)
+- Finetune the low-bit model (backbone network)
 
-  Refer [classification.md](./classification.md) for fintuning with `backbone_full.pt` as initilization.
+  Refer [classification.md](./classification.md) for finetuning with `backbone_full.pt` as initialization.
   
-  Refer the resulted model as `backbone_low.pt`
+  Refer the saved model as `backbone_low.pt`
   
 - Import `backbone_full.pt` and `backbone_low.pt` into detectron2 project format. 
 
-  To import the pretrained models in correct format, refer the `renaming function` provide in `tools.py` demonstrated in [tools.md](./tools.md) and also the [examples](./detection.md#Examples).
+  To import the pretrained models in correct format, refer the `renaming function` provided in `tools.py` demonstrated in [tools.md](./tools.md) and also the [examples](./detection.md#Examples).
 
-- Train in full precision of the detection/segmentation tasks with formatted `backbone_full.pt` as initilization.
+- Train the full precision model with formatted `backbone_full.pt` as initialization.
   
-  Refer the resulted model as `overall_full.pt`
+  Refer the saved model as `overall_full.pt`
  
- - Finetune low bit detection/segmentation model with double initilization.  
- 
-   We provide `WEIGHT_EXTRA` option to load an extra pretrain model. If `double-init` is perfered, provide the `overall_full.pt` with `WEIGHT_EXTRA` and the quantized backbone - the formatted `backbone_low.pt` with `WEIGHTS`. `Single pass init` is also possible by only setting the `overall_full.pt` with `WEIGHTS`.
-
-## Special Notice on the Model Structure Revision for Quantizaiton
-
-  The performance of quantization network is approved to be possible improved with the following tricks.
-
-- Employ normalization (such as BatchNorm) and non-linearity (such as ReLU) to the FPN module. (We found this revision will slightly improve the full precision performance.)
-
-- Empoly normalization (such as GroupNorm or BatchNorm) to the tower in the Head module. (No-share BatchNorm is demonstrated to achieve superior performance.)
-
-- Quantization is employed on all convolution layer wrappered in `detectron2/layer/wrapper.py`, namely the `Conv2D` module. For layers natively call `nn.conv2d` will keep in full precision.
-
-- We provide an option `quantization.scope` to flexible choose the layers/blocks which are scheduled to be quantized. By default, the first and last layers of the model are not quantized.
-
+ - Finetune low-bit model with double pass / single pass initialization.
 
 ## Examples
 
