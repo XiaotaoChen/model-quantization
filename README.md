@@ -1,7 +1,7 @@
 
-# QTool: A low bit quantization toolbox for computer vision neural networks
+# QTool: A low-bit quantization toolbox for deep neural networks in computer vision
 
-This project provides aboundant choices of quantization strategies (such as the quantization algoirthms, training schedules and empirical tricks) for quantizing the image classification neural networks into low bit counterparts. Associated projects demonstrate that this project can also benefit other computer vision tasks, such as object detection, segmentation and text parsing. Pretrained models are provided to show high standard of the code on achiving appealing quantization performance. 
+This project provides aboundant choices of quantization strategies (such as the quantization algoirthms, training schedules and empirical tricks) for quantizing the image classification neural networks into low-bit counterparts. Associated projects demonstrate that this project can also benefit other computer vision tasks, such as object detection, segmentation and text parsing. Pretrained models are provided to show high standard of the code on achiving appealing quantization performance. 
 
 ## Supported Task
 
@@ -24,7 +24,7 @@ Please cite the following work if you find the project helpful.
 ```
 @misc{chen2020qtool,
 author = {Peng Chen, Bohan Zhuang, Jing Liu and Chunlei Liu},
-title = {{QTool: A low bit quantization toolbox for computer vision neural networks}},
+title = {{QTool: A low-bit quantization toolbox for deep neural networks computer vision}},
 year = {2020},
 howpublished = {\url{https://github.com/blueardour/model-quantization}},
 note = {Accessed: [Insert date here]}
