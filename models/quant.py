@@ -18,11 +18,17 @@ __EPS__ = 0 #1e-5
 class quantization(nn.Module):
     def __init__(self, args=None, tag='fm', shape=[], feature_stride=None, logger=None):
         super(quantization, self).__init__()
+        self.index = -1
+        self.tag = tag
+        self.logger = logger
+        if logger is None:
+            self.logger = logging.getLogger(__name__)
+
         if args is None:
+            self.enable = False
             return
 
         self.args = args
-        self.tag = tag
         self.shape = shape
         self.feature_stride = feature_stride
         self.enable = getattr(args, tag + '_enable', False)
@@ -77,9 +83,6 @@ class quantization(nn.Module):
         if not self.enable:
             return
 
-        self.logger = logger
-        if logger is None:
-            self.logger = logging.getLogger(__name__)
         self.logger.info("half_range({}), bit({}), num_levels({}), quant_group({}) boundary({}) scale({}) ratio({}) fan({}) tag({})".format(
             self.half_range, self.bit, self.num_levels, self.quant_group, self.boundary, self.scale, self.ratio, self.fan, self.tag))
 
@@ -88,7 +91,6 @@ class quantization(nn.Module):
         self.learning_rate = 1
         self.init_learning_rate = 1
         self.progressive = False
-        self.index = -1
         self.init()
 
     def init(self):
@@ -177,15 +179,15 @@ class quantization(nn.Module):
         #raise RuntimeError("Quantization method not provided %s" % self.args.keyword)
 
     def update_quantization(self, **parameters):
-        if not self.enable:
-            return
-
         index = self.index
         if 'index' in parameters:
             index =  parameters['index']
         if index != self.index:
             self.index = index
             self.logger.info('update %s_index %r' % (self.tag, self.index))
+
+        if not self.enable:
+            return
 
         if self.method == 'dorefa':
             if 'progressive' in parameters:
@@ -218,12 +220,18 @@ class quantization(nn.Module):
             pass
 
     def init_based_on_warmup(self, data=None):
+        if not self.enable:
+            return
+
         with torch.no_grad():
             if self.method == 'dorefa' and data is not None:
                 pass
         return
 
     def init_based_on_pretrain(self, weight=None):
+        if not self.enable:
+            return
+
         with torch.no_grad():
             if self.method == 'dorefa' and 'non-uniform' in self.args.keyword:
                 pass
@@ -248,6 +256,15 @@ class quantization(nn.Module):
         elif 'proxquant' in self.args.keyword:
             return x * self.prox + y * (1 - self.prox)
         else:
+            if 'probe' in self.args.keyword and self.index >= 0 and not self.training and self.tag == 'fm':
+                for item in self.args.probe_list:
+                    if 'before-quant' == item:
+                        torch.save(x, "log/{}-activation-latent.pt".format(self.index))
+                    elif 'after-quant' == item:
+                        torch.save(y, "log/{}-activation-quant.pt".format(self.index))
+                    elif hasattr(self, item):
+                        torch.save(getattr(self, item), "log/{}-activation-{}.pt".format(self.index, item))
+                self.index = -1
             return y
 
     def forward(self, x):
@@ -401,15 +418,15 @@ def conv5x5(in_planes, out_planes, stride=1, groups=1, args=None, force_fp=False
     return custom_conv(in_planes, out_planes, kernel_size=5, stride=stride, padding=2, groups=groups,
             args=args, force_fp=force_fp, feature_stride=feature_stride)
 
-def conv3x3(in_planes, out_planes, stride=1, groups=1, args=None, force_fp=False, feature_stride=1):
+def conv3x3(in_planes, out_planes, stride=1, groups=1, padding=1, args=None, force_fp=False, feature_stride=1, keepdim=True):
     "3x3 convolution with padding"
-    return custom_conv(in_planes, out_planes, kernel_size=3, stride=stride, padding=1, groups=groups,
+    return custom_conv(in_planes, out_planes, kernel_size=3, stride=stride, padding=padding, groups=groups,
             args=args, force_fp=force_fp, feature_stride=feature_stride)
 
-def conv1x1(in_planes, out_planes, stride=1, args=None, force_fp=False, feature_stride=1):
+def conv1x1(in_planes, out_planes, stride=1, padding=0, args=None, force_fp=False, feature_stride=1):
     "1x1 convolution"
-    return custom_conv(in_planes, out_planes, kernel_size=1, stride=stride, args=args,
-            force_fp=force_fp, feature_stride=feature_stride)
+    return custom_conv(in_planes, out_planes, kernel_size=1, stride=stride, padding=padding,
+            args=args, force_fp=force_fp, feature_stride=feature_stride)
 
 #class custom_linear(nn.Linear):
 #    def __init__(self, in_channels, out_channels, dropout=0, args=None, bias=False):

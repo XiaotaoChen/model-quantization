@@ -46,6 +46,8 @@ def get_parser():
     parser.add_argument('--width_alpha', default=1.0, type=float, help='channel alpha')
     parser.add_argument('--block_alpha', default=1.0, type=float)
     parser.add_argument('--se_reduction', default=16, type=int, help='ratio in Squeeze-Excition Module')
+    parser.add_argument('--stem_kernel', default=1, type=int)
+    parser.add_argument('--order', default='none', type=str)
 
     # config for activation quantization
     parser.add_argument('--fm_bit', default=None, type=float)
@@ -91,7 +93,8 @@ def get_parser():
 
     # record / debug runtime information
     parser.add_argument('--probe_iteration', default=1, type=int)
-    parser.add_argument('--probe_list', default=[], type=int, nargs='+')
+    parser.add_argument('--probe_index', default=[], type=int, nargs='+')
+    parser.add_argument('--probe_list', default='', type=str)
 
     # specific custom learning rate or weight decay for certain parameters
     parser.add_argument('--custom_decay_list', default='', type=str)
@@ -113,6 +116,8 @@ def get_parameter():
         args.custom_decay_list = [x.strip() for x in args.custom_decay_list.split(',')]
     if isinstance(args.custom_lr_list, str):
         args.custom_lr_list = [x.strip() for x in args.custom_lr_list.split(',')]
+    if isinstance(args.probe_list, str):
+        args.probe_list = [x.strip() for x in args.probe_list.split(',')]
     return args
 
 def main(args=None):
@@ -182,7 +187,10 @@ def main(args=None):
     if args.resume:
         if utils.check_file(args.resume_file):
             logging.info("resuming from %s" % args.resume_file)
-            checkpoint = torch.load(args.resume_file)
+            if torch.cuda.is_available():
+                checkpoint = torch.load(args.resume_file)
+            else:
+                checkpoint = torch.load(args.resume_file, map_location='cpu')
             if 'epoch' in checkpoint:
                 epoch = checkpoint['epoch']
                 logging.info("resuming ==> last epoch: %d" % epoch)
@@ -203,7 +211,10 @@ def main(args=None):
     else:
         if utils.check_file(args.pretrained):
             logging.info("load pretrained from %s" % args.pretrained)
-            checkpoint = torch.load(args.pretrained)
+            if torch.cuda.is_available():
+                checkpoint = torch.load(args.pretrained)
+            else:
+                checkpoint = torch.load(args.pretrained, map_location='cpu')
             logging.info("load pretrained ==> last epoch: %d" % checkpoint.get('epoch', 0))
             logging.info("load pretrained ==> last best_acc: %f" % checkpoint.get('best_acc', 0))
             logging.info("load pretrained ==> last learning_rate: %f" % checkpoint.get('learning_rate', 0))

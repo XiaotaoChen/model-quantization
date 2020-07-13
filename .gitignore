@@ -6,6 +6,7 @@ ipytorch
 tmp
 log
 
+# tmp files
 *.swp
 *.o
 *.bak
@@ -19,3 +20,7 @@ config.*
 *-origin.py
 convert_onnx.py
 convert_onnx.sh
+.config*
+*.swn
+*.swm
+*.swo

@@ -1,0 +1,210 @@
+backbone.bottom_up.res2.0.conv1.norm.{bias, running_var, weight, running_mean}
+backbone.bottom_up.res2.0.conv1.quant_activation.{times, clip_val}
+backbone.bottom_up.res2.0.conv1.quant_weight.{clip_val, times}
+backbone.bottom_up.res2.0.conv1.weight
+backbone.bottom_up.res2.0.conv2.norm.{bias, running_var, running_mean, weight}
+backbone.bottom_up.res2.0.conv2.quant_activation.{clip_val, times}
+backbone.bottom_up.res2.0.conv2.quant_weight.{times, clip_val}
+backbone.bottom_up.res2.0.conv2.weight
+backbone.bottom_up.res2.0.conv3.norm.{weight, bias, running_mean, running_var}
+backbone.bottom_up.res2.0.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res2.0.conv3.quant_weight.{times, clip_val}
+backbone.bottom_up.res2.0.conv3.weight
+backbone.bottom_up.res2.0.shortcut.norm.{running_mean, running_var, weight, bias}
+backbone.bottom_up.res2.0.shortcut.quant_activation.{times, clip_val}
+backbone.bottom_up.res2.0.shortcut.quant_weight.{clip_val, times}
+backbone.bottom_up.res2.0.shortcut.weight
+backbone.bottom_up.res2.1.conv1.norm.{running_var, running_mean, bias, weight}
+backbone.bottom_up.res2.1.conv1.quant_activation.{clip_val, times}
+backbone.bottom_up.res2.1.conv1.quant_weight.{clip_val, times}
+backbone.bottom_up.res2.1.conv1.weight
+backbone.bottom_up.res2.1.conv2.norm.{running_mean, bias, weight, running_var}
+backbone.bottom_up.res2.1.conv2.quant_activation.{times, clip_val}
+backbone.bottom_up.res2.1.conv2.quant_weight.{clip_val, times}
+backbone.bottom_up.res2.1.conv2.weight
+backbone.bottom_up.res2.1.conv3.norm.{bias, weight, running_var, running_mean}
+backbone.bottom_up.res2.1.conv3.quant_activation.{clip_val, times}
+backbone.bottom_up.res2.1.conv3.quant_weight.{times, clip_val}
+backbone.bottom_up.res2.1.conv3.weight
+backbone.bottom_up.res2.2.conv1.norm.{weight, bias, running_mean, running_var}
+backbone.bottom_up.res2.2.conv1.quant_activation.{clip_val, times}
+backbone.bottom_up.res2.2.conv1.quant_weight.{clip_val, times}
+backbone.bottom_up.res2.2.conv1.weight
+backbone.bottom_up.res2.2.conv2.norm.{running_var, bias, running_mean, weight}
+backbone.bottom_up.res2.2.conv2.quant_activation.{times, clip_val}
+backbone.bottom_up.res2.2.conv2.quant_weight.{clip_val, times}
+backbone.bottom_up.res2.2.conv2.weight
+backbone.bottom_up.res2.2.conv3.norm.{weight, running_mean, bias, running_var}
+backbone.bottom_up.res2.2.conv3.quant_activation.{clip_val, times}
+backbone.bottom_up.res2.2.conv3.quant_weight.{times, clip_val}
+backbone.bottom_up.res2.2.conv3.weight
+backbone.bottom_up.res3.0.conv1.norm.{bias, running_mean, running_var, weight}
+backbone.bottom_up.res3.0.conv1.quant_activation.{times, clip_val}
+backbone.bottom_up.res3.0.conv1.quant_weight.{times, clip_val}
+backbone.bottom_up.res3.0.conv1.weight
+backbone.bottom_up.res3.0.conv2.norm.{bias, weight, running_var, running_mean}
+backbone.bottom_up.res3.0.conv2.quant_activation.{clip_val, times}
+backbone.bottom_up.res3.0.conv2.quant_weight.{clip_val, times}
+backbone.bottom_up.res3.0.conv2.weight
+backbone.bottom_up.res3.0.conv3.norm.{running_var, running_mean, bias, weight}
+backbone.bottom_up.res3.0.conv3.quant_activation.{clip_val, times}
+backbone.bottom_up.res3.0.conv3.quant_weight.{clip_val, times}
+backbone.bottom_up.res3.0.conv3.weight
+backbone.bottom_up.res3.0.shortcut.norm.{running_var, weight, bias, running_mean}
+backbone.bottom_up.res3.0.shortcut.quant_activation.{clip_val, times}
+backbone.bottom_up.res3.0.shortcut.quant_weight.{times, clip_val}
+backbone.bottom_up.res3.0.shortcut.weight
+backbone.bottom_up.res3.1.conv1.norm.{running_var, bias, running_mean, weight}
+backbone.bottom_up.res3.1.conv1.quant_activation.{clip_val, times}
+backbone.bottom_up.res3.1.conv1.quant_weight.{clip_val, times}
+backbone.bottom_up.res3.1.conv1.weight
+backbone.bottom_up.res3.1.conv2.norm.{bias, weight, running_mean, running_var}
+backbone.bottom_up.res3.1.conv2.quant_activation.{times, clip_val}
+backbone.bottom_up.res3.1.conv2.quant_weight.{clip_val, times}
+backbone.bottom_up.res3.1.conv2.weight
+backbone.bottom_up.res3.1.conv3.norm.{weight, running_var, running_mean, bias}
+backbone.bottom_up.res3.1.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res3.1.conv3.quant_weight.{times, clip_val}
+backbone.bottom_up.res3.1.conv3.weight
+backbone.bottom_up.res3.2.conv1.norm.{running_var, bias, running_mean, weight}
+backbone.bottom_up.res3.2.conv1.quant_activation.{times, clip_val}
+backbone.bottom_up.res3.2.conv1.quant_weight.{clip_val, times}
+backbone.bottom_up.res3.2.conv1.weight
+backbone.bottom_up.res3.2.conv2.norm.{running_var, weight, running_mean, bias}
+backbone.bottom_up.res3.2.conv2.quant_activation.{times, clip_val}
+backbone.bottom_up.res3.2.conv2.quant_weight.{clip_val, times}
+backbone.bottom_up.res3.2.conv2.weight
+backbone.bottom_up.res3.2.conv3.norm.{running_mean, weight, bias, running_var}
+backbone.bottom_up.res3.2.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res3.2.conv3.quant_weight.{clip_val, times}
+backbone.bottom_up.res3.2.conv3.weight
+backbone.bottom_up.res3.3.conv1.norm.{weight, bias, running_var, running_mean}
+backbone.bottom_up.res3.3.conv1.quant_activation.{times, clip_val}
+backbone.bottom_up.res3.3.conv1.quant_weight.{clip_val, times}
+backbone.bottom_up.res3.3.conv1.weight
+backbone.bottom_up.res3.3.conv2.norm.{weight, running_mean, running_var, bias}
+backbone.bottom_up.res3.3.conv2.quant_activation.{clip_val, times}
+backbone.bottom_up.res3.3.conv2.quant_weight.{times, clip_val}
+backbone.bottom_up.res3.3.conv2.weight
+backbone.bottom_up.res3.3.conv3.norm.{weight, running_mean, bias, running_var}
+backbone.bottom_up.res3.3.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res3.3.conv3.quant_weight.{clip_val, times}
+backbone.bottom_up.res3.3.conv3.weight
+backbone.bottom_up.res4.0.conv1.norm.{running_mean, weight, bias, running_var}
+backbone.bottom_up.res4.0.conv1.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.0.conv1.quant_weight.{clip_val, times}
+backbone.bottom_up.res4.0.conv1.weight
+backbone.bottom_up.res4.0.conv2.norm.{running_var, weight, bias, running_mean}
+backbone.bottom_up.res4.0.conv2.quant_activation.{clip_val, times}
+backbone.bottom_up.res4.0.conv2.quant_weight.{clip_val, times}
+backbone.bottom_up.res4.0.conv2.weight
+backbone.bottom_up.res4.0.conv3.norm.{bias, running_var, weight, running_mean}
+backbone.bottom_up.res4.0.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.0.conv3.quant_weight.{clip_val, times}
+backbone.bottom_up.res4.0.conv3.weight
+backbone.bottom_up.res4.0.shortcut.norm.{running_mean, running_var, weight, bias}
+backbone.bottom_up.res4.0.shortcut.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.0.shortcut.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.0.shortcut.weight
+backbone.bottom_up.res4.1.conv1.norm.{weight, running_var, bias, running_mean}
+backbone.bottom_up.res4.1.conv1.quant_activation.{clip_val, times}
+backbone.bottom_up.res4.1.conv1.quant_weight.{clip_val, times}
+backbone.bottom_up.res4.1.conv1.weight
+backbone.bottom_up.res4.1.conv2.norm.{running_var, weight, running_mean, bias}
+backbone.bottom_up.res4.1.conv2.quant_activation.{clip_val, times}
+backbone.bottom_up.res4.1.conv2.quant_weight.{clip_val, times}
+backbone.bottom_up.res4.1.conv2.weight
+backbone.bottom_up.res4.1.conv3.norm.{bias, running_mean, running_var, weight}
+backbone.bottom_up.res4.1.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.1.conv3.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.1.conv3.weight
+backbone.bottom_up.res4.2.conv1.norm.{running_var, running_mean, bias, weight}
+backbone.bottom_up.res4.2.conv1.quant_activation.{clip_val, times}
+backbone.bottom_up.res4.2.conv1.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.2.conv1.weight
+backbone.bottom_up.res4.2.conv2.norm.{weight, running_var, running_mean, bias}
+backbone.bottom_up.res4.2.conv2.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.2.conv2.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.2.conv2.weight
+backbone.bottom_up.res4.2.conv3.norm.{weight, running_var, running_mean, bias}
+backbone.bottom_up.res4.2.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.2.conv3.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.2.conv3.weight
+backbone.bottom_up.res4.3.conv1.norm.{running_var, weight, bias, running_mean}
+backbone.bottom_up.res4.3.conv1.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.3.conv1.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.3.conv1.weight
+backbone.bottom_up.res4.3.conv2.norm.{running_var, bias, running_mean, weight}
+backbone.bottom_up.res4.3.conv2.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.3.conv2.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.3.conv2.weight
+backbone.bottom_up.res4.3.conv3.norm.{running_mean, weight, bias, running_var}
+backbone.bottom_up.res4.3.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.3.conv3.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.3.conv3.weight
+backbone.bottom_up.res4.4.conv1.norm.{weight, running_mean, bias, running_var}
+backbone.bottom_up.res4.4.conv1.quant_activation.{clip_val, times}
+backbone.bottom_up.res4.4.conv1.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.4.conv1.weight
+backbone.bottom_up.res4.4.conv2.norm.{weight, running_mean, running_var, bias}
+backbone.bottom_up.res4.4.conv2.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.4.conv2.quant_weight.{clip_val, times}
+backbone.bottom_up.res4.4.conv2.weight
+backbone.bottom_up.res4.4.conv3.norm.{weight, running_var, bias, running_mean}
+backbone.bottom_up.res4.4.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.4.conv3.quant_weight.{clip_val, times}
+backbone.bottom_up.res4.4.conv3.weight
+backbone.bottom_up.res4.5.conv1.norm.{weight, running_mean, running_var, bias}
+backbone.bottom_up.res4.5.conv1.quant_activation.{clip_val, times}
+backbone.bottom_up.res4.5.conv1.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.5.conv1.weight
+backbone.bottom_up.res4.5.conv2.norm.{running_mean, running_var, weight, bias}
+backbone.bottom_up.res4.5.conv2.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.5.conv2.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.5.conv2.weight
+backbone.bottom_up.res4.5.conv3.norm.{running_var, running_mean, weight, bias}
+backbone.bottom_up.res4.5.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res4.5.conv3.quant_weight.{times, clip_val}
+backbone.bottom_up.res4.5.conv3.weight
+backbone.bottom_up.res5.0.conv1.norm.{bias, weight, running_var, running_mean}
+backbone.bottom_up.res5.0.conv1.quant_activation.{clip_val, times}
+backbone.bottom_up.res5.0.conv1.quant_weight.{clip_val, times}
+backbone.bottom_up.res5.0.conv1.weight
+backbone.bottom_up.res5.0.conv2.norm.{bias, running_mean, weight, running_var}
+backbone.bottom_up.res5.0.conv2.quant_activation.{times, clip_val}
+backbone.bottom_up.res5.0.conv2.quant_weight.{times, clip_val}
+backbone.bottom_up.res5.0.conv2.weight
+backbone.bottom_up.res5.0.conv3.norm.{weight, running_mean, bias, running_var}
+backbone.bottom_up.res5.0.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res5.0.conv3.quant_weight.{times, clip_val}
+backbone.bottom_up.res5.0.conv3.weight
+backbone.bottom_up.res5.0.shortcut.norm.{running_mean, running_var, weight, bias}
+backbone.bottom_up.res5.0.shortcut.quant_activation.{times, clip_val}
+backbone.bottom_up.res5.0.shortcut.quant_weight.{clip_val, times}
+backbone.bottom_up.res5.0.shortcut.weight
+backbone.bottom_up.res5.1.conv1.norm.{bias, running_var, weight, running_mean}
+backbone.bottom_up.res5.1.conv1.quant_activation.{clip_val, times}
+backbone.bottom_up.res5.1.conv1.quant_weight.{times, clip_val}
+backbone.bottom_up.res5.1.conv1.weight
+backbone.bottom_up.res5.1.conv2.norm.{running_var, running_mean, weight, bias}
+backbone.bottom_up.res5.1.conv2.quant_activation.{times, clip_val}
+backbone.bottom_up.res5.1.conv2.quant_weight.{times, clip_val}
+backbone.bottom_up.res5.1.conv2.weight
+backbone.bottom_up.res5.1.conv3.norm.{running_mean, weight, running_var, bias}
+backbone.bottom_up.res5.1.conv3.quant_activation.{clip_val, times}
+backbone.bottom_up.res5.1.conv3.quant_weight.{times, clip_val}
+backbone.bottom_up.res5.1.conv3.weight
+backbone.bottom_up.res5.2.conv1.norm.{weight, bias, running_mean, running_var}
+backbone.bottom_up.res5.2.conv1.quant_activation.{times, clip_val}
+backbone.bottom_up.res5.2.conv1.quant_weight.{clip_val, times}
+backbone.bottom_up.res5.2.conv1.weight
+backbone.bottom_up.res5.2.conv2.norm.{bias, running_mean, weight, running_var}
+backbone.bottom_up.res5.2.conv2.quant_activation.{times, clip_val}
+backbone.bottom_up.res5.2.conv2.quant_weight.{clip_val, times}
+backbone.bottom_up.res5.2.conv2.weight
+backbone.bottom_up.res5.2.conv3.norm.{running_mean, weight, running_var, bias}
+backbone.bottom_up.res5.2.conv3.quant_activation.{times, clip_val}
+backbone.bottom_up.res5.2.conv3.quant_weight.{times, clip_val}
+backbone.bottom_up.res5.2.conv3.weight
+backbone.bottom_up.stem.conv1.norm.{bias, weight, running_mean, running_var}
+backbone.bottom_up.stem.conv1.weight

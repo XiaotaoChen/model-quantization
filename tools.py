@@ -20,7 +20,10 @@ def export_onnx(args):
 
     if utils.check_file(args.old):
         print("load pretrained from %s" % args.old)
-        checkpoint = torch.load(args.old)
+        if torch.cuda.is_available():
+            checkpoint = torch.load(args.old)
+        else:  # force cpu mode
+            checkpoint = torch.load(args.old, map_location='cpu')
         print("load pretrained ==> last epoch: %d" % checkpoint.get('epoch', 0))
         print("load pretrained ==> last best_acc: %f" % checkpoint.get('best_acc', 0))
         print("load pretrained ==> last learning_rate: %f" % checkpoint.get('learning_rate', 0))
@@ -116,9 +119,12 @@ def main():
             return
         if utils.check_file(args.old):
             raw = 'raw' in config.keys()
-            checkpoint = torch.load(args.old)
+            if torch.cuda.is_available():
+                checkpoint = torch.load(args.old)
+            else:  # force cpu mode
+                checkpoint = torch.load(args.old, map_location='cpu')
             try:
-                utils.load_state_dict(model, checkpoint.get('state_dict', None) if not raw else checkpoint, verbose=True)
+                utils.load_state_dict(model, checkpoint.get('state_dict', None) if not raw else checkpoint, verbose=False)
             except RuntimeError:
                 print("Loading pretrained model failed")
             print("Loading pretrained model OK")
@@ -175,6 +181,42 @@ def main():
         checkpointer = DetectionCheckpointer(model, split[0], save_to_disk=True)
         checkpointer.resume_or_load(args.old, resume=True)
         checkpointer.save(split[1])
+
+    if 'swap' in config.keys():
+        mapping_from = []
+        if os.path.isfile(args.mapping_from):
+            with open(args.mapping_from) as f:
+                mapping_from = f.readlines()
+                f.close()
+            mapping_from = [ i.strip().strip('\n').strip('"').strip("'") for i in mapping_from]
+            mapping_from = [ i for i in mapping_from if len(i) > 0 and i[0] != '#']
+            lists = args.verbose_list
+            for i in lists:
+                item = i.split('/')
+                interval = (int)(item[0])
+                index = item[1].split('-')
+                index = [(int)(x) for x in index]
+                if len(mapping_from) % interval == 0 and len(index) <= interval:
+                    mapping_to = mapping_from.copy()
+                    for j, k in enumerate(index):
+                        k = k % interval
+                        mapping_to[j::interval] = mapping_from[k::interval]
+
+            mapping_to= [ i + '\n' for i in mapping_to]
+            with open(args.mapping_from + "-swap", 'w') as f:
+                f.writelines(mapping_to)
+                f.close()
+
+    if 'sort' in config.keys():
+        mapping_from = []
+        if os.path.isfile(args.mapping_from):
+            with open(args.mapping_from) as f:
+                mapping_from = f.readlines()
+                f.close()
+            mapping_from.sort()
+            with open(args.mapping_from + "-sort", 'w') as f:
+                f.writelines(mapping_from)
+                f.close()
 
     if 'verify-data' in config.keys() or 'verify-image' in config.keys():
         if 'verify-image' in config.keys():
