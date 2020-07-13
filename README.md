@@ -3,7 +3,7 @@
 
 This project provides aboundant choices of quantization strategies (such as the quantization algorithms, training schedules and empirical tricks) for quantizing the image classification neural networks into low-bit counterparts. Associated projects demonstrate that this project can also act as a flexible plugin and benefit other computer vision tasks, such as object detection, segmentation and text parsing. Pretrained models are provided to show high standard of the code on achieving appealing quantization performance. 
 
-## Supported Task
+## Instructions for different tasks
 
 - [Classification](./doc/classification.md)
 - [Detection](./doc/detection.md)
@@ -12,6 +12,7 @@ This project provides aboundant choices of quantization strategies (such as the 
 
 ## Update History
 
+- Super Resolution (in preparing)
 - Text parsing (ABC-Net in preparing)
 - 2020.07.08 Instance Segmentation
 - 2020.07.08 Object Detection
