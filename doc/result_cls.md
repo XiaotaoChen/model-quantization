@@ -41,7 +41,7 @@ Explanations on some flags:
   apply weight normalization (type `var-mean`) on the weight
   
 - ep40 / ep120:
-  training total epoch of 40 / 120
+  total epoch of 40 / 120 in the training
   
 - fm_qg/ wt_qg:
   quantization group
