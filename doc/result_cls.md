@@ -48,6 +48,3 @@ Explanations on some flags:
   
 - real shortcut / real-skip: the downsample layer is kept in full precision. Other wise the shortcut is quantized (eg. `2bit shortcut`)
 
-- ldq: Lossless downsample quantization. ldn: Lossless downsample network.
-
-
