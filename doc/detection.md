@@ -126,7 +126,7 @@ git difftool quantization master detectron2/config/defaults.py
   
   Refer the saved model as `overall_full.pt`
  
- - Finetune low-bit model with double pass / single pass initialization.
+ - Finetune low-bit model with double pass initialization (`overall_full.pt` and `backbone_low.pt`) or single pass initialization (`overall_full.pt`).
 
 ## Examples
 
