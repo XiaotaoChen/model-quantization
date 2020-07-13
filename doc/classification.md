@@ -23,9 +23,9 @@ cd $FASTDIR/git/model-quantization
 # python 3 is required
 pip install -r requirement.txt
 ```
-For the version of Pytorch, the quantization project for classification task has no stricted requirement. Version above `Torch 1.0` should all work fine. However, seems the [detection](./detection.md) project requires a higher version pytorch. They currently require `Torch 1.4`+. Besides, for the `detectron2` project, it requires the CUDA version on the machine is the same with the one compling the pytorch.
+The quantization for classification task requires the pytorch version `1.3` or higher version. However, other tasks such as detection and segmentation require a higher version pytorch. `detectron2` currently require `Torch 1.4`+. Besides, the CUDA version on the machine is advised to keep same with the one compiling the pytorch.
 
-3. Install Nvidia Image preprocess packages and mix precision training packages (optional, highy recommend)
+3. Install Nvidia Image pre-process packages and mix precision training packages (optional, highly recommend)
 
 [Nvidia Dali](https://github.com/NVIDIA/DALI) 
 
