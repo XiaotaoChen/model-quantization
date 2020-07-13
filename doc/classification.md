@@ -84,7 +84,7 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
 
 - Keyword (quantization method choosing)
 
-  The `--keyword` option is one of most important varibale to control the model architecture and quantization algorithm choice.
+  The `--keyword` option is one of most important variables to control the model architecture and quantization algorithm choice.
 
   Currently support quantization algorithm choice by add the following items in the `keyword`:
 
@@ -94,39 +94,39 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
   
   c. `dorefa` for dorefa-net. Besides, additional keyword of `lsq` for learned step size, `non-uniform` for FATNN.
   
-  d. `xnor` for xnor-net. if `gamma` is combined with the `xnor` in the keyword, a separated learnable scale cofficient is added (It namely becomes the XNor-net++).
+  d. `xnor` for xnor-net. if `gamma` is combined with the `xnor` in the keyword, a separated learnable scale coefficient is added (It namely becomes the XNor-net++).
 
 - Keyword (structure control):
 
-  The neteok structure, of course, is firstly decided by the model architecture choosing (by `--arch` or `--model`). For resnet, the official resnet model is provided with `pytorch-resnetxx` and more flexible resnet architecture can be realized by setting the `--arch` or `--model` with `resnetxx`. For the latter case, a lot of options can be combined to customizer the network structure:
+  The network  structure, of course, is firstly decided by the model architecture choosing (by `--arch` or `--model`). For ResNet, the official ResNet model is provided with `pytorch-resnetxx` and more flexible ResNet architecture can be realized by setting the `--arch` or `--model` with `resnetxx`. For the latter case, a lot of options can be combined to customize the network structure:
 
-  a. `origin` exists / not exists in `keyword` is to choose whether the bi-real skip connection is perfered (Block-wise skip connection or layer-wise skip connection).
+  a. `origin` exists / not exists in `keyword` is to choose whether the bi-real skip connection is preferred (Block-wise skip connection versus layer-wise skip connection).
   
-  b. `bacs` or `cbas` so on indicate the layer order in a resnet block. For example, `bacs` is a kind of pre-activation structure, representing in a resnet block, first normalization layer, then activation layer, then convolution layer and last skip connection layer. For pre-activation structure, `preBN` is required for the first resnet block.  Refer [resnet.md](./resnet.md) for more information.
+  b. `bacs` or `cbas`, etc, indicate the layer order in a ResNet block. For example, `bacs` is a kind of pre-activation structure, representing in a resnet block, first normalization layer, then activation layer, then convolution layer and last skip connection layer. For pre-activation structure, `preBN` is required for the first resnet block.  Refer [resnet.md](./resnet.md) for more information.
   
   c. By default all layers except the first and last layer are quantized, `real_skip` can be added to keep the skip connection layers in resnet to full precision. Widely used in Xnor-net and Bi-Real net.
   
   d. The normalization layer and activation layer, we also provide some `keyword` for different variants. For example, `NRelU` means do not including ReLU activation in the network and `PRelU` indicates PReLU is employed. Refer `model/layer.py` for the detail. 
   
-  e. Padding and quantization order. I think it is an error if padding the feature map with 0 after quantization, specially in BNN. From my perspective, the strategy makes BNNs to become TNNs. Thus, I advocate to pad the feature map with zero first and then go through the quanzation step. To keep compatible with the publication as well as provide a revision method, `padding_after_quant` is supplied the order between padding and quantization. Refer line 445 in `model/quant.py` for the implementation.
+  e. Padding and quantization order. I think it is an error if padding the feature map with 0 after quantization, especially in BNN. From my perspective, the strategy makes BNNs to become TNNs. Thus, I advocate to pad the feature map with zero first and then go through the quantization step. To keep compatible with the publication as well as provide a revision method, `padding_after_quant` is supplied the order between padding and quantization. Refer line 445 in `model/quant.py` for the implementation.
   
   f. Skip connection realization. Two choices are provided. One is a avgpooling with stride followed by a conv1x1 with stride=1. The other is just one conv1x1 with stride as demanded. `singleconv` in `keyword` is used for the choice.
   
-  g. `fixup` is used to enable the architecture in Fixup Initlization. 
+  g. `fixup` is used to enable the architecture in Fixup Initialization. 
   
   h. the option `base` which is a standalone option rather a word in the `keyword` list is used to realize the branch configuration in Group-Net
   
-  Self-defined `keyword` is suported and can be easily realized according the user's own desire. As introduced above, the options can be combined to build up different variant architecutures. Examples can be found in the `config` subfolder.
+  Self-defined `keyword` is supported and can be easily realized according the user's own desire. As introduced above, the options can be combined to build up different variant architectures. Examples can be found in the `config` subfolder.
 
 - Activation and weight quantization options
 
-  The script provides indepdent configration for the activation and weight, respectively. Options such as `xx_bit`, `xx_level`, `xx_enable`, `xx_half_range` are easy to understand (`xx` is `fm` for activation or `wt` for weight ). We here explain more about other advanced options. 
+  The script provides independent configuration for the activation and weight, respectively. Options such as `xx_bit`, `xx_level`, `xx_enable`, `xx_half_range` are easy to understand (`xx` is `fm` for activation or `wt` for weight ). We here explain more about other advanced options. 
   
   1. `xx_quant_group` indicates the group amount for the quantization parameter along the channel dimension.
   
-  2. `xx_adaptive` in most cases, inidicates the additonal normalization operation which shows great potential to increase the performance.
+  2. `xx_adaptive` in most cases, indicates the additional normalization operation which shows great potential to increase the performance.
   
-  3. `xx_grad_type` define custom gradident boost method. As generally, the quantization step is not differentiable, techniques such as the STE are used to approximate the gradient. Other types of approximation exist. Besides, in some publication, it is advocated to add some scale coefficient to the gradient in order to stabilize the training.
+  3. `xx_grad_type` define custom gradient boost method. As generally, the quantization step is not differentiable, techniques such as the STE are used to approximate the gradient. Other types of approximation exist. Besides, in some publication, it is advocated to add some scale coefficient to the gradient in order to stabilize the training.
 
 - Weight decay
 
@@ -134,9 +134,9 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
 
   1. `--wd` set the default L2 weight decay value.
   
-  2. Weight decay is originally proposed to avoid ovrefit for the large amount of paramters. For some small tensors, for example the parameters in BatchNorm layer (as well as custom defined quantization parameter, such as clip-value), weight decay is advocated to be zero. `--decay_small` is for whether decay those small tensor or not.
+  2. Weight decay is originally proposed to avoid overfit for the large number of parameters. For some small tensors, for example the parameters in BatchNorm layer (as well as custom defined quantization parameter, such as clip-value), weight decay is advocated to be zero. `--decay_small` is for whether decay those small tensors or not.
   
-  3. `--custom_decay_list` and `--custom_decay` are combined for specific custom decay value to certain parameters. For example, in PACT, the clip_boudary can own its independent weight decay for regularition. The combination filter paramter name according to `--custom_decay_list` and assign the weight decay to `--custom_decay`.
+  3. `--custom_decay_list` and `--custom_decay` are combined for specific custom decay value to certain parameters. For example, in PACT, the clip_boudary can own its independent weight decay for regulation. The combination filter parameter name according to `--custom_decay_list` and assign the weight decay to `--custom_decay`.
 
 
 - Learning rate
