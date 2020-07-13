@@ -5,10 +5,10 @@ This project provides aboundant choices of quantization strategies (such as the 
 
 ## Supported Task
 
-- [Classification](./doc/classification.md): [Performance](./doc/result_cls.md)
-- [Detection](./doc/detection.md): [Performance](./doc/result_det.md)
-- [Segmentation](./doc/detection.md): [Performance](./doc/result_seg.md)
-- [Text parsing](./doc/detection.md): [Performance](./doc/result_text.md)
+- [Classification](./doc/classification.md)
+- [Detection](./doc/detection.md)
+- [Segmentation](./doc/detection.md)
+- [Text parsing](./doc/detection.md)
 
 ## Update History
 
