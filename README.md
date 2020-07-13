@@ -32,19 +32,11 @@ note = {Accessed: [Insert date here]}
 ```
 
 
-Also Cite correspoding publication when you choose [dedicated algorithms](./doc/reference.md).
+Also cite the corresponding publications when you choose [dedicated algorithms](./doc/reference.md).
 
-## Contributors
+## Contribute
 
-Current Contributors:
-
-- [Blueardour](https://github.com/blueardour)
-- [bohanzhuang](https://github.com/bohanzhuang)
-- [liujingcs](https://github.com/liujingcs)
-- [liuchunlei0430](https://github.com/liuchunlei0430)
-
-
-To contribute, PR is appreciated and suggestions are welcome to discuss. Private conact is available at blueardour@gmail.com
+To contribute, PR is appreciated and suggestions are welcome to discuss. Private contact is available at blueardour@gmail.com
 
 ## License
 
