@@ -28,11 +28,11 @@ imagenet | Group-Net | ResNet-18 | 1/1 | - | 63.9 | cabs,bireal,base=5,without-s
 imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 52.0 | cbsa,fm_triangle,wt_pass,No-ReLU
 imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 50.5 | cbsa,fm_STE,wt_pass,No-ReLU
 imagenet | LSQ | Torch-R18 | 1/1 | - | 58.5 | ReLU,wt-var-mean,wtg=1
-cifar100 |  - | ResNet-20 | 32/32 | - | 66.56 | cbsa, ldq, order c
-cifar100 |  - | ResNet-20 | 32/32 | - | 75.13 | cbsa, ldq, order cb
-cifar100 |  - | ResNet-20 | 32/32 | - | 71.82 | cbsa, ldq, order ca
-cifar100 |  - | ResNet-20 | 32/32 | - | 66.90 | cbsa, ldq, order cba
-cifar100 |  - | ResNet-20 | 32/32 | - | 66.88 | cbsa, ldq, baseline
+cifar100 |  - | ResNet-20 | 32/32 | - | 66.56 | cbsa, ldn, order c
+cifar100 |  - | ResNet-20 | 32/32 | - | 75.13 | cbsa, ldn, order cb
+cifar100 |  - | ResNet-20 | 32/32 | - | 71.82 | cbsa, ldn, order ca
+cifar100 |  - | ResNet-20 | 32/32 | - | 66.90 | cbsa, ldn, order cba
+cifar100 |  - | ResNet-20 | 32/32 | - | 66.88 | cbsa, ldn, baseline
 cifar100 |  LSQ | ResNet-20 | 2/2 | - | 63.51 | cbsa, ldq, order c, real shortcut
 cifar100 |  LSQ | ResNet-20 | 2/2 | - | 73.84 | cbsa, ldq, order cb, real shortcut
 cifar100 |  LSQ | ResNet-20 | 2/2 | - | 69.98 | cbsa, ldq, order ca, real shortcut
