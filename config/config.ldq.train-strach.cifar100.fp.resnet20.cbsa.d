@@ -8,7 +8,7 @@ options="$options --width_alpha 0.25"
 train_batch=256
 val_batch=50
 
-case='cifar100-EfficientQuant-stratch-fp-pytorch-TypeD-sgd_0'
+case='cifar100-ldn-stratch-fp-pytorch-TypeD-sgd_0'
 keyword='cifar100,origin,cbsa,fix_pooling,singleconv,fix,ReShapeResolution,real_skip'
 
 pretrained='None'
@@ -27,7 +27,8 @@ options="$options --pretrained $pretrained"
 
  epochs=200
 # SGD
- options="$options --lr 1e-1   --lr_policy custom_step --lr_decay 0.2 --lr_custom_step 60,120,160 --nesterov"
+ options="$options --lr 1e-1 --lr_policy custom_step --lr_decay 0.2 --lr_custom_step 60,120,160 --nesterov"
+#options="$options --lr 1e-2 --lr_policy custom_step --lr_decay 0.2 --lr_custom_step 60,120,160 --nesterov"
 
 #options="$options --wt_quant_group 1"
 #options="$options --wt_adaptive var-mean"

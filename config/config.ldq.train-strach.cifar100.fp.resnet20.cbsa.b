@@ -8,7 +8,7 @@ model='resnet20'
 train_batch=256
 val_batch=50
 
-case='cifar100-EfficientQuant-stratch-fp-pytorch-TypeB-sgd_0'
+case='cifar100-ldn-stratch-fp-pytorch-TypeB-sgd_0'
 keyword='cifar100,origin,cbsa,fix_pooling,singleconv,fix,ReShapeResolution,real_skip'
 
 pretrained='None'
@@ -27,8 +27,9 @@ options="$options --pretrained $pretrained"
 
  epochs=200
 # SGD
-options="$options --lr 1e-1   --lr_policy custom_step --lr_decay 0.2 --lr_custom_step 60,120,160 --nesterov"
-# options="$options --lr 1e-2 --lr_policy custom_step --lr_decay 0.1 --lr_custom_step 30,60,80 --nesterov"
+ options="$options --lr 1e-1 --lr_policy custom_step --lr_decay 0.2 --lr_custom_step 60,120,160 --nesterov"
+#options="$options --lr 1e-2 --lr_policy custom_step --lr_decay 0.2 --lr_custom_step 60,120,160 --nesterov"
+#options="$options --lr 1e-2 --lr_policy custom_step --lr_decay 0.1 --lr_custom_step 30,60,80 --nesterov"
 #options="$options --lr 1e-2 --lr_policy sgdr --lr_custom_step 90 --eta_min 1e-6 --nesterov"
 #options="$options --lr 1e-2 --lr_policy sgdr --lr_custom_step 6  --eta_min 1e-6 --nesterov"
 

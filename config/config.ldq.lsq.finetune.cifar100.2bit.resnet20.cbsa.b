@@ -3,15 +3,15 @@ dataset='cifar100'
 root=$FASTDIR/data/cifar
 
 model='resnet20'
-#options="$options --width_alpha 0.25"
+options="$options --width_alpha 0.25"
 
 train_batch=256
 val_batch=50
 
-case='cifar100-lsq-finetune-2bit-pytorch-TypeB-wd1e-4-wt_qg1_var-mean-sgd_0'
+case='cifar100-ldq-lsq-finetune-2bit-pytorch-TypeB-wd1e-4-wt_qg1_var-mean-sgd_0'
 keyword='cifar100,origin,cbsa,fix_pooling,singleconv,fix,ReShapeResolution,real_skip,dorefa,lsq'
 
-pretrained='cifar100-EfficientQuant-stratch-fp-pytorch-TypeB-sgd_0-model_best.pth.tar'
+pretrained='cifar100-ldn-stratch-fp-pytorch-TypeB-sgd_0-model_best.pth.tar'
 options="$options --pretrained $pretrained"
 
  options="$options --tensorboard"
@@ -33,11 +33,4 @@ options="$options --pretrained $pretrained"
 
  epochs=200
 # SGD
-options="$options --lr 1e-2   --lr_policy custom_step --lr_decay 0.2 --lr_custom_step 60,120,160 --nesterov"
-# options="$options --lr 1e-2 --lr_policy custom_step --lr_decay 0.1 --lr_custom_step 30,60,80 --nesterov"
-#options="$options --lr 1e-2 --lr_policy sgdr --lr_custom_step 90 --eta_min 1e-6 --nesterov"
-#options="$options --lr 1e-2 --lr_policy sgdr --lr_custom_step 6  --eta_min 1e-6 --nesterov"
-
-#options="$options --wt_quant_group 1"
-#options="$options --wt_adaptive var-mean"
-
+ options="$options --lr 1e-2 --lr_policy custom_step --lr_decay 0.2 --lr_custom_step 60,120,160 --nesterov"
