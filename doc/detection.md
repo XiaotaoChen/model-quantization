@@ -130,7 +130,7 @@ We provide pretrained models gradually in [google drive](https://drive.google.co
  
  - Finetune low bit detection/segmentation model with double initilization.  
  
-   We provide `WEIGHT_EXTRA` option to load an extra pretrain model. When quantization, provide the `overall_full.pt` as extra initilization. Override some of the initilization (the backbone in most cases) with corresponding pretrianed model - the formatted `backbone_low.pt`.
+   We provide `WEIGHT_EXTRA` option to load an extra pretrain model. If `double-init` is perfered, provide the `overall_full.pt` with `WEIGHT_EXTRA` and the quantized backbone - the formatted `backbone_low.pt` with `WEIGHTS`. `Single pass init` is also possible by setting the `overall_full.pt` with `WEIGHTS`.
 
 ## Special Notice on the Model Structure Revision for Quantizaiton
 
