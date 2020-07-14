@@ -1,7 +1,7 @@
 
 # A independent script for debug / model converting
 
-This page presents selected functions which is commonly used.
+This page presents selected functions provided by `tools.py` which is commonly used in the project.
 
 ## Model import and paramter renaming.
 
