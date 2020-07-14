@@ -81,11 +81,15 @@ modified:   detectron2/checkpoint/detection_checkpoint.py
 modified:   detectron2/config/defaults.py
 modified:   detectron2/engine/defaults.py
 modified:   detectron2/engine/train_loop.py
+modified:   detectron2/layers/csrc/ROIAlign/ROIAlign_cuda.cu
+modified:   detectron2/layers/roi_align.py
 modified:   detectron2/layers/wrappers.py
 modified:   detectron2/modeling/backbone/fpn.py
 modified:   detectron2/modeling/meta_arch/build.py
+modified:   detectron2/modeling/meta_arch/retinanet.py
 new file:   third_party/convert_to_quantization.py
 new file:   third_party/quantization
+new file:   weights
 ```
 
 Highly recommend to check the `detectron2/engine/defaults.py` to see which options are added for the low-bit quantization.
