@@ -5,9 +5,9 @@ This page presents selected functions provided by `tools.py` which is commonly u
 
 ## Model import and paramter renaming.
 
-Some times models are trained by the old repo. When importing the pretrained model to new repo, some variable /paramters name might be changed.
+Some times models are trained by the another (or old version) repo. When importing the pretrained model to new repo, the name of certain variables /paramters might be changed.
 
-Following the commands for looking up items and converting (***Remove the brackets when testing, brackets only indicates the enclosed one can be replaced with other string***).
+The following commands can be used to browse items in the pretrained model and renaming specific parameters (***Remove the brackets when testing, brackets only indicates the enclosed one can be replaced with other string***).
 
 1. looking up item in the model file.
 
