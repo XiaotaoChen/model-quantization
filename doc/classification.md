@@ -2,7 +2,7 @@
 
 ## Install
 
-1. clone the repo (change the `FASTDIR` as perfered):
+1. Clone the repo (change the `FASTDIR` as perfered):
 ```
 export FASTDIR=/workspace
 cd $FASTDIR/git/
@@ -17,15 +17,15 @@ ln -s ../pytorch-utils utils
 #ln -s /data/pretrained/pytorch/model-quantization/weights .
 ```
 
-2. install prerequisite packages
+2. Install prerequisite packages
 ```
 cd $FASTDIR/git/model-quantization
 # python 3 is required
 pip install -r requirement.txt
 ```
-The quantization for classification task requires the pytorch version `1.3` or higher version. However, other tasks such as detection and segmentation require a higher version pytorch. `detectron2` currently require `Torch 1.4`+. Besides, the CUDA version on the machine is advised to keep same with the one compiling the pytorch.
+Quantization for the classification task requires the pytorch version `1.3` or higher versions. However, other tasks such as detection and segmentation require a higher version pytorch. `detectron2` currently require `Torch 1.4`+. Besides, the CUDA version on the machine is advised to keep the same with the one compiling the pytorch.
 
-3. Install Nvidia Image pre-process packages and mix precision training packages (optional, highly recommend)
+3. Install Nvidia image pre-processing packages and mix precision training packages (optional, highly recommend)
 
 [Nvidia Dali](https://github.com/NVIDIA/DALI) 
 
@@ -33,8 +33,8 @@ The quantization for classification task requires the pytorch version `1.3` or h
 
 ## Dataset
 
-This repo support the imagenet dataset and cifar dataset. 
-Create necessary folder and prepare the datasets. Example:
+This repo supports the Imagenet dataset and CIFAR dataset. 
+Create necessary folders and prepare the datasets. Example:
 
 ```
 # dataset
@@ -82,39 +82,39 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
 
   Common options are parsed in `util/config.py`. Quantization related options are separated in the `main.py`.
 
-- Keyword (quantization method choosing)
+- Keyword (choosing quantization method)
 
   The `--keyword` option is one of most important variables to control the model architecture and quantization algorithm choice.
 
-  Currently support quantization algorithm choice by add the following items in the `keyword`:
+  We currently support quantization algorithms by adding the following options in the `keyword`:
 
-  a. `lq` for Lq-net
+  a. `lq` for LQ-Nets
   
   b. `pact` for PACT
   
-  c. `dorefa` for dorefa-net. Besides, additional keyword of `lsq` for learned step size, `non-uniform` for FATNN.
+  c. `dorefa` for DoReFa-Net. Besides, additional keyword of `lsq` for learned step size, `non-uniform` for FATNN.
   
-  d. `xnor` for xnor-net. if `gamma` is combined with the `xnor` in the keyword, a separated learnable scale coefficient is added (It namely becomes the XNor-net++).
+  d. `xnor` for xnor-net. If `gamma` is combined with the `xnor` in the keyword, a separated learnable scale coefficient is added (It namely becomes the XNor-net++).
 
 - Keyword (structure control):
 
-  The network  structure, of course, is firstly decided by the model architecture choosing (by `--arch` or `--model`). For ResNet, the official ResNet model is provided with `pytorch-resnetxx` and more flexible ResNet architecture can be realized by setting the `--arch` or `--model` with `resnetxx`. For the latter case, a lot of options can be combined to customize the network structure:
+  The network structure can be chosen by `--arch` or `--model`. For ResNet, the official ResNet model is provided with `pytorch-resnetxx` and more flexible ResNet architecture can be realized by setting the `--arch` or `--model` with `resnetxx`. For the latter case, a lot of options can be combined to customize the network structure:
 
   a. `origin` exists / not exists in `keyword` is to choose whether the bi-real skip connection is preferred (Block-wise skip connection versus layer-wise skip connection).
   
   b. `bacs` or `cbas`, etc, indicate the layer order in a ResNet block. For example, `bacs` is a kind of pre-activation structure, representing in a resnet block, first normalization layer, then activation layer, then convolution layer and last skip connection layer. For pre-activation structure, `preBN` is required for the first resnet block.  Refer [resnet.md](./resnet.md) for more information.
   
-  c. By default all layers except the first and last layer are quantized, `real_skip` can be added to keep the skip connection layers in resnet to full precision. Widely used in Xnor-net and Bi-Real net.
+  c. By default all layers except the first and last layers are quantized, `real_skip` can be added to keep the skip connection layers in ResNet to full precision, which is widely used in Xnor-net and Bi-Real net.
   
-  d. The normalization layer and activation layer, we also provide some `keyword` for different variants. For example, `NRelU` means do not including ReLU activation in the network and `PRelU` indicates PReLU is employed. Refer `model/layer.py` for the detail. 
+  d. For the normalization layer and activation layer, we also provide some `keyword` for different variants. For example, `NRelU` means do not include ReLU activation in the network and `PRelU` indicates PReLU is employed. Refer `model/layer.py` for details. 
   
-  e. Padding and quantization order. I think it is an error if padding the feature map with 0 after quantization, especially in BNN. From my perspective, the strategy makes BNNs to become TNNs. Thus, I advocate to pad the feature map with zero first and then go through the quantization step. To keep compatible with the publication as well as provide a revision method, `padding_after_quant` is supplied the order between padding and quantization. Refer line 445 in `model/quant.py` for the implementation.
+  e. Padding and quantization order. I think it is an error if padding the feature map with 0 after quantization, especially in BNNs. From my perspective, the strategy makes BNNs to become TNNs. Thus, I advocate to pad the feature map with zero first and then go through the quantization step. To keep compatible with the publication as well as providing a revised method, `padding_after_quant` can be set to control the order between padding and quantization. Refer line 445 in `model/quant.py` for the implementation.
   
-  f. Skip connection realization. Two choices are provided. One is a avgpooling with stride followed by a conv1x1 with stride=1. The other is just one conv1x1 with stride as demanded. `singleconv` in `keyword` is used for the choice.
+  f. Skip connection realization. Two choices are provided. One is a avgpooling with stride followed by a conv1x1 with stride=1. Another is just one conv1x1 with stride as demanded. `singleconv` in `keyword` is used for the choice.
   
   g. `fixup` is used to enable the architecture in Fixup Initialization. 
   
-  h. the option `base` which is a standalone option rather a word in the `keyword` list is used to realize the branch configuration in Group-Net
+  h. The option `base` which is a standalone option rather a word in the `keyword` list is used to realize the branch configuration in Group-Net.
   
   Self-defined `keyword` is supported and can be easily realized according the user's own desire. As introduced above, the options can be combined to build up different variant architectures. Examples can be found in the `config` subfolder.
 
