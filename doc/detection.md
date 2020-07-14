@@ -183,7 +183,7 @@ git difftool quantization master detectron2/config/defaults.py
 
 ### Segmentation
 
-- Resnet18-Blendmask Quantization by LSQ into 2-bit model
+- Resnet-18 Blendmask Quantization by LSQ into 2-bit model
 
   Similar with the detection flow, but with different configuration file
   ```
