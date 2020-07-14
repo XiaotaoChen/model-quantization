@@ -7,62 +7,61 @@ The framework is able to provide quantization support for all kinds of tasks tha
 
 1. install dependent packages according to [classification.md](./classification.md)
 
-***Note a known issue for the FP16 training: Training with FP16 and SyncBN on multi-GPU seems to cause NAN loss for current projects. Use normal BN instead***
+   ***Note a known issue for the FP16 training: Training with FP16 and SyncBN on multi-GPU seems to cause NAN loss for current projects. Use normal BN instead***
 
 2. download the [custom detectron2](https://github.com/blueardour/detectron2) project. See what is modified below.
 
-```
-cd /workspace/git/
-git clone https://github.com/blueardour/detectron2
-# checkout the quantization branch
-cd detectron2
-git checkout quantization
-
-# install 
-pip install -e .
-
-### other install options
-## (add --user if you don't have permission)
-#
-## Or if you are on macOS
-#CC=clang CXX=clang++ python -m pip install ......
-
-
-# link classification pretrained weight
-ln -s ../model-quantization/weights .
-```
-Facebook detectron2 does not support some works such as `FCOS` and `Blendmask`. Try the [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) for more tasks. Note, for the `aim-uofa/AdelaiDet`, it is also necessary to clone my custom branch (I'm considering to merge the `quantization` branch in my repo to the official repo if it is possible).
-
-```
-cd /workspace/git/
-git clone https://github.com/blueardour/uofa-AdelaiDet AdelaiDet
-# notice to change to the quantization branch
-cd AdelaiDet
-git checkout quantization
-
-# install
-python setup.py build develop
-
-# link classification pretrained weight
-ln -s ../model-quantization/weights .
-```
-
-The custom project [custom detectron2](https://github.com/blueardour/detectron2) and [custom AdelaiDet](https://github.com/blueardour/uofa-AdelaiDet) will upgrade regularly from the origin repo.
-
-Similar with the original project, `custom AdelaiDet` depends on `custom detectron2`.  Install the two projects based on the original install instructions.
+   ```
+   cd /workspace/git/
+   git clone https://github.com/blueardour/detectron2
+   # checkout the quantization branch
+   cd detectron2
+   git checkout quantization
+   
+   # install 
+   pip install -e .
+   
+   ### other install options
+   ## (add --user if you don't have permission)
+   #
+   ## Or if you are on macOS
+   #CC=clang CXX=clang++ python -m pip install ......
+   
+   
+   # link classification pretrained weight
+   ln -s ../model-quantization/weights .
+   ```
+   Facebook detectron2 does not support some works such as `FCOS` and `Blendmask`. Try the [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) for more tasks. Note, for the `aim-uofa/AdelaiDet`, it is also necessary to clone my custom branch (I'm considering to merge the `quantization` branch in my repo to the official repo if it is possible).
+   
+   ```
+   cd /workspace/git/
+   git clone https://github.com/blueardour/uofa-AdelaiDet AdelaiDet
+   # notice to change to the quantization branch
+   cd AdelaiDet
+   git checkout quantization
+   
+   # install
+   python setup.py build develop
+   
+   # link classification pretrained weight
+   ln -s ../model-quantization/weights .
+   ```
+   
+   The custom project [custom detectron2](https://github.com/blueardour/detectron2) and [custom AdelaiDet](https://github.com/blueardour/uofa-AdelaiDet) will upgrade regularly from the origin repo.
+   
+   Similar with the original project, `custom AdelaiDet` depends on `custom detectron2`.  Install the two projects based on the original install instructions.
 
 3. make sure the symbolic link is correct.
-```
-cd /workspace/git/detectron2
-ls -l third_party
-# the third_party/quantization should point to /workspace/git/model-quantization/models
-```
+   ```
+   cd /workspace/git/detectron2
+   ls -l third_party
+   # the third_party/quantization should point to /workspace/git/model-quantization/models
+   ```
 
 ## Dataset
 
-refer detectron2 datasets: [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md)
-
-and specific datasets from [AdelaiDet](https://github.com/aim-uofa/AdelaiDet)
+refer detectron2 datasets: [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md) 
+and specific datasets from [AdelaiDet](https://github.com/aim-uofa/AdelaiDet).
 
 ## Pretrained models and quantization results
 
