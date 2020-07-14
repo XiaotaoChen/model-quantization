@@ -164,7 +164,7 @@ git difftool quantization master detectron2/config/defaults.py
     python tools/train_net.py --config-file configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml
     ```
     
-    ***Check the parameters on the backbone are re-loaded correctly***
+    ***Check the parameters in the backbone are re-loaded correctly***
 
     This step would obtain the pretrained model in `output/fcos/R_18_1x-Full-SyncBN/model_final.pth`
 
