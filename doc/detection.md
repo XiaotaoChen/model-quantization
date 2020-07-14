@@ -49,9 +49,9 @@ ln -s ../model-quantization/weights .
 
 The custom project [custom detectron2](https://github.com/blueardour/detectron2) and [custom AdelaiDet](https://github.com/blueardour/uofa-AdelaiDet) will upgrade regularly from the origin repo.
 
-Similar with the orignal project, `custom AdelaiDet` depends on `custom detectron2`.  Install the two projects based on the original install instructions.
+Similar with the original project, `custom AdelaiDet` depends on `custom detectron2`.  Install the two projects based on the original install instructions.
 
-3. make sure the symbol link is correct.
+3. make sure the symbolic link is correct.
 ```
 cd /workspace/git/detectron2
 ls -l third_party
@@ -64,7 +64,7 @@ refer detectron2 datasets: [datasets/README.md](https://github.com/facebookresea
 
 and specific datasets from [AdelaiDet](https://github.com/aim-uofa/AdelaiDet)
 
-## Pretrained model and quanzation Results
+## Pretrained models and quantization results
 
 - [Detection](./result_det.md)
 
@@ -96,23 +96,23 @@ git difftool quantization master detectron2/config/defaults.py
 
 
 
-## Training and Test
+## Training and Testing
 
-  Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ).  To obtain the quantization version of given models, please modify corresponding configuration files by setting quantization related options.
+  Training and testing methods follow original projects ( [detectron2](https://github.com/facebookresearch/detectron2) or [aim-uofa/AdelaiDet](https://github.com/aim-uofa/AdelaiDet) ). To obtain the quantization version of the given models, please modify corresponding configuration files by setting quantization related options.
 
-  Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config`. In `detectron2` and `aim-uofa/AdelaiDet` projects, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in classification task. Refer option introduction in [classification.md](./classification.md#Training-script-options)
+  Example configurations for quantization are provided in `detectron2/config` and `AdelaiDet/config`. In `detectron2` and `aim-uofa/AdelaiDet` projects, most of the options are managed by the `yaml` config file. Thus, the `detectron2/config/default.py` is modified to add the quantization related options. They have the same meaning with the ones in the classification task. Refer option introduction in [classification.md](./classification.md#Training-script-options)
 
   If you want to test the low-bit quantization model only, just download the pretrained model and run the test. If training is required, see below [examples](./detection.md#Examples) for demonstration.
 
-## Speical Guide for quantization
+## Special guide for quantization
 
-  The overall flow of the quantization on detection/ segmentation / text spotting tasks are as follows, some of them can be omit if the pretrained model already exists.
+  The overall flow of the quantization on detection/ segmentation / text spotting tasks are as follows, some of them can be omitted if the pretrained model already exists.
 
-- Train full precision backbone network on Imagenet
+- Train the full-precision backbone on Imagenet
 
   Refer the saved model as `backbone_full.pt`
 
-- Finetune the low-bit model (backbone network)
+- Finetune the low-bit backbone network
 
   Refer [classification.md](./classification.md) for finetuning with `backbone_full.pt` as initialization.
   
@@ -126,21 +126,21 @@ git difftool quantization master detectron2/config/defaults.py
   
   Refer the saved model as `overall_full.pt`
  
- - Finetune low-bit model with double pass initialization (`overall_full.pt` and `backbone_low.pt`) or single pass initialization (`overall_full.pt`).
+- Finetune the low-bit model with double pass initialization (`overall_full.pt` and `backbone_low.pt`) or single pass initialization (`overall_full.pt`).
 
 ## Examples
 
 ### Detection
 
-- Resnet18-FCOS Quantization by LSQ into 2-bit model
+- ResNet18-FCOS Quantization by LSQ into 2-bit model
 
-1. Pretrain the full precision and 2-bit backbone in the [`model-quantization`](https://github.com/blueardour/model-quantization) project. We provide pretrained models in above  download link. Prepare your own model if other backbones are required. 
+1. Pretrain the full-precision and 2-bit backbone in the [`model-quantization`](https://github.com/blueardour/model-quantization) project. We provide pretrained models in above  download links. Prepare your own model if other backbones are required. 
    
    full precision model: `weights/pytorch-resnet18/resnet18_w32a32.pth`
    
    2-bit LSQ model: `weights/pytorch-resnet18/lsq_best_model_a2w2.pth`
    
-2. import model from classification project to detection project.
+2. Import model from classification project to detection project.
 
   ```
   cd /workspace/git/model-quantization
@@ -153,7 +153,7 @@ git difftool quantization master detectron2/config/defaults.py
   
   The `mf.txt` and `mt.txt` files for the Resnet18 are uploaded in the `model-quantization` project as an example. The files for Resnet50 are also provided. Refer [tools.md](./tools.md) for more instructions.
 
-3. train full precision FCOS-R18-1x
+3. Train full-precision FCOS-R18-1x
 
   Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml`
   
@@ -167,7 +167,7 @@ git difftool quantization master detectron2/config/defaults.py
 
   This step would obtain the pretrained model in `output/fcos/R_18_1x-Full-SyncBN/model_final.pth`
 
-4. fintune to get quantization model
+4. Fintune to get quantized model
 
   Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml`
   
