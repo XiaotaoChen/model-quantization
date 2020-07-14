@@ -135,10 +135,10 @@ git difftool quantization master detectron2/config/defaults.py
 ## Examples
 
 ### Detection
+  
+- ResNet18-FCOS 2-bit Quantization with LSQ
 
-- ResNet18-FCOS Quantization by LSQ into 2-bit model
-
-1. Pretrain the full-precision and 2-bit backbone in the [`model-quantization`](https://github.com/blueardour/model-quantization) project. We provide pretrained models in [above  download links](./detection.md#Pretrained-models-and-quantization-results). Prepare your own model if other backbones are required. For ResNet-18, the pretrained model can be found in folder:
+  1. Pretrain the full-precision and 2-bit backbone in the [`model-quantization`](https://github.com/blueardour/model-quantization) project. We provide pretrained models in [above  download links](./detection.md#Pretrained-models-and-quantization-results). Prepare your own model if other backbones are required. For ResNet-18, the pretrained model can be found in folder:
    
    Full precision model: `weights/pytorch-resnet18/resnet18_w32a32.pth`
    
@@ -184,10 +184,18 @@ git difftool quantization master detectron2/config/defaults.py
   ***Check the parameters in double pass initialization are re-loaded correctly***
   
   Compare the accuracy with the one in step 3.
+  
+- ResNet18-RetinaNet 2-bit Quantization with Dorefa-Net (to be finished)
 
+  ```
+  cd /workspace/git/detectron2
+  # add other options, such as the GPU number as needed
+  python tools/train_net.py --config-file configs/COCO-Detection/retinanet_R_18_FPN_1x-Full-BN.yaml
+  ```
+  
 ### Segmentation
 
-- Resnet-18 Blendmask Quantization by LSQ into 2-bit model
+- Resnet18-Blendmask Quantization by LSQ into 2-bit model
 
   Similar with the detection flow, but with different configuration file
   ```
