@@ -138,50 +138,50 @@ git difftool quantization master detectron2/config/defaults.py
   
 - ResNet18-FCOS 2-bit Quantization with LSQ
 
-  Pretrain the full-precision and 2-bit backbone in the [`model-quantization`](https://github.com/blueardour/model-quantization) project. We provide pretrained models in [above  download links](./detection.md#Pretrained-models-and-quantization-results). Prepare your own model if other backbones are required. For ResNet-18, the pretrained model can be found in folder: a. Full precision model: `weights/pytorch-resnet18/resnet18_w32a32.pth`. b. 2-bit LSQ model: `weights/pytorch-resnet18/lsq_best_model_a2w2.pth`
+  - Pretrain the full-precision and 2-bit backbone in the [`model-quantization`](https://github.com/blueardour/model-quantization) project. We provide pretrained models in [above  download links](./detection.md#Pretrained-models-and-quantization-results). Prepare your own model if other backbones are required. For ResNet-18, the pretrained model can be found in folder: a. Full precision model: `weights/pytorch-resnet18/resnet18_w32a32.pth`. b. 2-bit LSQ model: `weights/pytorch-resnet18/lsq_best_model_a2w2.pth`
    
-2. Import model from classification project to detection project.
+  - Import model from classification project to detection project.
 
-  script:
+    Script:
   
-  ```
-  cd /workspace/git/model-quantization
-  # prepare the weights/det-resnet18/mf.txt and weights/det-resnet18/mt.txt
-  # the two files are created manually with the parameter renaming
-  python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/resnet18_w32a32.pth --new weights/det-resnet18/resnet18_w32a32.pth
-  
-  python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/lsq_best_model_a2w2.pth --new weights/det-resnet18/lsq_best_model_a2w2.pth
-  ```
-  
-  The `mf.txt` and `mt.txt` files for the Resnet18 are uploaded in the `model-quantization` project as an example. The files for Resnet50 are also provided. Refer [tools.md](./tools.md) for more instructions.
+    ```
+    cd /workspace/git/model-quantization
+    # prepare the weights/det-resnet18/mf.txt and weights/det-resnet18/mt.txt
+    # the two files are created manually with the parameter renaming
+    python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/resnet18_w32a32.pth --new weights/det-resnet18/resnet18_w32a32.pth
+    
+    python tools.py --keyword update,raw --mf weights/det-resnet18/mf.txt --mt weights/det-resnet18/mt.txt --old weights/pytorch-resnet18/lsq_best_model_a2w2.pth --new weights/det-resnet18/lsq_best_model_a2w2.pth
+    ```
+    
+    The `mf.txt` and `mt.txt` files for the Resnet18 are uploaded in the `model-quantization` project as an example. The files for Resnet50 are also provided. Refer [tools.md](./tools.md) for more instructions.
 
-3. Train full-precision FCOS-R18-1x
+  - Train full-precision FCOS-R18-1x
 
-  Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml`
+    Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml`
   
-  ```
-  cd /workspace/git/AdelaiDet
-  # add other options, such as the GPU number as needed
-  python tools/train_net.py --config-file configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml
-  ```
-  
-  ***Check the parameters on the backbone are re-loaded correctly***
+    ```
+    cd /workspace/git/AdelaiDet
+    # add other options, such as the GPU number as needed
+    python tools/train_net.py --config-file configs/FCOS-Detection/R_18_1x-Full-SyncBN.yaml
+    ```
+    
+    ***Check the parameters on the backbone are re-loaded correctly***
 
-  This step would obtain the pretrained model in `output/fcos/R_18_1x-Full-SyncBN/model_final.pth`
+    This step would obtain the pretrained model in `output/fcos/R_18_1x-Full-SyncBN/model_final.pth`
 
-4. Fintune to get quantized model
+  - Fintune to get quantized model
 
-  Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml`
+    Check the configuration file `configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml`
   
-  ```
-  cd /workspace/git/AdelaiDet
-  # add other options, such as the GPU number as needed
-  python tools/train_net.py --config configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml
-  ```
-  
-  ***Check the parameters in double pass initialization are re-loaded correctly***
-  
-  Compare the accuracy with the one in step 3.
+    ```
+    cd /workspace/git/AdelaiDet
+    # add other options, such as the GPU number as needed
+    python tools/train_net.py --config configs/FCOS-Detection/R_18_1x-Full-SyncBN-lsq-2bit.yaml
+    ```
+    
+    ***Check the parameters in double pass initialization are re-loaded correctly***
+    
+    Compare the accuracy with the one in step 3.
   
 - ResNet18-RetinaNet 2-bit Quantization with Dorefa-Net (to be finished)
 
