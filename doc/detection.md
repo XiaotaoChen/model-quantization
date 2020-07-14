@@ -134,9 +134,9 @@ git difftool quantization master detectron2/config/defaults.py
 
 - ResNet18-FCOS Quantization by LSQ into 2-bit model
 
-1. Pretrain the full-precision and 2-bit backbone in the [`model-quantization`](https://github.com/blueardour/model-quantization) project. We provide pretrained models in above  download links. Prepare your own model if other backbones are required. 
+1. Pretrain the full-precision and 2-bit backbone in the [`model-quantization`](https://github.com/blueardour/model-quantization) project. We provide pretrained models in above  download links(./detection.md#Pretrained-models-and-quantization-results). Prepare your own model if other backbones are required. For ResNet-18, the pretrained model can be found in folder:
    
-   full precision model: `weights/pytorch-resnet18/resnet18_w32a32.pth`
+   Full precision model: `weights/pytorch-resnet18/resnet18_w32a32.pth`
    
    2-bit LSQ model: `weights/pytorch-resnet18/lsq_best_model_a2w2.pth`
    
