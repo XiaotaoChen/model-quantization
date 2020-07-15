@@ -60,8 +60,7 @@ The framework is able to provide quantization support for all kinds of tasks tha
 
 ## Dataset
 
-refer detectron2 datasets: [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md) 
-and specific datasets from [AdelaiDet](https://github.com/aim-uofa/AdelaiDet).
+   Refer detectron2 datasets: [datasets/README.md](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md) and specific datasets from [AdelaiDet](https://github.com/aim-uofa/AdelaiDet).
 
 ## Pretrained models and quantization results
 
@@ -73,29 +72,30 @@ We provide pretrained models gradually in [google drive](https://drive.google.co
 
 ## What is modified in the detectron2 project
 
-The [`model-quantization`](https://github.com/blueardour/model-quantization) project can be used as a plugin to other projects to provide the quantization support. We modify the following files to integrate the `model-quantization` project into the `detectron2` / `AdelaiDet` projects. Use `vimdiff` to check the difference. The `model-quantization` project is potential to be equipped into other projects in a similar way.
-
-```
-modified:   detectron2/checkpoint/detection_checkpoint.py
-modified:   detectron2/config/defaults.py
-modified:   detectron2/engine/defaults.py
-modified:   detectron2/engine/train_loop.py
-modified:   detectron2/layers/csrc/ROIAlign/ROIAlign_cuda.cu
-modified:   detectron2/layers/roi_align.py
-modified:   detectron2/layers/wrappers.py
-modified:   detectron2/modeling/backbone/fpn.py
-modified:   detectron2/modeling/meta_arch/build.py
-modified:   detectron2/modeling/meta_arch/retinanet.py
-new file:   third_party/convert_to_quantization.py
-new file:   third_party/quantization
-new file:   weights
-```
-
-Highly recommend to check the `detectron2/engine/defaults.py` to see which options are added for the low-bit quantization.
-
-```
-git difftool quantization master detectron2/config/defaults.py
-```
+   The [`model-quantization`](https://github.com/blueardour/model-quantization) project can be used as a plugin to other projects to provide the quantization support. We modify the following files to integrate the `model-quantization` project into the `detectron2` / `AdelaiDet` projects. Use `vimdiff` to check the difference. The `model-quantization` project is potential to be equipped into other projects in a similar way.
+   
+   ```
+   modified:   detectron2/checkpoint/detection_checkpoint.py
+   modified:   detectron2/config/defaults.py
+   modified:   detectron2/engine/defaults.py
+   modified:   detectron2/engine/train_loop.py
+   modified:   detectron2/layers/csrc/ROIAlign/ROIAlign_cuda.cu
+   modified:   detectron2/layers/roi_align.py
+   modified:   detectron2/layers/wrappers.py
+   modified:   detectron2/modeling/backbone/fpn.py
+   modified:   detectron2/modeling/meta_arch/build.py
+   modified:   detectron2/modeling/meta_arch/retinanet.py
+   new file:   third_party/convert_to_quantization.py
+   new file:   third_party/quantization
+   new file:   weights
+   ```
+   Make sure the `weights` and `third_party/quantization` link to correct position. 
+   
+   Highly recommend to check the `detectron2/engine/defaults.py` to see which options are added for the low-bit quantization.
+   
+   ```
+   git difftool quantization master detectron2/config/defaults.py
+   ```
 
 
 
