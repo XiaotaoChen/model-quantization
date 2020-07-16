@@ -9,10 +9,10 @@ Note that the performance among different methods is obtained based on different
 
 We provide pretrained models in [google drive](https://drive.google.com/drive/folders/1vwxth9UB8AMbYP7cJxaWE9S0z9fueZ5J?usp=sharing)
 
-Dataset | Method | Model | A/W | Reported | Top-1  | Flags 
---- |:---:|:---:|:---:|:---:|:---:|:---:
-imagenet | - | ResNet-18 | 32/32 | - | 70.1 | PreBN,bacs 
-imagenet | - | Torch-R18 | 32/32 | 69.8 | 70.1 | Pytorch-official
+Dataset | Method | Model | A/W | Reported | Top-1  | Flags | Config
+--- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
+imagenet | - | ResNet-18 | 32/32 | - | 70.1 | PreBN,bacs | [File](../config/config.dorefa.eval.imagenet.fp.resnet18)
+imagenet | - | Torch-R18 | 32/32 | 69.8 | 70.1 | Pytorch-official 
 imagenet | Fixup | ResNet-18 | 32/32 | - | 69.0 | fixup,cbsa,mixup=0.7
 imagenet | Fixup | ResNet-50 | 32/32 | - | 75.9 | fixup,cbsa,mixup=0.7
 imagenet | TResnet | ResNet-18 | 32/32 | 70.1 | 68.7 | PreBN,bacs,TResNetStem
