@@ -6,9 +6,7 @@ This project provides aboundant choices of quantization strategies (such as the 
 ## Instructions for different tasks
 
 - [Classification](./doc/classification.md)
-- [Detection](./doc/detection.md)
-- [Segmentation](./doc/detection.md)
-- [Text parsing](./doc/detection.md)
+- [Detection / Segmentation / Text parsing ](./doc/detectron2.md)
 
 ## Update History
 
