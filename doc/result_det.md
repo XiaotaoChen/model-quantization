@@ -16,6 +16,12 @@ COCO | Retina-Net | - | Torch-34 | 32/32 | - | 35.2 | 1x
 COCO | Retina-Net | - | Torch-50 | 32/32 | - | 36.6 | 1x
 COCO | Retina-Net | - | Torch-50 | 32/32 | - | 37.8 | 1x, FPN-BN,Head-BN
 COCO | Retina-Net | - | MSRA-R50 | 32/32 | - | 36.4 | 1x
+COCO | Retina-Net | - | Torch-18 | 4/4 | - | 34.0 | 1x,Full-BN, Quantize-All
+COCO | Retina-Net | - | Torch-18 | 3/3 | - | 32.8 | 1x,Full-BN, Quantize-All
+COCO | Retina-Net | - | Torch-18 | 2/2 | - | 29.6 | 1x,Full-BN, Quantize-All
+COCO | Retina-Net | - | Torch-34 | 4/4 | - | 37.0 | 1x,Full-BN, Quantize-All
+COCO | Retina-Net | - | Torch-34 | 3/3 | - | 35.9 | 1x,Full-BN, Quantize-All
+COCO | Retina-Net | - | Torch-34 | 2/2 | - | 33.1 | 1x,Full-BN, Quantize-All
 COCO | FCOS | - | MSRA-R50 | 32/32 | - | 38.6 | 1x
 COCO | FCOS | - | Torch-50 | 32/32 | - | 38.4 | 1x
 COCO | FCOS | - | Torch-50 | 32/32 | - | 38.5 | 1x,FPN-BN
@@ -26,6 +32,8 @@ COCO | FCOS | - | Torch-18 | 32/32 | - | 33.4 | 1x,FPN-BN
 COCO | FCOS | - | Torch-18 | 32/32 | - | 33.9 | 1x,FPN-BN, FP16
 COCO | FCOS | - | Torch-18 | 32/32 | - | 33.9 | 1x,FPN-BN,Head-BN
 COCO | FCOS | - | Torch-18 | 32/32 | - | 34.3 | 1x,FPN-SyncBN,Head-SyncBN
+COCO | FCOS | LSQ | Torch-18 | 4/4 | - | 35.2 | 1x,FPN-BN, Quantize-All, double-init
+COCO | FCOS | LSQ | Torch-18 | 3/3 | - | 34.1 | 1x,FPN-BN, Quantize-All, double-init
 COCO | FCOS | LSQ | Torch-18 | 2/2 | - | 33.4 | 1x,FPN-BN, Quantize-Backbone, double-init
 COCO | FCOS | LSQ | Torch-18 | 2/2 | - | 32.0 | 1x,FPN-BN, Quantize-All, singe-pass-init
 COCO | FCOS | LSQ | Torch-18 | 2/2 | - | 30.3 | 1x,FPN-BN, Quantize-All, double-init
