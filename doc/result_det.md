@@ -5,7 +5,7 @@ Here lists selected experiment result. The performance is potentially being bett
 
 For training and inference instructions, refer [detectron2.md](./detectron2.md).
 
-As the project is keeping upgrading, the pretrained model provided on [Google Drive](./detectron2.md#Pretrained-model) might show better performance compared with the one in table.
+As the project is keeping upgrading, the pretrained model provided on [Google Drive](./detectron2.md#Pretrained-model) might show better performance compared with the one in table. For more details, please refer to [our paper](https://arxiv.org/abs/2007.06919).
 
 Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Flags 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
