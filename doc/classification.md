@@ -120,8 +120,8 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
 
 - Activation and weight quantization options
 
-  The script provides independent configurations for activations and weights respectively. Options such as `xx_bit`, `xx_level`, `xx_enable`, `xx_half_range` are easy to understand (`xx` is `fm` for activation or `wt` for weight ). We here explain more about other advanced options. 
-  
+  The script provides independent configurations for activations and weights respectively. We here explain some advanced options. 
+    
   1. `xx_quant_group` indicates the group amount for the quantization parameter along the channel dimension.
   
   2. `xx_adaptive` in most cases, indicates the additional normalization operation which shows great potential to increase the performance.
