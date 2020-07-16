@@ -136,7 +136,7 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
   
   2. Weight decay is originally proposed to avoid overfit for the large number of parameters. For some small tensors, for example the parameters in BatchNorm layer (as well as custom defined quantization parameters, such as clip-value), weight decay is advocated to be zero. `--decay_small` is for whether decay those small tensors or not.
   
-  3. `--custom_decay_list` and `--custom_decay` are combined for specific custom decay value to certain parameters. For example, in PACT, the clip_boundary can own its independent weight decay for regularization. The combination filter parameter name according to `--custom_decay_list` and assign the weight decay to `--custom_decay`.
+  3. `--custom_decay_list` and `--custom_decay` are combined for specific custom decay value to certain parameters. For example, in PACT, the clip_boundary can own its independent weight decay for regularization.
 
 
 - Learning rate
