@@ -30,6 +30,17 @@ note = {Accessed: [Insert date here]}
 }
 ```
 
+For quantization of object detection, please cite
+```
+@misc{liu2020aqd,
+    title={AQD: Towards Accurate Quantized Object Detection},
+    author={Jing Liu and Bohan Zhuang and Peng Chen and Mingkui Tan and Chunhua Shen},
+    year={2020},
+    eprint={2007.06919},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+```
 
 Also cite the corresponding publications when you choose [dedicated algorithms](./doc/reference.md).
 
