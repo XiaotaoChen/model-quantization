@@ -2,6 +2,7 @@
 
 The framework is able to provide quantization support for all kinds of tasks that the `Detectron2` and `AdelaiDet` projects integrate. Mix precision training is also available as a benefit.
 
+***The related repositories are temporarily unavailable***
 
 ## Install
 
