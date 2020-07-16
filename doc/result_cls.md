@@ -16,11 +16,12 @@ imagenet | - | Torch-R18 | 32/32 | 69.8 | 70.1 | Pytorch-official |[File](../con
 imagenet | Fixup | ResNet-18 | 32/32 | - | 69.0 | fixup,cbsa,mixup=0.7 | [File](../config/)
 imagenet | Fixup | ResNet-50 | 32/32 | - | 75.9 | fixup,cbsa,mixup=0.7 | [File](../config/config.fixup.eval.imagenet.fp.resnet50)
 imagenet | TResnet | ResNet-18 | 32/32 | 70.1 | 68.7 | PreBN,bacs,TResNetStem | [File](../config/config.TResNet.eval.dali.fp.resnet18)
-imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 64.9 | PreBN,bacs, ep120 (old)
-imagenet | LQ-net | ResNet-18 | 2/2 | - | 65.9 | PreBN,bacs,fm_qg=8, ep120 (old)
-imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.7 | PreBN,bacs, ep120
+imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 64.9 | PreBN,bacs, ep120 (old)  | [File](../config/config.lq-net.eval.dali.2bit.resnet18)
+imagenet | LQ-net | ResNet-18 | 2/2 | - | 65.9 | PreBN,bacs,fm_qg=8, ep120 (old) | [File](../config/config.lq-net.eval.dali.2bit.resnet18-fg8)
+imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.7 | PreBN,bacs, ep120 | [File](../config/config.lq-net.finetune.dali.2bit.resnet18-baseline-sgdr
+)
 imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.3 | PreBN,bacs,wt_mean-var, ep40
-imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.6 | PreBN,bacs,wt_mean-var, ep120
+imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.6 | PreBN,bacs,wt_mean-var, ep120 | [File](../config/config.lq-net.finetune.dali.2bit.resnet18-wt-norm)
 imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.4 | PreBN,bacs,wt_mean-var,wt_gq=1, ep120
 imagenet | LSQ | Torch-R18 | 2/2 | 67.6 | 67.3 | vanilla resnet(paper use pre act) | [File](../config/config.lsq.eval.imagenet.2bit.torch-resnet18)
 imagenet | Dorefa-Net | ResNet-18 | 2/2 | - | 64.1 | PreBN,bacs  | [File](../config/config.dorefa.eval.imagenet.2bit.resnet18)
