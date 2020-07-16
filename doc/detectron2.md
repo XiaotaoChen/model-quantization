@@ -121,7 +121,7 @@ We provide pretrained models gradually in [google drive](https://drive.google.co
   
 - Import `backbone_full.pt` and `backbone_low.pt` into detectron2 project format. 
 
-  To import the pretrained models in correct format, refer the `renaming function` provided in `tools.py` demonstrated in [tools.md](./tools.md) and also the [examples](./detection.md#Examples).
+  To import the pretrained models in correct format, refer the `renaming function` provided in `tools.py` demonstrated in [tools.md](./tools.md) and also the [examples](./detectron2.md#Examples).
 
 - Train the full precision model with formatted `backbone_full.pt` as initialization.
   
