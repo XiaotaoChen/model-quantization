@@ -94,7 +94,7 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
   
   c. `dorefa` for DoReFa-Net. Besides, additional keyword of `lsq` for learned step size, `non-uniform` for FATNN.
   
-  d. `xnor` for xnor-net. If `gamma` is combined with the `xnor` in the keyword, a separated learnable scale coefficient is added (It namely becomes the XNor-net++).
+  d. `xnor` for XNOR-Net. If `gamma` is combined with the `xnor` in the keyword, a separated learnable scale coefficient is added (It namely becomes the XNor-net++).
 
 - Keyword (structure control):
 
@@ -102,7 +102,7 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
 
   a. `origin` exists / not exists in `keyword` is to choose whether the bi-real skip connection is preferred (Block-wise skip connection versus layer-wise skip connection).
   
-  b. `bacs` or `cbas`, etc, indicate the layer order in a ResNet block. For example, `bacs` is a kind of pre-activation structure, representing in a resnet block, first normalization layer, then activation layer, then convolution layer and last skip connection layer. For pre-activation structure, `preBN` is required for the first resnet block.  Refer [resnet.md](./resnet.md) for more information.
+  b. `bacs` or `cbas`, etc, indicate the layer order in a ResNet block. For example, `bacs` is a kind of pre-activation structure, representing in a ResNet block, first normalization layer, then activation layer, then convolution layer and last skip connection layer. For pre-activation structure, `preBN` is required for the first ResNet block.  Refer [resnet.md](./resnet.md) for more information.
   
   c. By default all layers except the first and last layers are quantized, `real_skip` can be added to keep the skip connection layers in ResNet to full precision, which is widely used in Xnor-net and Bi-Real net.
   
@@ -110,7 +110,7 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
   
   e. Padding and quantization order. I think it is an error if padding the feature map with 0 after quantization, especially in BNNs. From my perspective, the strategy makes BNNs to become TNNs. Thus, I advocate to pad the feature map with zero first and then go through the quantization step. To keep compatible with the publication as well as providing a revised method, `padding_after_quant` can be set to control the order between padding and quantization. Refer line 445 in `model/quant.py` for the implementation.
   
-  f. Skip connection realization. Two choices are provided. One is a avgpooling with stride followed by a conv1x1 with stride=1. Another is just one conv1x1 with stride as demanded. `singleconv` in `keyword` is used for the choice.
+  f. Skip connection realization. Two choices are provided. One is the avgpooling with stride followed by a conv1x1 with stride=1. Another is just one conv1x1 with stride as demanded. `singleconv` in `keyword` is used for the choice.
   
   g. `fixup` is used to enable the architecture in Fixup Initialization. 
   
@@ -120,13 +120,13 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
 
 - Activation and weight quantization options
 
-  The script provides independent configuration for the activation and weight, respectively. Options such as `xx_bit`, `xx_level`, `xx_enable`, `xx_half_range` are easy to understand (`xx` is `fm` for activation or `wt` for weight ). We here explain more about other advanced options. 
+  The script provides independent configurations for activations and weights respectively. Options such as `xx_bit`, `xx_level`, `xx_enable`, `xx_half_range` are easy to understand (`xx` is `fm` for activation or `wt` for weight ). We here explain more about other advanced options. 
   
   1. `xx_quant_group` indicates the group amount for the quantization parameter along the channel dimension.
   
   2. `xx_adaptive` in most cases, indicates the additional normalization operation which shows great potential to increase the performance.
   
-  3. `xx_grad_type` define custom gradient boost method. As generally, the quantization step is not differentiable, techniques such as the STE are used to approximate the gradient. Other types of approximation exist. Besides, in some publication, it is advocated to add some scale coefficient to the gradient in order to stabilize the training.
+  3. `xx_grad_type` defines custom gadient approximation method. In general, the quantization step is not differentiable, techniques such as the STE are used to approximate the gradient. Other types of approximation exist. Besides, in some works, it is advocated to add some scale coefficient to the gradient in order to stabilize the training.
 
 - Weight decay
 
@@ -134,9 +134,9 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
 
   1. `--wd` set the default L2 weight decay value.
   
-  2. Weight decay is originally proposed to avoid overfit for the large number of parameters. For some small tensors, for example the parameters in BatchNorm layer (as well as custom defined quantization parameter, such as clip-value), weight decay is advocated to be zero. `--decay_small` is for whether decay those small tensors or not.
+  2. Weight decay is originally proposed to avoid overfit for the large number of parameters. For some small tensors, for example the parameters in BatchNorm layer (as well as custom defined quantization parameters, such as clip-value), weight decay is advocated to be zero. `--decay_small` is for whether decay those small tensors or not.
   
-  3. `--custom_decay_list` and `--custom_decay` are combined for specific custom decay value to certain parameters. For example, in PACT, the clip_boudary can own its independent weight decay for regulation. The combination filter parameter name according to `--custom_decay_list` and assign the weight decay to `--custom_decay`.
+  3. `--custom_decay_list` and `--custom_decay` are combined for specific custom decay value to certain parameters. For example, in PACT, the clip_boundary can own its independent weight decay for regularization. The combination filter parameter name according to `--custom_decay_list` and assign the weight decay to `--custom_decay`.
 
 
 - Learning rate
@@ -149,9 +149,9 @@ loading third party model failed cannot import name 'model_zoo' from 'third_part
   
   4. `--custom_lr_list` and `--custom_lr` are provided similarly with before mentioned weight decay to specific custom learning rate for certain parameters.
 
-- mix precision training
+- Mixed precision training
   options `--fp16` and `--opt_level [O1]` are provided for mix precision traning.
 
   1. FP32
   
-  2. FP16 with customed level, recommend `O1` level.
+  2. FP16 with custom level, recommend `O1` level.
