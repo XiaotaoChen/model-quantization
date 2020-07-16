@@ -18,8 +18,7 @@ imagenet | Fixup | ResNet-50 | 32/32 | - | 75.9 | fixup,cbsa,mixup=0.7 | [File](
 imagenet | TResnet | ResNet-18 | 32/32 | 70.1 | 68.7 | PreBN,bacs,TResNetStem | [File](../config/config.TResNet.eval.dali.fp.resnet18)
 imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 64.9 | PreBN,bacs, ep120 (old)  | [File](../config/config.lq-net.eval.dali.2bit.resnet18)
 imagenet | LQ-net | ResNet-18 | 2/2 | - | 65.9 | PreBN,bacs,fm_qg=8, ep120 (old) | [File](../config/config.lq-net.eval.dali.2bit.resnet18-fg8)
-imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.7 | PreBN,bacs, ep120 | [File](../config/config.lq-net.finetune.dali.2bit.resnet18-baseline-sgdr
-)
+imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.7 | PreBN,bacs, ep120 | [File](../config/config.lq-net.finetune.dali.2bit.resnet18-baseline-sgdr)
 imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.3 | PreBN,bacs,wt_mean-var, ep40
 imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.6 | PreBN,bacs,wt_mean-var, ep120 | [File](../config/config.lq-net.finetune.dali.2bit.resnet18-wt-norm)
 imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.4 | PreBN,bacs,wt_mean-var,wt_gq=1, ep120
