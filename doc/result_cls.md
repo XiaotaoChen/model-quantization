@@ -12,20 +12,20 @@ We provide pretrained models in [google drive](https://drive.google.com/drive/fo
 Dataset | Method | Model | A/W | Reported | Top-1  | Flags | Config
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 imagenet | - | ResNet-18 | 32/32 | - | 70.1 | PreBN,bacs | [File](../config/config.dorefa.eval.imagenet.fp.resnet18)
-imagenet | - | Torch-R18 | 32/32 | 69.8 | 70.1 | Pytorch-official 
-imagenet | Fixup | ResNet-18 | 32/32 | - | 69.0 | fixup,cbsa,mixup=0.7
-imagenet | Fixup | ResNet-50 | 32/32 | - | 75.9 | fixup,cbsa,mixup=0.7
-imagenet | TResnet | ResNet-18 | 32/32 | 70.1 | 68.7 | PreBN,bacs,TResNetStem
+imagenet | - | Torch-R18 | 32/32 | 69.8 | 70.1 | Pytorch-official |[File](../config/config.dorefa.eval.imagenet.fp.torch-resnet18)
+imagenet | Fixup | ResNet-18 | 32/32 | - | 69.0 | fixup,cbsa,mixup=0.7 | [File](../config/)
+imagenet | Fixup | ResNet-50 | 32/32 | - | 75.9 | fixup,cbsa,mixup=0.7 | [File](../config/config.fixup.eval.imagenet.fp.resnet50)
+imagenet | TResnet | ResNet-18 | 32/32 | 70.1 | 68.7 | PreBN,bacs,TResNetStem | [File](../config/config.TResNet.eval.dali.fp.resnet18)
 imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 64.9 | PreBN,bacs, ep120 (old)
 imagenet | LQ-net | ResNet-18 | 2/2 | - | 65.9 | PreBN,bacs,fm_qg=8, ep120 (old)
 imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.7 | PreBN,bacs, ep120
 imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.3 | PreBN,bacs,wt_mean-var, ep40
 imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.6 | PreBN,bacs,wt_mean-var, ep120
 imagenet | LQ-net | ResNet-18 | 2/2 | 64.9 | 65.4 | PreBN,bacs,wt_mean-var,wt_gq=1, ep120
-imagenet | LSQ | Torch-R18 | 2/2 | 67.6 | 67.3 | vanilla resnet(paper use pre act)
-imagenet | Dorefa-Net | ResNet-18 | 2/2 | - | 64.1 | PreBN,bacs
-imagenet | Group-Net | ResNet-18 | 1/1 | - | 63.9 | cabs,bireal,base=5,without-softgate
-imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 52.0 | cbsa,fm_triangle,wt_pass,No-ReLU
+imagenet | LSQ | Torch-R18 | 2/2 | 67.6 | 67.3 | vanilla resnet(paper use pre act) | [File](../config/config.lsq.eval.imagenet.2bit.torch-resnet18)
+imagenet | Dorefa-Net | ResNet-18 | 2/2 | - | 64.1 | PreBN,bacs  | [File](../config/config.dorefa.eval.imagenet.2bit.resnet18)
+imagenet | Group-Net | ResNet-18 | 1/1 | - | 63.9 | cabs,bireal,base=5,without-softgate | [File](../config/config.group-net.eval.imagenet.bin.resnet18.base5.cabs)
+imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 52.0 | cbsa,fm_triangle,wt_pass,No-ReLU | [File](../config/config.xnor.train-strach.dali.bin.resnet18-triangle-pass)
 imagenet | Xnor-Net | ResNet-18 | 1/1 | 51.2 | 50.5 | cbsa,fm_STE,wt_pass,No-ReLU
 imagenet | LSQ | Torch-R18 | 1/1 | - | 58.5 | ReLU,wt-var-mean,wtg=1
 
