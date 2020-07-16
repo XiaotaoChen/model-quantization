@@ -9,7 +9,7 @@ The framework is able to provide quantization support for all kinds of tasks tha
 
    ***Note a known issue for the FP16 training: Training with FP16 and SyncBN on multi-GPU seems to cause NAN loss for current projects. Use normal BN instead***
 
-2. download the [custom detectron2](https://github.com/blueardour/detectron2) project. See [what is modified below](./detection.md#what-is-modified-in-the-detectron2-project).
+2. download the [custom detectron2](https://github.com/blueardour/detectron2) project. See [what is modified below](./detectron2.md#what-is-modified-in-the-detectron2-project).
 
    ```
    cd /workspace/git/
