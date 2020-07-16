@@ -7,7 +7,7 @@ For training and inference instructions, refer [detection.md](./detection.md).
 
 As the project is keeping upgrading, the pretrained model provided on [Google Drive](./detection.md#Pretrained-model) might show better performance compared with the one in table.
 
-Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Comment 
+Dataset | Task Method | Quantization method | Model | A/W | Reported | AP  | Flags 
 --- |:---:|:---:|:---:|:---:|:---:|:---:|:---:
 COCO | Retina-Net | - | Torch-18 | 32/32 | - | 31.5 | 1x
 COCO | Retina-Net | - | Torch-18 | 32/32 | - | 32.8 | 1x, FPN-BN,Head-GN
@@ -27,9 +27,12 @@ COCO | FCOS | - | Torch-18 | 32/32 | - | 33.9 | 1x,FPN-BN, FP16
 COCO | FCOS | - | Torch-18 | 32/32 | - | 33.9 | 1x,FPN-BN,Head-BN
 COCO | FCOS | - | Torch-18 | 32/32 | - | 34.3 | 1x,FPN-SyncBN,Head-SyncBN
 COCO | FCOS | LSQ | Torch-18 | 2/2 | - | 33.4 | 1x,FPN-BN, Quantize-Backbone, double-init
+COCO | FCOS | LSQ | Torch-18 | 2/2 | - | 32.0 | 1x,FPN-BN, Quantize-All, singe-pass-init
 COCO | FCOS | LSQ | Torch-18 | 2/2 | - | 30.3 | 1x,FPN-BN, Quantize-All, double-init
 COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 32.6 | 1x,FPN-BN, Quantize-Backbone, double-init
 COCO | FCOS | LQ-Net | Torch-18 | ter/ter | - | 26.2 | 1x,FPN-BN, Quantize-All, double-init
 
-In the comment, `FPN-BN` indicates adding BN and RELU in the FPN; `FP16` implies the case is trained in FP16 (half float) mode; `Head-BN` represents the prospoal header employes non shared BatchNorm. `Full-BN` indicates combining `FPN-BN` and `Head-BN`. `Torch-18/34/50` means the backbone is the Pytorch ResNet-18/34/50.
+Flags:
+
+`FPN-BN` indicates adding BN and RELU in the FPN; `FP16` implies the case is trained in FP16 (half float) mode; `Head-BN` represents the prospoal header employes non shared BatchNorm. `Full-BN` indicates combining `FPN-BN` and `Head-BN`. `Torch-18/34/50` means the backbone is the Pytorch ResNet-18/34/50.
 
